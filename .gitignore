@@ -1,0 +1,5 @@
+# ignore valgrind tmp files
+*.vgcore
+
+# ignore compiled tests
+tests/test*
