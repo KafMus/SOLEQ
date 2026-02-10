@@ -15,21 +15,24 @@ namespace kfsoleq
 
 class DiagThree {
 private:
-        std::array<std::vector<SOLEQ_FLOAT>*, 3> diagonals;
+        unsigned int size;
+        std::array<std::vector<SOLEQ_FLOAT>, 3> diagonals;
 public:
 	// Constructors and destructors
 	DiagThree(); // Default constructor
 	DiagThree(const DiagThree& root_diagThree); // Copy constructor
 	DiagThree(DiagThree&& base_diagThree); // Move constructor
 	~DiagThree(); // Destructor
+        DiagThree(unsigned int size);
 	
 	// Getters and setters
-	std::array<std::vector<SOLEQ_FLOAT>*, 3> getDiagonals() const { return diagonals; }
-	std::array<std::vector<SOLEQ_FLOAT>*, 3>& getDiagonals() { return diagonals; }
+        unsigned int getSize() const { return size; }
+	std::array<std::vector<SOLEQ_FLOAT>, 3>& getDiagonalsRef() { return diagonals; } // Not Safe, should be removed
 	
 	// Additional infrastructure
 	void print() const;
-        void printMatrix() const;
+        void printDiagonals() const;
+        
 	
 	// Operators overload
 	DiagThree& operator = (const DiagThree& root_diagThree); // DiagThree assignment
