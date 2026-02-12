@@ -104,6 +104,20 @@ void kfsoleq::DiagThree::solve() {
             this->roots[i] = coeffs[i].first * roots[i + 1] + coeffs[i].second;
         }
 }
+bool kfsoleq::DiagThree::checkDiagonalDomination() const {
+        if (abs(this->diagonals[1][0]) < abs(this->diagonals[2][0])) {
+            return false;
+        }
+        for (unsigned int i = 1; i < this->size - 1; ++i) {
+            if (abs(this->diagonals[1][i]) < (abs(this->diagonals[0][i]) + abs(this->diagonals[2][i]))) {
+                return false;
+            }
+        }
+        if (abs(this->diagonals[1][this->size - 1]) < abs(this->diagonals[0][this->size - 1])) {
+            return false;
+        }
+        return true;
+}
 
 
 // 

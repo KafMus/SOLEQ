@@ -31,9 +31,6 @@ public:
 	
 	// Getters and setters
         unsigned int getSize() const { return size; }
-	std::array<std::vector<SOLEQ_FLOAT>, 3>& getDiagonalsRef() { return diagonals; } // Not Safe, should be removed
-        std::vector<SOLEQ_FLOAT>& getConstantTermsRef() { return constant_terms; } // Not Safe, should be removed
-        std::vector<SOLEQ_FLOAT>& getRootsRef() { return roots; } // Not Safe, should be removed
         
 	// Additional infrastructure
 	void print() const;
@@ -41,6 +38,7 @@ public:
         void printConstantTerms() const;
         void printRoots() const;
         void solve();
+        bool checkDiagonalDomination() const;
         
 	
 	// Operators overload
