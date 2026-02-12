@@ -1,7 +1,7 @@
-#ifndef THREEDIAG_CPP_UUID_0000
-#define THREEDIAG_CPP_UUID_0000
+#ifndef DIAGTHREE_CPP_UUID_0000
+#define DIAGTHREE_CPP_UUID_0000
 
-#include "threediag.hpp"
+#include <diagthree.hpp>
 #include <iostream>
 #include <array>
 #include <vector>
@@ -43,7 +43,6 @@ kfsoleq::DiagThree::DiagThree(unsigned int size) {
 
 // 
 // Getters and setters
-// 
 
 
 
@@ -63,6 +62,9 @@ void kfsoleq::DiagThree::printDiagonals() const {
             std::cout << "]\n";
         }
 }
+/*void kfsoleq::getCoefficientsByIndex(unsigned int index, std::pair<SOLEQ_FLOAT, SOLEQ_FLOAT> coefficients) const {
+        ddd
+}*/
 
 
 // 

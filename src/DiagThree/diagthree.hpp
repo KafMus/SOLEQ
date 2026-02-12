@@ -1,5 +1,5 @@
-#ifndef THREEDIAG_HPP_UUID_0000
-#define THREEDIAG_HPP_UUID_0000
+#ifndef DIAGTHREE_HPP_UUID_0000
+#define DIAGTHREE_HPP_UUID_0000
 
 #include <iostream>
 #include <array>

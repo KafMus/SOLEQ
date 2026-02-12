@@ -3,3 +3,6 @@
 
 # ignore compiled tests
 tests/test*
+
+# ignore build dir
+build

@@ -1,4 +1,4 @@
-#include "../src/threediag.hpp"
+#include <diagthree.hpp>
 #include <iostream>
 #include <array>
 
