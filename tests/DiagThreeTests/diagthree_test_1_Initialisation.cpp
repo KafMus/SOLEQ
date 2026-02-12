@@ -4,9 +4,9 @@
 int main() {
     
     // DiagThree initialisation check
-    std::cout << "Initialising DiagThree...\n";
+    std::cout << "Initialising blank DiagThree...\n";
     kfsoleq::DiagThree my_diag{};
-    std::cout << "Initialising DiagThree DONE!\n";
+    std::cout << "Initialising blank DiagThree DONE!\n";
     
     
     return 0;
