@@ -25,7 +25,9 @@ public:
 	DiagThree(const DiagThree& root_diagThree); // Copy constructor
 	DiagThree(DiagThree&& base_diagThree); // Move constructor
 	~DiagThree(); // Destructor
-        DiagThree(unsigned int size);
+        DiagThree(unsigned int size,
+                  const std::array<std::vector<SOLEQ_FLOAT>, 3>& diagonals,
+                  const std::vector<SOLEQ_FLOAT>& constant_terms);
 	
 	// Getters and setters
         unsigned int getSize() const { return size; }

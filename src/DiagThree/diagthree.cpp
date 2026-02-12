@@ -34,15 +34,20 @@ kfsoleq::DiagThree::DiagThree(kfsoleq::DiagThree&& base_diagThree) {
 	(*this) = std::move(base_diagThree);
 }
 kfsoleq::DiagThree::~DiagThree() { }
-kfsoleq::DiagThree::DiagThree(unsigned int size) {
+kfsoleq::DiagThree::DiagThree(unsigned int size,
+                              const std::array<std::vector<SOLEQ_FLOAT>, 3>& diagonals,
+                              const std::vector<SOLEQ_FLOAT>& constant_terms) {
+        /*
+         * shrink_to_fit() may not be the greatest way to shrink vectors,
+         * because it doesn't necessarily do anything at all. Also maybe
+         * I shouldn't shrink them here or shouldn't shrink them at all.
+         */
         this->size = size;
         for (unsigned int i = 0; i < 3; ++i) {
-            
-            // May not be the best way to do this
-            this->diagonals[i] = std::vector<SOLEQ_FLOAT>(size);
+            this->diagonals[i] = diagonals[i];
             this->diagonals[i].shrink_to_fit();
         }
-        this->constant_terms = std::vector<SOLEQ_FLOAT>(size);
+        this->constant_terms = constant_terms;
         this->constant_terms.shrink_to_fit();
         this->roots = std::vector<SOLEQ_FLOAT>(size);
         this->roots.shrink_to_fit();
