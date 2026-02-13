@@ -18,12 +18,20 @@ int main() {
         for (unsigned int j = 0; j < n; ++j) {
             switch(i) {
                 case 0:
+                    if (0 == j) {
+                        std::cout << "a_0: BLANK\n";
+                        continue;
+                    }
                     std::cout << "a_" << j << ": ";
                     break;
                 case 1:
                     std::cout << "b_" << j << ": ";
                     break;
                 case 2:
+                    if (n - 1 == j) {
+                        std::cout << "c_" << j << ": BLANK\n";
+                        continue;
+                    }
                     std::cout << "c_" << j << ": ";
             }
             std::cin >> diagonals[i][j];

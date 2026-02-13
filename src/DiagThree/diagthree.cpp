@@ -2,8 +2,8 @@
 #define DIAGTHREE_CPP_UUID_0000
 
 #include <diagthree.hpp>
-#include <iostream>
 #include <array>
+#include <iostream>
 #include <vector>
 
 
@@ -65,6 +65,16 @@ void kfsoleq::DiagThree::print() const {
 }
 void kfsoleq::DiagThree::printDiagonals() const {
         for (unsigned int i = 0; i < 3; ++i) {
+            switch (i) {
+                case 0:
+                    std::cout << "a: ";
+                    break;
+                case 1:
+                    std::cout << "b: ";
+                    break;
+                case 2:
+                    std::cout << "c: ";
+            }
             std::cout << "[ ";
             for (auto jter = this->diagonals[i].begin(); jter != this->diagonals[i].end(); ++jter) {
                 std::cout << (*jter) << ' ';
@@ -73,14 +83,14 @@ void kfsoleq::DiagThree::printDiagonals() const {
         }
 }
 void kfsoleq::DiagThree::printConstantTerms() const {
-        std::cout << "[ ";
+        std::cout << "d: [ ";
         for (auto iter = this->constant_terms.begin(); iter != this->constant_terms.end(); ++iter) {
             std::cout << (*iter) << ' ';
         }
         std::cout << "]\n";
 }
 void kfsoleq::DiagThree::printRoots() const {
-        std::cout << "[ ";
+        std::cout << "x: [ ";
         for (auto iter = this->roots.begin(); iter != this->roots.end(); ++iter) {
             std::cout << (*iter) << ' ';
         }

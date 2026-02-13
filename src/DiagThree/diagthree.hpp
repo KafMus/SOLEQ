@@ -1,8 +1,8 @@
 #ifndef DIAGTHREE_HPP_UUID_0000
 #define DIAGTHREE_HPP_UUID_0000
 
-#include <iostream>
 #include <array>
+#include <iostream>
 #include <vector>
 
 
@@ -39,7 +39,6 @@ public:
         void printRoots() const;
         void solve();
         bool checkDiagonalDomination() const;
-        
 	
 	// Operators overload
 	DiagThree& operator = (const DiagThree& root_diagThree); // DiagThree assignment
