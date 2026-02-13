@@ -33,6 +33,7 @@ int main() {
                         continue;
                     }
                     std::cout << "c_" << j << ": ";
+                    break;
             }
             std::cin >> diagonals[i][j];
         }

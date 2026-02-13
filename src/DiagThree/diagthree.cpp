@@ -74,6 +74,7 @@ void kfsoleq::DiagThree::printDiagonals() const {
                     break;
                 case 2:
                     std::cout << "c: ";
+                    break;
             }
             std::cout << "[ ";
             for (auto jter = this->diagonals[i].begin(); jter != this->diagonals[i].end(); ++jter) {
