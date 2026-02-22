@@ -1,0 +1,98 @@
+{
+    "version": 10,
+    "cmakeMinimumRequired": {
+        "major": 4,
+        "minor": 2,
+        "patch": 3
+    },
+    "configurePresets": [
+        {
+            "name": "default",
+            "binaryDir": "${sourceDir}/build",
+            "hidden": true,
+            "cacheVariables": {
+                "CMAKE_COMPILE_WARNING_AS_ERROR": true
+            },
+            "warnings": {
+                "dev": true,
+                "deprecated": true,
+                "unusedCli": true,
+                "systemVars": true
+            },
+            "errors": {
+                "dev": true,
+                "deprecated": true
+            }
+        },
+        {
+            "name": "dev",
+            "hidden": true,
+            "inherits": "default",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug"
+            }
+        },
+        {
+            "name": "dev-unix",
+            "displayName": "Unix dev",
+            "description": "Unix gcc/clang preset for dev",
+            "hidden": false,
+            "inherits": "dev",
+            "cacheVariables": {
+                "CMAKE_CXX_FLAGS": "-Wall -Wextra -Wpedantic -Wshadow -Wconversion -Wsign-conversion"
+            }
+        },
+        {
+            "name": "dev-win",
+            "displayName": "Windows dev",
+            "description": "Windows msvc preset for dev",
+            "hidden": false,
+            "inherits": "dev",
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Windows"
+            },
+            "cacheVariables": {
+                "CMAKE_C_COMPILER": "cl",
+                "CMAKE_CXX_COMPILER": "cl",
+                "CMAKE_CXX_FLAGS": "/W4 /EHsc"
+            }
+        },
+        {
+            "name": "release",
+            "hidden": true,
+            "inherits": "default",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release"
+            }
+        },
+        {
+            "name": "release-unix",
+            "displayName": "Unix release",
+            "description": "Unix gcc/clang release preset",
+            "hidden": false,
+            "inherits": "release",
+            "cacheVariables": {
+                "CMAKE_CXX_FLAGS": "-Wall -Wextra -Wpedantic -Wshadow -Wconversion -Wsign-conversion -O2"
+            }
+        },
+        {
+            "name": "release-win",
+            "displayName": "Windows release",
+            "description": "Windows msvc release preset",
+            "hidden": false,
+            "inherits": "release",
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Windows"
+            },
+            "cacheVariables": {
+                "CMAKE_C_COMPILER": "cl",
+                "CMAKE_CXX_COMPILER": "cl",
+                "CMAKE_CXX_FLAGS": "/W4 /EHsc /O2"
+            }
+        }
+    ]
+}

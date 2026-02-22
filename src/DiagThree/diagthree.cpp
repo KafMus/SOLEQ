@@ -3,6 +3,7 @@
 
 #include <diagthree.hpp>
 #include <array>
+#include <cmath>
 #include <iostream>
 #include <vector>
 
@@ -17,39 +18,39 @@
 // 
 // Constructors and destructors
 // 
-kfsoleq::DiagThree::DiagThree() : size(0) {
-        for (auto iter = this->diagonals.begin(); iter != this->diagonals.end(); ++iter) {
-            (*iter) = std::vector<SOLEQ_FLOAT>{};
+kfsoleq::DiagThree::DiagThree() :
+    size(0),
+    constant_terms(std::vector<SOLEQ_FLOAT>{}),
+    roots(std::vector<SOLEQ_FLOAT>{}) {
+        for (unsigned int i = 0; i < 3; ++i) {
+            this->diagonals[i] = std::vector<SOLEQ_FLOAT>{};
         }
-        this->constant_terms = std::vector<SOLEQ_FLOAT>{};
-        this->roots = std::vector<SOLEQ_FLOAT>{};
 }
-kfsoleq::DiagThree::DiagThree(const kfsoleq::DiagThree& root_diagThree) {
-	this->size = root_diagThree.size;
-	this->diagonals = root_diagThree.diagonals;
-        this->constant_terms = root_diagThree.constant_terms;
-        this->roots = root_diagThree.roots;
-}
+kfsoleq::DiagThree::DiagThree(const kfsoleq::DiagThree& root_diagThree) : 
+    size(root_diagThree.size),
+    diagonals(root_diagThree.diagonals),
+    constant_terms(root_diagThree.constant_terms),
+    roots(root_diagThree.roots) {}
 kfsoleq::DiagThree::DiagThree(kfsoleq::DiagThree&& base_diagThree) {
 	(*this) = std::move(base_diagThree);
 }
 kfsoleq::DiagThree::~DiagThree() { }
-kfsoleq::DiagThree::DiagThree(unsigned int size,
-                              const std::array<std::vector<SOLEQ_FLOAT>, 3>& diagonals,
-                              const std::vector<SOLEQ_FLOAT>& constant_terms) {
+kfsoleq::DiagThree::DiagThree(unsigned int given_size,
+                              const std::array<std::vector<SOLEQ_FLOAT>, 3>& given_diagonals,
+                              const std::vector<SOLEQ_FLOAT>& given_constant_terms) :
+    size(given_size),
+    constant_terms(given_constant_terms),
+    roots(std::vector<SOLEQ_FLOAT>(given_size)) {
         /*
          * shrink_to_fit() may not be the greatest way to shrink vectors,
          * because it doesn't necessarily do anything at all. Also maybe
          * I shouldn't shrink them here or shouldn't shrink them at all.
          */
-        this->size = size;
         for (unsigned int i = 0; i < 3; ++i) {
-            this->diagonals[i] = diagonals[i];
+            this->diagonals[i] = given_diagonals[i];
             this->diagonals[i].shrink_to_fit();
         }
-        this->constant_terms = constant_terms;
         this->constant_terms.shrink_to_fit();
-        this->roots = std::vector<SOLEQ_FLOAT>(size);
         this->roots.shrink_to_fit();
 }
 
@@ -112,19 +113,19 @@ void kfsoleq::DiagThree::solve() {
         this->roots[this->size - 1] = (constant_terms[this->size - 1] - diagonals[0][this->size - 1] * coeffs[this->size - 2].second) /
                                       (diagonals[0][this->size - 1] * coeffs[this->size - 2].first + diagonals[1][this->size - 1]);
         for (long i = this->size - 2; i >= 0; --i) {
-            this->roots[i] = coeffs[i].first * roots[i + 1] + coeffs[i].second;
+            this->roots[(unsigned long)i] = coeffs[(unsigned long)i].first * roots[(unsigned long)i + 1] + coeffs[(unsigned long)i].second;
         }
 }
 bool kfsoleq::DiagThree::checkDiagonalDomination() const {
-        if (abs(this->diagonals[1][0]) < abs(this->diagonals[2][0])) {
+        if (std::abs(this->diagonals[1][0]) < std::abs(this->diagonals[2][0])) {
             return false;
         }
         for (unsigned int i = 1; i < this->size - 1; ++i) {
-            if (abs(this->diagonals[1][i]) < (abs(this->diagonals[0][i]) + abs(this->diagonals[2][i]))) {
+            if (std::abs(this->diagonals[1][i]) < (std::abs(this->diagonals[0][i]) + std::abs(this->diagonals[2][i]))) {
                 return false;
             }
         }
-        if (abs(this->diagonals[1][this->size - 1]) < abs(this->diagonals[0][this->size - 1])) {
+        if (std::abs(this->diagonals[1][this->size - 1]) < std::abs(this->diagonals[0][this->size - 1])) {
             return false;
         }
         return true;
