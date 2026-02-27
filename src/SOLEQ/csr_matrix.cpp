@@ -1,7 +1,7 @@
 #ifndef CSR_MATRIX_CPP_UUID_0000
 #define CSR_MATRIX_CPP_UUID_0000
 
-#include <csr_matrix.hpp>
+#include <SOLEQ/csr_matrix.hpp>
 #include <iostream>
 #include <list>
 #include <utility>

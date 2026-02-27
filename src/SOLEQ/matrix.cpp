@@ -1,7 +1,7 @@
 #ifndef MATRIX_CPP_UUID_0000
 #define MATRIX_CPP_UUID_0000
 
-#include <matrix.hpp>
+#include <SOLEQ/matrix.hpp>
 #include <array>
 #include <cmath>
 #include <iostream>

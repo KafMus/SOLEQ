@@ -1,4 +1,4 @@
-#include <diagthree.hpp>
+#include <SOLEQ/diagthree.hpp>
 #include <iostream>
 #include <vector>
 #include <array>

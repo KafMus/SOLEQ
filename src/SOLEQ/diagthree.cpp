@@ -1,7 +1,7 @@
 #ifndef DIAGTHREE_CPP_UUID_0000
 #define DIAGTHREE_CPP_UUID_0000
 
-#include <diagthree.hpp>
+#include <SOLEQ/diagthree.hpp>
 #include <array>
 #include <cmath>
 #include <iostream>

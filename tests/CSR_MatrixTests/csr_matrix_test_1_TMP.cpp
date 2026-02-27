@@ -1,4 +1,4 @@
-#include <csr_matrix.hpp>
+#include <SOLEQ/csr_matrix.hpp>
 #include <iostream>
 #include <list>
 #include <utility>

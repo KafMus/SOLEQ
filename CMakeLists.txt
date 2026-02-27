@@ -11,12 +11,11 @@ option(CSR_MATRIX_BUILD "Build CSR_Matrix" ON)
 option(CSR_MATRIX_TESTS_BUILD "Build CSR_Matrix tests" ON)
 
 
-# Applying options
+# Apply Source CMakeLists.txt
+add_subdirectory(src)
+
+# Build needed tests
 if (DIAGTHREE_BUILD)
-    message("Adding DiagThree Source files...")
-    add_subdirectory(src/DiagThree)
-    message("Adding DiagThree Source files DONE!")
-    
     if (DIAGTHREE_TESTS_BUILD)
         message("Adding DiagThree Test files...")
         add_subdirectory(tests/DiagThreeTests)
@@ -25,10 +24,6 @@ if (DIAGTHREE_BUILD)
     endif()
 endif()
 if (MATRIX_BUILD)
-    message("Adding Matrix Source files...")
-    add_subdirectory(src/Matrix)
-    message("Adding Matrix Source files DONE!")
-    
     if (MATRIX_TESTS_BUILD)
         message("Adding Matrix Test files...")
         add_subdirectory(tests/MatrixTests)
@@ -36,10 +31,6 @@ if (MATRIX_BUILD)
     endif()
 endif()
 if (CSR_MATRIX_BUILD)
-    message("Adding CSR_Matrix Source files...")
-    add_subdirectory(src/CSR_Matrix)
-    message("Adding CSR_Matrix Source files DONE!")
-    
     if (CSR_MATRIX_TESTS_BUILD)
         message("Adding CSR_Matrix Test files...")
         add_subdirectory(tests/CSR_MatrixTests)

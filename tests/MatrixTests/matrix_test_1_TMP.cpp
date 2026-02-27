@@ -1,4 +1,4 @@
-#include <matrix.hpp>
+#include <SOLEQ/matrix.hpp>
 #include <iostream>
 
 int main() {
