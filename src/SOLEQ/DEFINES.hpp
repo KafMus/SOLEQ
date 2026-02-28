@@ -4,5 +4,8 @@
 #ifndef SOLEQ_FLOAT
 #define SOLEQ_FLOAT double
 #endif
+#ifndef SOLEQ_FLOAT_THRESHOLD
+#define SOLEQ_FLOAT_THRESHOLD 0.00001
+#endif
 
 #endif

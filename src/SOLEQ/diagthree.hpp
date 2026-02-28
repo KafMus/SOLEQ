@@ -13,22 +13,22 @@ namespace kfsoleq
 
 class DiagThree {
 private:
-        unsigned int size;
+        size_t size;
         std::array<std::vector<SOLEQ_FLOAT>, 3> diagonals;
         std::vector<SOLEQ_FLOAT> constant_terms;
         std::vector<SOLEQ_FLOAT> roots;
 public:
 	// Constructors and destructors
 	DiagThree(); // Default constructor
-	DiagThree(const DiagThree& root_diagThree); // Copy constructor
-	DiagThree(DiagThree&& base_diagThree); // Move constructor
-	~DiagThree(); // Destructor
-        DiagThree(unsigned int given_size,
+        DiagThree(size_t given_size,
                   const std::array<std::vector<SOLEQ_FLOAT>, 3>& given_diagonals,
                   const std::vector<SOLEQ_FLOAT>& given_constant_terms);
 	
 	// Getters and setters
-        unsigned int getSize() const { return size; }
+        size_t getSize() const { return size; }
+        std::array<std::vector<SOLEQ_FLOAT>, 3> getDiagonals() const { return diagonals; }
+        std::vector<SOLEQ_FLOAT> getConstantTerms() const { return constant_terms; }
+        std::vector<SOLEQ_FLOAT> getRoots() const { return roots; }
         
 	// Additional infrastructure
 	void print() const;
@@ -37,10 +37,6 @@ public:
         void printRoots() const;
         void solve();
         bool checkDiagonalDomination() const;
-	
-	// Operators overload
-	DiagThree& operator = (const DiagThree& root_diagThree); // DiagThree assignment
-	DiagThree& operator = (DiagThree&& base_diagThree); // Move assignment
 };
 
 

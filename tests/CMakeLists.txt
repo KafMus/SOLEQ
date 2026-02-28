@@ -4,9 +4,17 @@ include(GoogleTest)
 
 if (DIAGTHREE_BUILD)
     message("Adding DiagThree Test files...")
-    add_subdirectory(DiagThreeTests)
+    add_executable(
+        DiagThreeTests
+        DiagThreeTests/diagthree_tests.cpp
+    )
+    target_link_libraries(
+        DiagThreeTests
+        GTest::gtest_main
+        SOLEQ
+    )
+    gtest_discover_tests(DiagThreeTests)
     message("Adding DiagThree Test files DONE!")
-    message("[31;1mTHE MAIN TEST FOR DIAGTHREE IS 6th ONE, YOU CAN TRY TO SOLVE YOUR OWN TRIDIAGONAL SYSTEM OF LINEAR EQUATIONS WITH IT[0m")
 endif()
 if (MATRIX_BUILD)
     message("Adding Matrix Test files...")

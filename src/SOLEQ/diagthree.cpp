@@ -22,20 +22,11 @@ kfsoleq::DiagThree::DiagThree() :
     size(0),
     constant_terms(std::vector<SOLEQ_FLOAT>{}),
     roots(std::vector<SOLEQ_FLOAT>{}) {
-        for (unsigned int i = 0; i < 3; ++i) {
+        for (size_t i = 0; i < 3; ++i) {
             this->diagonals[i] = std::vector<SOLEQ_FLOAT>{};
         }
 }
-kfsoleq::DiagThree::DiagThree(const kfsoleq::DiagThree& root_diagThree) : 
-    size(root_diagThree.size),
-    diagonals(root_diagThree.diagonals),
-    constant_terms(root_diagThree.constant_terms),
-    roots(root_diagThree.roots) {}
-kfsoleq::DiagThree::DiagThree(kfsoleq::DiagThree&& base_diagThree) {
-	(*this) = std::move(base_diagThree);
-}
-kfsoleq::DiagThree::~DiagThree() { }
-kfsoleq::DiagThree::DiagThree(unsigned int given_size,
+kfsoleq::DiagThree::DiagThree(size_t given_size,
                               const std::array<std::vector<SOLEQ_FLOAT>, 3>& given_diagonals,
                               const std::vector<SOLEQ_FLOAT>& given_constant_terms) :
     size(given_size),
@@ -46,7 +37,7 @@ kfsoleq::DiagThree::DiagThree(unsigned int given_size,
          * because it doesn't necessarily do anything at all. Also maybe
          * I shouldn't shrink them here or shouldn't shrink them at all.
          */
-        for (unsigned int i = 0; i < 3; ++i) {
+        for (size_t i = 0; i < 3; ++i) {
             this->diagonals[i] = given_diagonals[i];
             this->diagonals[i].shrink_to_fit();
         }
@@ -65,7 +56,7 @@ void kfsoleq::DiagThree::print() const {
 	std::cout << "Roots ptr:[" << &this->roots << "]\n";
 }
 void kfsoleq::DiagThree::printDiagonals() const {
-        for (unsigned int i = 0; i < 3; ++i) {
+        for (size_t i = 0; i < 3; ++i) {
             switch (i) {
                 case 0:
                     std::cout << "a: ";
@@ -104,7 +95,7 @@ void kfsoleq::DiagThree::solve() {
         // Forward
         coeffs[0].first = -(this->diagonals[2][0] / this->diagonals[1][0]);
         coeffs[0].second = (this->constant_terms[0] / this->diagonals[1][0]);
-        for (unsigned int i = 1; i < this->size - 1; ++i) {
+        for (size_t i = 1; i < this->size - 1; ++i) {
             coeffs[i].first = -(this->diagonals[2][i] / (this->diagonals[0][i] * coeffs[i - 1].first + this->diagonals[1][i]));
             coeffs[i].second = (this->constant_terms[i] - this->diagonals[0][i] * coeffs[i - 1].second) / (this->diagonals[0][i] * coeffs[i - 1].first + this->diagonals[1][i]);
         }
@@ -112,15 +103,15 @@ void kfsoleq::DiagThree::solve() {
         // Back
         this->roots[this->size - 1] = (constant_terms[this->size - 1] - diagonals[0][this->size - 1] * coeffs[this->size - 2].second) /
                                       (diagonals[0][this->size - 1] * coeffs[this->size - 2].first + diagonals[1][this->size - 1]);
-        for (long i = this->size - 2; i >= 0; --i) {
-            this->roots[(unsigned long)i] = coeffs[(unsigned long)i].first * roots[(unsigned long)i + 1] + coeffs[(unsigned long)i].second;
+        for (long long int i = (long long int)(this->size - 2); i >= 0; --i) {
+            this->roots[(size_t)i] = coeffs[(size_t)i].first * roots[(size_t)i + 1] + coeffs[(size_t)i].second;
         }
 }
 bool kfsoleq::DiagThree::checkDiagonalDomination() const {
         if (std::abs(this->diagonals[1][0]) < std::abs(this->diagonals[2][0])) {
             return false;
         }
-        for (unsigned int i = 1; i < this->size - 1; ++i) {
+        for (size_t i = 1; i < this->size - 1; ++i) {
             if (std::abs(this->diagonals[1][i]) < (std::abs(this->diagonals[0][i]) + std::abs(this->diagonals[2][i]))) {
                 return false;
             }
@@ -131,38 +122,6 @@ bool kfsoleq::DiagThree::checkDiagonalDomination() const {
         return true;
 }
 
-
-// 
-// Operators overload
-// 
-kfsoleq::DiagThree& kfsoleq::DiagThree::operator = (const kfsoleq::DiagThree& root_diagThree) {
-	
-	// Check self assignment
-	if (this == &root_diagThree) {
-		return *this;
-	}
-	
-	this->size = root_diagThree.size;
-	this->diagonals = root_diagThree.diagonals;
-	this->constant_terms = root_diagThree.constant_terms;
-	this->roots = root_diagThree.roots;
-	return *this;
-}
-kfsoleq::DiagThree& kfsoleq::DiagThree::operator = (kfsoleq::DiagThree&& base_diagThree) {
-	this->size = base_diagThree.size;
-	this->diagonals = base_diagThree.diagonals;
-	this->constant_terms = base_diagThree.constant_terms;
-	this->roots = base_diagThree.roots;
-        
-        base_diagThree.size = 0;
-        base_diagThree.diagonals = std::array<std::vector<SOLEQ_FLOAT>, 3>{};
-        for (auto iter = base_diagThree.diagonals.begin(); iter != base_diagThree.diagonals.end(); ++iter) {
-            (*iter) = std::vector<SOLEQ_FLOAT>{};
-        }
-        this->constant_terms = std::vector<SOLEQ_FLOAT>{};
-        this->roots = std::vector<SOLEQ_FLOAT>{};
-	return (*this);
-}
 
 
 
