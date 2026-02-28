@@ -23,6 +23,7 @@ public:
         
 	// Additional infrastructure
 	void print() const;
+        SOLEQ_FLOAT getNorm() const;
         
         // Operators overload
         SOLEQ_FLOAT  operator [] (size_t ind) const {

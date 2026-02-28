@@ -2,6 +2,7 @@
 #define VECTOR_CPP_UUID_0000
 
 #include <SOLEQ/vector.hpp>
+#include <cmath>
 #include <iostream>
 #include <vector>
 
@@ -29,6 +30,13 @@ void kfsoleq::Vector::print() const {
             std::cout << (*iter) << ' ';
         }
         std::cout << "]\n";
+}
+SOLEQ_FLOAT kfsoleq::Vector::getNorm() const {
+        SOLEQ_FLOAT result = 0;
+        for (auto iter = values.begin(); iter != values.end(); ++iter) {
+            result += std::pow((*iter), 2);
+        }
+        return std::sqrt(result);
 }
 
 
