@@ -10,6 +10,9 @@ option(MATRIX_TESTS_BUILD "Build Matrix tests" ON)
 option(CSR_MATRIX_BUILD "Build CSR_Matrix" ON)
 option(CSR_MATRIX_TESTS_BUILD "Build CSR_Matrix tests" ON)
 
+# For Google Testing enabling
+enable_testing()
+
 
 # Apply Source CMakeLists.txt
 add_subdirectory(src)
