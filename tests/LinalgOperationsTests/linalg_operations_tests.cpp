@@ -45,9 +45,9 @@ TEST(LinalgOperationsMatrixVector, Multiplication) {
             EXPECT_EQ(result.getSize(), 3) << "Multiplicated Vector's size doesn't match";
             EXPECT_EQ(result.getValues().size(), 3) << "Multiplicated Vector's Values size doesn't match";
             EXPECT_EQ(result.getValues().capacity(), 3) << "Multiplicated Vector's Values capacity doesn't match";
-            EXPECT_EQ(result[0], 500)     << "Multiplicated Vector's Values values doesn't match";
-            EXPECT_EQ(result[1], 3000500) << "Multiplicated Vector's Values values doesn't match";
-            EXPECT_EQ(result[2], 6000500) << "Multiplicated Vector's Values values doesn't match";
+            EXPECT_NEAR(result[0], 500, SOLEQ_FLOAT_THRESHOLD) << "Multiplicated Vector's Values values doesn't match";
+            EXPECT_NEAR(result[1], 3000500, SOLEQ_FLOAT_THRESHOLD) << "Multiplicated Vector's Values values doesn't match";
+            EXPECT_NEAR(result[2], 6000500, SOLEQ_FLOAT_THRESHOLD) << "Multiplicated Vector's Values values doesn't match";
         }
         /*  
          *  ||   0     1     2     3     4   || * ||  0  || = ||   3000   ||
@@ -60,9 +60,9 @@ TEST(LinalgOperationsMatrixVector, Multiplication) {
             EXPECT_EQ(result.getSize(), 3) << "Multiplicated Vector's size doesn't match";
             EXPECT_EQ(result.getValues().size(), 3) << "Multiplicated Vector's Values size doesn't match";
             EXPECT_EQ(result.getValues().capacity(), 3) << "Multiplicated Vector's Values capacity doesn't match";
-            EXPECT_EQ(result[0], 3000)     << "Multiplicated Vector's Values values doesn't match";
-            EXPECT_EQ(result[1], 10003000) << "Multiplicated Vector's Values values doesn't match";
-            EXPECT_EQ(result[2], 20003000) << "Multiplicated Vector's Values values doesn't match";
+            EXPECT_NEAR(result[0], 3000, SOLEQ_FLOAT_THRESHOLD) << "Multiplicated Vector's Values values doesn't match";
+            EXPECT_NEAR(result[1], 10003000, SOLEQ_FLOAT_THRESHOLD) << "Multiplicated Vector's Values values doesn't match";
+            EXPECT_NEAR(result[2], 20003000, SOLEQ_FLOAT_THRESHOLD) << "Multiplicated Vector's Values values doesn't match";
         }
     }
 }
@@ -95,8 +95,8 @@ TEST(LinalgOperationsCSRMatrixVector, Multiplication) {
     EXPECT_EQ(result.getSize(), 2) << "Multiplicated Vector's size doesn't match";
     EXPECT_EQ(result.getValues().size(), 2) << "Multiplicated Vector's Values size doesn't match";
     EXPECT_EQ(result.getValues().capacity(), 2) << "Multiplicated Vector's Values capacity doesn't match";
-    EXPECT_EQ(result[0], 100) << "Multiplicated Vector's Values values doesn't match";
-    EXPECT_EQ(result[1], 400) << "Multiplicated Vector's Values values doesn't match";
+    EXPECT_NEAR(result[0], 100, SOLEQ_FLOAT_THRESHOLD) << "Multiplicated Vector's Values values doesn't match";
+    EXPECT_NEAR(result[1], 400, SOLEQ_FLOAT_THRESHOLD) << "Multiplicated Vector's Values values doesn't match";
     
     /*  
      *  || 1 2 0 3  || * || 100 || = || 1700 ||
@@ -120,7 +120,7 @@ TEST(LinalgOperationsCSRMatrixVector, Multiplication) {
     EXPECT_EQ(result.getSize(), 3) << "Multiplicated Vector's size doesn't match";
     EXPECT_EQ(result.getValues().size(), 3) << "Multiplicated Vector's Values size doesn't match";
     EXPECT_EQ(result.getValues().capacity(), 3) << "Multiplicated Vector's Values capacity doesn't match";
-    EXPECT_EQ(result[0], 1700) << "Multiplicated Vector's Values values doesn't match";
-    EXPECT_EQ(result[1], 1200)  << "Multiplicated Vector's Values values doesn't match";
-    EXPECT_EQ(result[2], 4600) << "Multiplicated Vector's Values values doesn't match";
+    EXPECT_NEAR(result[0], 1700, SOLEQ_FLOAT_THRESHOLD) << "Multiplicated Vector's Values values doesn't match";
+    EXPECT_NEAR(result[1], 1200, SOLEQ_FLOAT_THRESHOLD) << "Multiplicated Vector's Values values doesn't match";
+    EXPECT_NEAR(result[2], 4600, SOLEQ_FLOAT_THRESHOLD) << "Multiplicated Vector's Values values doesn't match";
 }

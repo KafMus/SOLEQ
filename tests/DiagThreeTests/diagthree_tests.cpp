@@ -58,11 +58,11 @@ TEST(DiagThreeInitialization, FullInitialization) {
         EXPECT_EQ(my_diagthree.getRoots().capacity(), size) << "DiagThree's Roots capacity doesn't match";
         
         for (size_t i = 0; i < size; ++i) {
-            EXPECT_NEAR(my_diagthree.getDiagonals()[0][i], (SOLEQ_FLOAT)i, SOLEQ_FLOAT_THRESHOLD);
-            EXPECT_NEAR(my_diagthree.getDiagonals()[1][i], diag_salt + (SOLEQ_FLOAT)i, SOLEQ_FLOAT_THRESHOLD);
-            EXPECT_NEAR(my_diagthree.getDiagonals()[2][i], 2 * diag_salt + (SOLEQ_FLOAT)i, SOLEQ_FLOAT_THRESHOLD);
-            EXPECT_NEAR(my_diagthree.getConstantTerms()[i], cons_salt + (SOLEQ_FLOAT)i, SOLEQ_FLOAT_THRESHOLD);
-            EXPECT_NEAR(my_diagthree.getRoots()[i], 0, SOLEQ_FLOAT_THRESHOLD);
+            EXPECT_NEAR(my_diagthree.getDiagonals()[0][i], (SOLEQ_FLOAT)i, SOLEQ_FLOAT_THRESHOLD) << "DiagThree's Diagonals[0] values doesn't match";
+            EXPECT_NEAR(my_diagthree.getDiagonals()[1][i], diag_salt + (SOLEQ_FLOAT)i, SOLEQ_FLOAT_THRESHOLD) << "DiagThree's Diagonals[1] values doesn't match";
+            EXPECT_NEAR(my_diagthree.getDiagonals()[2][i], 2 * diag_salt + (SOLEQ_FLOAT)i, SOLEQ_FLOAT_THRESHOLD) << "DiagThree's Diagonals[2] values doesn't match";
+            EXPECT_NEAR(my_diagthree.getConstantTerms()[i], cons_salt + (SOLEQ_FLOAT)i, SOLEQ_FLOAT_THRESHOLD) << "DiagThree's ConstantTerms values doesn't match";
+            EXPECT_NEAR(my_diagthree.getRoots()[i], 0, SOLEQ_FLOAT_THRESHOLD) << "DiagThree's Roots values doesn't match";
         }
     }
 }
@@ -127,7 +127,7 @@ TEST(DiagThreeFunctions, CheckDiagonalDomination) {
     constant_terms = { 1, 1, 1, 1, 1  };
     
     my_diagthree = kfsoleq::DiagThree(size, diagonals, constant_terms);
-    EXPECT_TRUE(my_diagthree.checkDiagonalDomination());
+    EXPECT_TRUE(my_diagthree.checkDiagonalDomination()) << "DiagThree's checkDiagonalDomination() made a mistake";
     
     /*
      *  || 3 7 0 0 0  ||
@@ -142,7 +142,7 @@ TEST(DiagThreeFunctions, CheckDiagonalDomination) {
     constant_terms = { 1, 1, 1, 1, 1  };
     
     my_diagthree = kfsoleq::DiagThree(size, diagonals, constant_terms);
-    EXPECT_FALSE(my_diagthree.checkDiagonalDomination());
+    EXPECT_FALSE(my_diagthree.checkDiagonalDomination()) << "DiagThree's checkDiagonalDomination() made a mistake";
     
     /*
      *  || 1 1 0 ||
@@ -156,7 +156,7 @@ TEST(DiagThreeFunctions, CheckDiagonalDomination) {
     constant_terms = { 1, 1, 1 };
     
     my_diagthree = kfsoleq::DiagThree(size, diagonals, constant_terms);
-    EXPECT_FALSE(my_diagthree.checkDiagonalDomination());
+    EXPECT_FALSE(my_diagthree.checkDiagonalDomination()) << "DiagThree's checkDiagonalDomination() made a mistake";
     
     /*
      *  || 1 1 ||
@@ -169,7 +169,7 @@ TEST(DiagThreeFunctions, CheckDiagonalDomination) {
     constant_terms = { 1, 1 };
     
     my_diagthree = kfsoleq::DiagThree(size, diagonals, constant_terms);
-    EXPECT_TRUE(my_diagthree.checkDiagonalDomination());
+    EXPECT_TRUE(my_diagthree.checkDiagonalDomination()) << "DiagThree's checkDiagonalDomination() made a mistake";
     
     /*
      *  || 1 0 ||
@@ -181,7 +181,7 @@ TEST(DiagThreeFunctions, CheckDiagonalDomination) {
     constant_terms = { 1, 1 };
     
     my_diagthree = kfsoleq::DiagThree(size, diagonals, constant_terms);
-    EXPECT_TRUE(my_diagthree.checkDiagonalDomination());
+    EXPECT_TRUE(my_diagthree.checkDiagonalDomination()) << "DiagThree's checkDiagonalDomination() made a mistake";
     
     /*
      *  || 1 2 ||
@@ -193,5 +193,5 @@ TEST(DiagThreeFunctions, CheckDiagonalDomination) {
     constant_terms = { 1, 1 };
     
     my_diagthree = kfsoleq::DiagThree(size, diagonals, constant_terms);
-    EXPECT_FALSE(my_diagthree.checkDiagonalDomination());
+    EXPECT_FALSE(my_diagthree.checkDiagonalDomination()) << "DiagThree's checkDiagonalDomination() made a mistake";
 }

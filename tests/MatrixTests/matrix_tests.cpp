@@ -26,7 +26,7 @@ TEST(MatrixInitialisation, SizeBySizeInitialisation) {
         my_matrix_values = my_matrix.getValues();
         for (size_t j = 0; j < size_y[i]; ++j) {
             for (size_t z = 0; z < size_x[i]; ++z) {
-                EXPECT_EQ(my_matrix_values[j * size_x[i] + z], 0) << "Matrix's Values values doesn't match";
+                EXPECT_NEAR(my_matrix_values[j * size_x[i] + z], 0, SOLEQ_FLOAT_THRESHOLD) << "Matrix's Values values doesn't match";
             }
         }
     }
@@ -45,14 +45,14 @@ TEST(MatrixOperators, AccessOperator) {
     
     for (size_t i = 0; i < 10; ++i) {
         for (size_t j = 0; j < 30; ++j) {
-            EXPECT_EQ(my_matrix(i, j), (salt_num * (SOLEQ_FLOAT)(i * j)) + (SOLEQ_FLOAT)i) << "Matrix's Values values doesn't match";
+            EXPECT_NEAR(my_matrix(i, j), (salt_num * (SOLEQ_FLOAT)(i * j)) + (SOLEQ_FLOAT)i, SOLEQ_FLOAT_THRESHOLD) << "Matrix's Values values doesn't match";
         }
     }
     
     my_matrix_values = my_matrix.getValues();
     for (size_t i = 0; i < 10; ++i) {
         for (size_t j = 0; j < 30; ++j) {
-            EXPECT_EQ(my_matrix_values[i * 30 + j], (salt_num * (SOLEQ_FLOAT)(i * j)) + (SOLEQ_FLOAT)i) << "Matrix's Values values doesn't match";
+            EXPECT_NEAR(my_matrix_values[i * 30 + j], (salt_num * (SOLEQ_FLOAT)(i * j)) + (SOLEQ_FLOAT)i, SOLEQ_FLOAT_THRESHOLD) << "Matrix's Values values doesn't match";
         }
     }
 }

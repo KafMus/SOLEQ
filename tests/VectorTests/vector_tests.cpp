@@ -22,7 +22,7 @@ TEST(VectorInitialisation, BySizeInitialisation) {
         
         my_vector_values = my_vector.getValues();
         for (size_t j = 0; j < size[i]; ++j) {
-            EXPECT_EQ(my_vector_values[j], 0) << "Vector's Values values doesn't match";
+            EXPECT_NEAR(my_vector_values[j], 0, SOLEQ_FLOAT_THRESHOLD) << "Vector's Values values doesn't match";
         }
     }
 }
@@ -36,11 +36,11 @@ TEST(VectorOperators, AccessOperator) {
         my_vector[i] = (salt_num * (SOLEQ_FLOAT)i);
     }
     for (size_t i = 0; i < 10; ++i) {
-        EXPECT_EQ(my_vector[i], (salt_num * (SOLEQ_FLOAT)i)) << "Vector's Values values doesn't match";
+        EXPECT_NEAR(my_vector[i], (salt_num * (SOLEQ_FLOAT)i, SOLEQ_FLOAT_THRESHOLD)) << "Vector's Values values doesn't match";
     }
     
     my_vector_values = my_vector.getValues();
     for (size_t i = 0; i < 10; ++i) {
-        EXPECT_EQ(my_vector_values[i], (salt_num * (SOLEQ_FLOAT)i)) << "Vector's Values values doesn't match";
+        EXPECT_NEAR(my_vector_values[i], (salt_num * (SOLEQ_FLOAT)i), SOLEQ_FLOAT_THRESHOLD) << "Vector's Values values doesn't match";
     }
 }

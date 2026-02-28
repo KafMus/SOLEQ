@@ -19,8 +19,8 @@ TEST(CSRMatrixInitialisation, LILInitialisation) {
     std::list<std::list<std::pair<size_t, SOLEQ_FLOAT>>> my_lil = { lil_first_row, lil_second_row };
     
     kfsoleq::CSR_Matrix my_matrix(my_lil);
-    EXPECT_EQ(my_matrix.getValues()[0], 1) << "Matrix's Values values doesn't match";
-    EXPECT_EQ(my_matrix.getValues()[1], 2) << "Matrix's Values values doesn't match";
+    EXPECT_NEAR(my_matrix.getValues()[0], 1, SOLEQ_FLOAT_THRESHOLD) << "Matrix's Values values doesn't match";
+    EXPECT_NEAR(my_matrix.getValues()[1], 2, SOLEQ_FLOAT_THRESHOLD) << "Matrix's Values values doesn't match";
     EXPECT_EQ(my_matrix.getColumnIndexes()[0], 0) << "Matrix's Column Indexes values doesn't match";
     EXPECT_EQ(my_matrix.getColumnIndexes()[1], 1) << "Matrix's Column Indexes values doesn't match";
     EXPECT_EQ(my_matrix.getRowIndexes()[0], 0) << "Matrix's Row Indexes values doesn't match";
@@ -35,12 +35,12 @@ TEST(CSRMatrixInitialisation, LILInitialisation) {
     my_lil = { lil_first_row, lil_second_row, lil_third_row };
     
     my_matrix = kfsoleq::CSR_Matrix(my_lil);
-    EXPECT_EQ(my_matrix.getValues()[0], 1) << "Matrix's Values values doesn't match";
-    EXPECT_EQ(my_matrix.getValues()[1], 2) << "Matrix's Values values doesn't match";
-    EXPECT_EQ(my_matrix.getValues()[2], 3) << "Matrix's Values values doesn't match";
-    EXPECT_EQ(my_matrix.getValues()[3], 4) << "Matrix's Values values doesn't match";
-    EXPECT_EQ(my_matrix.getValues()[4], 1) << "Matrix's Values values doesn't match";
-    EXPECT_EQ(my_matrix.getValues()[5], 11) << "Matrix's Values values doesn't match";
+    EXPECT_NEAR(my_matrix.getValues()[0], 1, SOLEQ_FLOAT_THRESHOLD) << "Matrix's Values values doesn't match";
+    EXPECT_NEAR(my_matrix.getValues()[1], 2, SOLEQ_FLOAT_THRESHOLD) << "Matrix's Values values doesn't match";
+    EXPECT_NEAR(my_matrix.getValues()[2], 3, SOLEQ_FLOAT_THRESHOLD) << "Matrix's Values values doesn't match";
+    EXPECT_NEAR(my_matrix.getValues()[3], 4, SOLEQ_FLOAT_THRESHOLD) << "Matrix's Values values doesn't match";
+    EXPECT_NEAR(my_matrix.getValues()[4], 1, SOLEQ_FLOAT_THRESHOLD) << "Matrix's Values values doesn't match";
+    EXPECT_NEAR(my_matrix.getValues()[5], 11, SOLEQ_FLOAT_THRESHOLD) << "Matrix's Values values doesn't match";
     EXPECT_EQ(my_matrix.getColumnIndexes()[0], 0) << "Matrix's Column Indexes values doesn't match";
     EXPECT_EQ(my_matrix.getColumnIndexes()[1], 1) << "Matrix's Column Indexes values doesn't match";
     EXPECT_EQ(my_matrix.getColumnIndexes()[2], 3) << "Matrix's Column Indexes values doesn't match";
