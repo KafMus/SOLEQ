@@ -9,18 +9,23 @@
 #include <iostream>
 #include <fstream>
 
-#define SIZES_NUM  5
-#define DENSES_NUM 9
-#define DATAFILE_PATH "./data.csv"
-int main() {
+#define SIZES_NUM  6
+#define DENSES_NUM 6
+int main(int argc, char* argv[]) {
+    
+    if (argc < 2) {
+        std::cout << "Need filepath to save as argument!\n";
+        exit(EXIT_FAILURE);
+    }
     
     // Opening datafile in needed mode
-    std::fstream datafile("./data.csv", datafile.in | datafile.app);
+    std::fstream datafile(argv[1], datafile.in | datafile.app);
     if (!datafile.is_open()) {
         std::cout << "Failed to open datafile!\n";
         exit(EXIT_FAILURE);
     }
     datafile.setf(std::ios_base::unitbuf);
+    datafile << "NEW ENTRY OF BENCHMARK DATA" << std::endl;
     
     // Main stuff declaration and/or initialization
     kfsoleq::Vector etalon_vector;
@@ -28,9 +33,9 @@ int main() {
     kfsoleq::CSR_Matrix my_csr_matrix;
     kfsoleq::Vector result;
     std::list<std::list<std::pair<size_t, SOLEQ_FLOAT>>> my_lil;
-    size_t size_y[SIZES_NUM] = { 10, 50, 250, 500, 1000 };
-    size_t size_x[SIZES_NUM] = { 10, 50, 250, 500, 1000 };
-    unsigned int number_of_iterations = 10;
+    size_t size_y[SIZES_NUM] =                     { 10,   50,  250, 500, 1000, 10000 };
+    size_t size_x[SIZES_NUM] =                     { 10,   50,  250, 500, 1000, 10000 };
+    unsigned int number_of_iterations[SIZES_NUM] = { 1000, 500, 200, 50,  50,   50    };
     SOLEQ_FLOAT salt = 420;
     SOLEQ_FLOAT vector_salt = 100;
     
@@ -38,7 +43,7 @@ int main() {
      * We will fill matrix somewhere. every_which
      * describes which element we will fill.
      */
-    unsigned int every_which[DENSES_NUM] = { 2, 5, 10, 20, 50, 200, 500, 1000, 2000 };
+    unsigned int every_which[DENSES_NUM] = { 500, 2000, 5000, 10000, 100000, 1000000 };
     double aver_matrix_time[DENSES_NUM * SIZES_NUM]     = { 0 };
     double aver_csr_matrix_time[DENSES_NUM * SIZES_NUM] = { 0 };
     double actual_density[DENSES_NUM * SIZES_NUM]       = { 0 };
@@ -93,7 +98,7 @@ int main() {
             std::cout << "Iterations loops...\n";
             long long int time_duration_in_ns = 0;
             std::chrono::high_resolution_clock::time_point current_time, saved_time;
-            for (unsigned int iter_num = 0; iter_num < number_of_iterations; ++iter_num) {
+            for (unsigned int iter_num = 0; iter_num < number_of_iterations[i]; ++iter_num) {
                 saved_time = std::chrono::high_resolution_clock::now();
                 
                 result = my_matrix * etalon_vector;
@@ -101,9 +106,9 @@ int main() {
                 current_time = std::chrono::high_resolution_clock::now();
                 time_duration_in_ns += std::chrono::duration_cast<std::chrono::nanoseconds>(current_time - saved_time).count();
             }
-            aver_matrix_time[i * SIZES_NUM + dens_ind] = (double)time_duration_in_ns / (double)number_of_iterations;
+            aver_matrix_time[i * SIZES_NUM + dens_ind] = (double)time_duration_in_ns / (double)number_of_iterations[i];
             time_duration_in_ns = 0;
-            for (unsigned int iter_num = 0; iter_num < number_of_iterations; ++iter_num) {
+            for (unsigned int iter_num = 0; iter_num < number_of_iterations[i]; ++iter_num) {
                 saved_time = std::chrono::high_resolution_clock::now();
                 
                 result = my_csr_matrix * etalon_vector;
@@ -111,7 +116,7 @@ int main() {
                 current_time = std::chrono::high_resolution_clock::now();
                 time_duration_in_ns += std::chrono::duration_cast<std::chrono::nanoseconds>(current_time - saved_time).count();
             }
-            aver_csr_matrix_time[i * SIZES_NUM + dens_ind] = (double)time_duration_in_ns / (double)number_of_iterations;
+            aver_csr_matrix_time[i * SIZES_NUM + dens_ind] = (double)time_duration_in_ns / (double)number_of_iterations[i];
             std::cout << "Iterations loops DONE!\n";
             
             // Output
