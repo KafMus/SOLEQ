@@ -37,3 +37,16 @@ if (CSR_MATRIX_BUILD)
     )
     message("Adding CSR_Matrix Source files DONE!")
 endif()
+if (VECTOR_BUILD)
+    message("Adding Vector Source files...")
+    add_library(Vector)
+    target_sources(Vector
+        PRIVATE
+        SOLEQ/vector.cpp
+        PUBLIC
+            FILE_SET HEADERS
+            FILES
+            SOLEQ/vector.hpp
+    )
+    message("Adding Vector Source files DONE!")
+endif()
