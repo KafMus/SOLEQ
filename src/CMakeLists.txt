@@ -50,3 +50,22 @@ if (VECTOR_BUILD)
     )
     message("Adding Vector Source files DONE!")
 endif()
+if (LINALG_OPERATIONS_BUILD)
+    message("Adding LinalgOperations Source files...")
+    add_library(LinalgOperations)
+    target_sources(LinalgOperations
+        PRIVATE
+        SOLEQ/linalg_operations.cpp
+        PUBLIC
+            FILE_SET HEADERS
+            FILES
+            SOLEQ/linalg_operations.hpp
+    )
+    target_link_libraries(LinalgOperations
+        PRIVATE
+            Matrix
+            CSR_Matrix
+            Vector
+    )
+    message("Adding LinalgOperations Source files DONE!")
+endif()

@@ -1,6 +1,7 @@
 #ifndef DIAGTHREE_HPP_UUID_0000
 #define DIAGTHREE_HPP_UUID_0000
 
+#include <SOLEQ/DEFINES.hpp>
 #include <array>
 #include <cmath>
 #include <iostream>
@@ -9,10 +10,6 @@
 
 namespace kfsoleq
 {
-
-#ifndef SOLEQ_FLOAT
-#define SOLEQ_FLOAT double
-#endif
 
 class DiagThree {
 private:

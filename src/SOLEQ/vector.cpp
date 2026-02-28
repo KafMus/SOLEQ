@@ -38,6 +38,44 @@ void kfsoleq::Vector::print() const {
 }
 
 
+// 
+// Operator Overloading
+// 
+kfsoleq::Vector& kfsoleq::Vector::operator += (const kfsoleq::Vector& right_vector) {
+        for (auto iter = this->values.begin(); iter != this->values.end(); ++iter) {
+            for (auto jter = right_vector.values.begin(); jter != right_vector.values.end(); ++jter) {
+                (*iter) += (*jter);
+            }
+        }
+        return (*this);
+}
+kfsoleq::Vector& kfsoleq::Vector::operator *= (const kfsoleq::Vector& right_vector) {
+        for (auto iter = this->values.begin(); iter != this->values.end(); ++iter) {
+            for (auto jter = right_vector.values.begin(); jter != right_vector.values.end(); ++jter) {
+                (*iter) *= (*jter);
+            }
+        }
+        return (*this);
+}
+kfsoleq::Vector& kfsoleq::Vector::operator *= (SOLEQ_FLOAT right_value) {
+        for (auto iter = this->values.begin(); iter != this->values.end(); ++iter) {
+            (*iter) *= right_value;
+        }
+        return (*this);
+}
+kfsoleq::Vector kfsoleq::operator + (kfsoleq::Vector left_vector, const kfsoleq::Vector& right_vector) {
+        return left_vector += right_vector;
+}
+kfsoleq::Vector kfsoleq::operator * (kfsoleq::Vector left_vector, const kfsoleq::Vector& right_vector) {
+        return left_vector *= right_vector;
+}
+kfsoleq::Vector kfsoleq::operator * (kfsoleq::Vector left_vector, SOLEQ_FLOAT right_value) {
+        return left_vector *= right_value;
+}
+kfsoleq::Vector kfsoleq::operator * (SOLEQ_FLOAT left_value, kfsoleq::Vector right_vector) {
+        return right_vector *= left_value;
+}
+
 
 
 

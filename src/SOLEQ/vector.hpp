@@ -1,16 +1,12 @@
 #ifndef VECTOR_HPP_UUID_0000
 #define VECTOR_HPP_UUID_0000
 
-#include <iostream>
+#include <SOLEQ/DEFINES.hpp>
 #include <vector>
 
 
 namespace kfsoleq
 {
-
-#ifndef SOLEQ_FLOAT
-#define SOLEQ_FLOAT double // Probably should be included with some "main_defines.hpp" or something file.
-#endif
 
 class Vector {
 private:
@@ -35,7 +31,15 @@ public:
         SOLEQ_FLOAT& operator [] (size_t ind) {
             return this->values[ind];
         }
+        Vector& operator += (const Vector& right_vector);
+        Vector& operator *= (const Vector& right_vector); // Scalar Multiplication
+        Vector& operator *= (SOLEQ_FLOAT right_value);
 };
+
+Vector operator + (Vector left_vector, const Vector& right_vector);
+Vector operator * (Vector left_vector, const Vector& right_vector);
+Vector operator * (Vector left_vector, SOLEQ_FLOAT right_value);
+Vector operator * (SOLEQ_FLOAT left_value, Vector right_vector);
 
 
 }

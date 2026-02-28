@@ -33,14 +33,14 @@ TEST(VectorOperators, AccessOperator) {
     SOLEQ_FLOAT salt_num = 11037;
     
     for (size_t i = 0; i < 10; ++i) {
-        my_vector[i] = (salt_num * (double)i);
+        my_vector[i] = (salt_num * (SOLEQ_FLOAT)i);
     }
     for (size_t i = 0; i < 10; ++i) {
-        EXPECT_EQ(my_vector[i], (salt_num * (double)i)) << "Vector's Values values doesn't match";
+        EXPECT_EQ(my_vector[i], (salt_num * (SOLEQ_FLOAT)i)) << "Vector's Values values doesn't match";
     }
     
     my_vector_values = my_vector.getValues();
     for (size_t i = 0; i < 10; ++i) {
-        EXPECT_EQ(my_vector_values[i], (salt_num * (double)i)) << "Vector's Values values doesn't match";
+        EXPECT_EQ(my_vector_values[i], (salt_num * (SOLEQ_FLOAT)i)) << "Vector's Values values doesn't match";
     }
 }

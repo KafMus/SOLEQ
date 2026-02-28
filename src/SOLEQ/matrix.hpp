@@ -1,18 +1,13 @@
 #ifndef MATRIX_HPP_UUID_0000
 #define MATRIX_HPP_UUID_0000
 
-#include <array>
-#include <cmath>
+#include <SOLEQ/DEFINES.hpp>
 #include <iostream>
 #include <vector>
 
 
 namespace kfsoleq
 {
-
-#ifndef SOLEQ_FLOAT
-#define SOLEQ_FLOAT double // Probably should be included with some "main_defines.hpp" or something file.
-#endif
 
 class Matrix {
 private:

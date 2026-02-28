@@ -39,20 +39,20 @@ TEST(MatrixOperators, AccessOperator) {
     
     for (size_t i = 0; i < 10; ++i) {
         for (size_t j = 0; j < 30; ++j) {
-            my_matrix(i, j) = (salt_num * (double)(i * j)) + (double)i;
+            my_matrix(i, j) = (salt_num * (SOLEQ_FLOAT)(i * j)) + (SOLEQ_FLOAT)i;
         }
     }
     
     for (size_t i = 0; i < 10; ++i) {
         for (size_t j = 0; j < 30; ++j) {
-            EXPECT_EQ(my_matrix(i, j), (salt_num * (double)(i * j)) + (double)i) << "Matrix's Values values doesn't match";
+            EXPECT_EQ(my_matrix(i, j), (salt_num * (SOLEQ_FLOAT)(i * j)) + (SOLEQ_FLOAT)i) << "Matrix's Values values doesn't match";
         }
     }
     
     my_matrix_values = my_matrix.getValues();
     for (size_t i = 0; i < 10; ++i) {
         for (size_t j = 0; j < 30; ++j) {
-            EXPECT_EQ(my_matrix_values[i * 30 + j], (salt_num * (double)(i * j)) + (double)i) << "Matrix's Values values doesn't match";
+            EXPECT_EQ(my_matrix_values[i * 30 + j], (salt_num * (SOLEQ_FLOAT)(i * j)) + (SOLEQ_FLOAT)i) << "Matrix's Values values doesn't match";
         }
     }
 }

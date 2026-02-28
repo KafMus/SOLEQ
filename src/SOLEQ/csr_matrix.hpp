@@ -1,6 +1,7 @@
 #ifndef CSR_MATRIX_HPP_UUID_0000
 #define CSR_MATRIX_HPP_UUID_0000
 
+#include <SOLEQ/DEFINES.hpp>
 #include <iostream>
 #include <list>
 #include <utility>
@@ -9,10 +10,6 @@
 
 namespace kfsoleq
 {
-
-#ifndef SOLEQ_FLOAT
-#define SOLEQ_FLOAT double // Probably should be included with some "main_defines.hpp" or something file.
-#endif
 
 class CSR_Matrix {
 private:
