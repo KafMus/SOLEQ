@@ -2,18 +2,12 @@
 #define MATRIX_CPP_UUID_0000
 
 #include <SOLEQ/matrix.hpp>
+#include <SOLEQ/DEFINES.hpp>
 #include <array>
-#include <cmath>
 #include <iostream>
 #include <vector>
 
 
-
-// 
-// 
-// Matrix part
-// 
-// 
 
 // 
 // Constructors and destructors

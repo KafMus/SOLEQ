@@ -2,18 +2,13 @@
 #define DIAGTHREE_CPP_UUID_0000
 
 #include <SOLEQ/diagthree.hpp>
+#include <SOLEQ/DEFINES.hpp>
 #include <array>
 #include <cmath>
 #include <iostream>
 #include <vector>
 
 
-
-// 
-// 
-// DiagThree part
-// 
-// 
 
 // 
 // Constructors and destructors

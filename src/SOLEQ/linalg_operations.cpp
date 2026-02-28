@@ -5,7 +5,6 @@
 #include <SOLEQ/matrix.hpp>
 #include <SOLEQ/csr_matrix.hpp>
 #include <SOLEQ/vector.hpp>
-#include <iostream>
 
 
 

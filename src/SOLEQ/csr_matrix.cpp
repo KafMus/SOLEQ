@@ -2,18 +2,13 @@
 #define CSR_MATRIX_CPP_UUID_0000
 
 #include <SOLEQ/csr_matrix.hpp>
+#include <SOLEQ/DEFINES.hpp>
 #include <iostream>
 #include <list>
 #include <utility>
 #include <vector>
 
 
-
-// 
-// 
-// CSR_Matrix part
-// 
-// 
 
 // 
 // Constructors and destructors

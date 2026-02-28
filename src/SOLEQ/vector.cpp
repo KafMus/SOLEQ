@@ -8,12 +8,6 @@
 
 
 // 
-// 
-// Vector part
-// 
-// 
-
-// 
 // Constructors and destructors
 // 
 kfsoleq::Vector::Vector() :

@@ -2,7 +2,6 @@
 #define MATRIX_HPP_UUID_0000
 
 #include <SOLEQ/DEFINES.hpp>
-#include <iostream>
 #include <vector>
 
 
