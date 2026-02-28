@@ -22,7 +22,7 @@ foreach(test IN LISTS all_tests)
     # Link target to needed libraries
     target_link_libraries("DiagThreeTest_${k}"
         PRIVATE
-            DiagThree
+            SOLEQ
     )
     
     # Testname index incremention

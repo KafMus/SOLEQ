@@ -37,7 +37,7 @@ void kfsoleq::Matrix::print() const {
         std::cout << "Size X:[" << this->size_x << "]\n";
         std::cout << "Values:\n";
         for (size_t i = 0; i < this->size_y; ++i) {
-            std::cout << "[";
+            std::cout << "[ ";
             for (size_t j = 0; j < this->size_x; ++j) {
                 std::cout << this->values[(i * this->size_x) + j] << ' ';
             }
