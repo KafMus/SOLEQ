@@ -41,6 +41,12 @@ kfsoleq::Vector& kfsoleq::Vector::operator += (const kfsoleq::Vector& right_vect
         }
         return (*this);
 }
+kfsoleq::Vector& kfsoleq::Vector::operator -= (const kfsoleq::Vector& right_vector) {
+        for (size_t i = 0; i < this->size; ++i) {
+            this->values[i] -= right_vector.values[i];
+        }
+        return (*this);
+}
 SOLEQ_FLOAT kfsoleq::Vector::operator *= (const kfsoleq::Vector& right_vector) {
         SOLEQ_FLOAT result = 0;
         for (size_t i = 0; i < this->size; ++i) {
@@ -56,6 +62,9 @@ kfsoleq::Vector& kfsoleq::Vector::operator *= (SOLEQ_FLOAT right_value) {
 }
 kfsoleq::Vector kfsoleq::operator + (kfsoleq::Vector left_vector, const kfsoleq::Vector& right_vector) {
         return left_vector += right_vector;
+}
+kfsoleq::Vector kfsoleq::operator - (kfsoleq::Vector left_vector, const kfsoleq::Vector& right_vector) {
+        return left_vector -= right_vector;
 }
 SOLEQ_FLOAT kfsoleq::operator * (kfsoleq::Vector left_vector, const kfsoleq::Vector& right_vector) {
         return left_vector *= right_vector;
