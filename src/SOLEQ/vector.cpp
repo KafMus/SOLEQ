@@ -44,20 +44,17 @@ SOLEQ_FLOAT kfsoleq::Vector::getNorm() const {
 // Operator Overloading
 // 
 kfsoleq::Vector& kfsoleq::Vector::operator += (const kfsoleq::Vector& right_vector) {
-        for (auto iter = this->values.begin(); iter != this->values.end(); ++iter) {
-            for (auto jter = right_vector.values.begin(); jter != right_vector.values.end(); ++jter) {
-                (*iter) += (*jter);
-            }
+        for (size_t i = 0; i < this->size; ++i) {
+            this->values[i] += right_vector.values[i];
         }
         return (*this);
 }
-kfsoleq::Vector& kfsoleq::Vector::operator *= (const kfsoleq::Vector& right_vector) {
-        for (auto iter = this->values.begin(); iter != this->values.end(); ++iter) {
-            for (auto jter = right_vector.values.begin(); jter != right_vector.values.end(); ++jter) {
-                (*iter) *= (*jter);
-            }
+SOLEQ_FLOAT kfsoleq::Vector::operator *= (const kfsoleq::Vector& right_vector) {
+        SOLEQ_FLOAT result = 0;
+        for (size_t i = 0; i < this->size; ++i) {
+            result += this->values[i] * right_vector.values[i];
         }
-        return (*this);
+        return result;
 }
 kfsoleq::Vector& kfsoleq::Vector::operator *= (SOLEQ_FLOAT right_value) {
         for (auto iter = this->values.begin(); iter != this->values.end(); ++iter) {
@@ -68,7 +65,7 @@ kfsoleq::Vector& kfsoleq::Vector::operator *= (SOLEQ_FLOAT right_value) {
 kfsoleq::Vector kfsoleq::operator + (kfsoleq::Vector left_vector, const kfsoleq::Vector& right_vector) {
         return left_vector += right_vector;
 }
-kfsoleq::Vector kfsoleq::operator * (kfsoleq::Vector left_vector, const kfsoleq::Vector& right_vector) {
+SOLEQ_FLOAT kfsoleq::operator * (kfsoleq::Vector left_vector, const kfsoleq::Vector& right_vector) {
         return left_vector *= right_vector;
 }
 kfsoleq::Vector kfsoleq::operator * (kfsoleq::Vector left_vector, SOLEQ_FLOAT right_value) {

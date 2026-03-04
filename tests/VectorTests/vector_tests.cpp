@@ -47,6 +47,120 @@ TEST(VectorOperators, AccessOperator) {
     }
 }
 
+TEST(VectorOperators, VectorSum) {
+    const size_t iters = 4;
+    const size_t size  = 5;
+    kfsoleq::Vector  left_vector(size);
+    kfsoleq::Vector right_vector(size);
+    kfsoleq::Vector result_vector{};
+    
+    SOLEQ_FLOAT left_vector_data[iters][size]   = { { 3, 5, 7, 9, 11 },
+                                                    { 3, 5, 7, 9, 11 },
+                                                    { 1, 1, 1, 1,  1 },
+                                                    { 3, 5, 7, 9, 11 } };
+
+    SOLEQ_FLOAT right_vector_data[iters][size]  = { { 0, 0, 0, 0,  0 },
+                                                    { 1, 1, 1, 1,  1 },
+                                                    { 3, 5, 7, 9, 11 },
+                                                    { 2, 4, 6, 8, 10 } };
+    
+    SOLEQ_FLOAT result_vector_data[iters][size] = { { 3, 5,  7,  9, 11 },
+                                                    { 4, 6,  8, 10, 12 },
+                                                    { 4, 6,  8, 10, 12 },
+                                                    { 5, 9, 13, 17, 21 } };
+    
+    for (size_t i = 0; i < iters; ++i) {
+        for (size_t j = 0; j < size; ++j) {
+            left_vector[j]  =  left_vector_data[i][j];
+            right_vector[j] = right_vector_data[i][j];
+        }
+        result_vector = left_vector + right_vector;
+        for (size_t j = 0; j < size; ++j) {
+            EXPECT_NEAR(result_vector[j],
+                        result_vector_data[i][j],
+                        SOLEQ_FLOAT_THRESHOLD) << "Result Vector's values doesn't match";
+        }
+    }
+}
+
+TEST(VectorOperators, VectorScalarMultiplication) {
+    const size_t iters = 4;
+    const size_t size  = 5;
+    kfsoleq::Vector  left_vector(size);
+    kfsoleq::Vector right_vector(size);
+    SOLEQ_FLOAT result;
+    
+    SOLEQ_FLOAT left_vector_data[iters][size]   = { { 3, 5, 7, 9, 11 },
+                                                    { 3, 5, 7, 9, 11 },
+                                                    { 1, 1, 1, 1,  1 },
+                                                    { 3, 5, 7, 9, 11 } };
+    
+    SOLEQ_FLOAT right_vector_data[iters][size]  = { { 0, 0, 0, 0,  0 },
+                                                    { 1, 1, 1, 1,  1 },
+                                                    { 3, 5, 7, 9, 11 },
+                                                    { 2, 4, 6, 8, 10 } };
+    
+    SOLEQ_FLOAT result_data[iters] = { 0, 35, 35, 250 };
+    
+    for (size_t i = 0; i < iters; ++i) {
+        for (size_t j = 0; j < size; ++j) {
+            left_vector[j]  =  left_vector_data[i][j];
+            right_vector[j] = right_vector_data[i][j];
+        }
+        result = left_vector * right_vector;
+        EXPECT_NEAR(result,
+                    result_data[i],
+                    SOLEQ_FLOAT_THRESHOLD) << "Result value doesn't match";
+    }
+}
+
+TEST(VectorOperators, ToScalarMultiplication) {
+    const size_t iters = 4;
+    const size_t size  = 5;
+    kfsoleq::Vector  left_vector(size);
+    SOLEQ_FLOAT right_value;
+    kfsoleq::Vector result_vector(size);
+    
+    SOLEQ_FLOAT left_vector_data[iters][size]   = { { 3, 5, 7, 9, 11 },
+                                                    { 3, 5, 7, 9, 11 },
+                                                    { 3, 5, 7, 9, 11 },
+                                                    { 3, 5, 7, 9, 11 } };
+    
+    SOLEQ_FLOAT right_value_data[iters]  = { 0, 1, 3, -1 };
+    
+    SOLEQ_FLOAT result_vector_data[iters][size] = { {  0,  0,  0,  0,   0 },
+                                                    {  3,  5,  7,  9,  11 },
+                                                    {  9, 15, 21, 27,  33 },
+                                                    { -3, -5, -7, -9, -11 } };
+    
+    for (size_t i = 0; i < iters; ++i) {
+        for (size_t j = 0; j < size; ++j) {
+            left_vector[j] = left_vector_data[i][j];
+        }
+        right_value = right_value_data[i];
+        
+        result_vector = left_vector * right_value;
+        for (size_t j = 0; j < size; ++j) {
+            EXPECT_NEAR(result_vector[j],
+                        result_vector_data[i][j],
+                        SOLEQ_FLOAT_THRESHOLD) << "Result Vector's values doesn't match";
+        }
+    }
+    for (size_t i = 0; i < iters; ++i) {
+        for (size_t j = 0; j < size; ++j) {
+            left_vector[j] = left_vector_data[i][j];
+        }
+        right_value = right_value_data[i];
+        
+        result_vector = right_value * left_vector;
+        for (size_t j = 0; j < size; ++j) {
+            EXPECT_NEAR(result_vector[j],
+                        result_vector_data[i][j],
+                        SOLEQ_FLOAT_THRESHOLD) << "Result Vector's values doesn't match";
+        }
+    }
+}
+
 TEST(VectorFunctions, GetNorm) {
     kfsoleq::Vector my_vector(3);
     
