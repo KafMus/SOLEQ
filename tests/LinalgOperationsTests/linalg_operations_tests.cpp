@@ -5,11 +5,12 @@
 #include <SOLEQ/vector.hpp>
 
 TEST(LinalgOperationsMatrixVector, Multiplication) {
-    size_t size_y[3] = { 0, 3, 3 };
-    size_t size_x[3] = { 0, 3, 5 };
+    size_t size_y[4] = { 0, 3, 3, 1 };
+    size_t size_x[4] = { 0, 3, 5, 3 };
     kfsoleq::Matrix my_matrix;
     kfsoleq::Vector my_vector;
     kfsoleq::Vector result;
+    kfsoleq::Matrix result_matrix;
     SOLEQ_FLOAT matrix_salt = 10000;
     SOLEQ_FLOAT vector_salt = 100;
     
@@ -63,6 +64,43 @@ TEST(LinalgOperationsMatrixVector, Multiplication) {
             EXPECT_NEAR(result[0], 3000, SOLEQ_FLOAT_THRESHOLD) << "Multiplicated Vector's Values values doesn't match";
             EXPECT_NEAR(result[1], 10003000, SOLEQ_FLOAT_THRESHOLD) << "Multiplicated Vector's Values values doesn't match";
             EXPECT_NEAR(result[2], 20003000, SOLEQ_FLOAT_THRESHOLD) << "Multiplicated Vector's Values values doesn't match";
+        }
+    }
+    for (size_t i = 3; i < 4; ++i) {
+        my_matrix = kfsoleq::Matrix(size_y[i], size_x[i]);
+        my_vector = kfsoleq::Vector(size_x[i]);
+        
+        for (size_t j = 0; j < size_y[i]; ++j) {
+            for (size_t z = 0; z < size_x[i]; ++z) {
+                my_matrix(j, z) = matrix_salt * (SOLEQ_FLOAT)j + (SOLEQ_FLOAT)z;
+            }
+        }
+        for (size_t j = 0; j < size_x[i]; ++j) {
+            my_vector[j] = vector_salt * (SOLEQ_FLOAT)j;
+        }
+        
+        // Checking
+        result_matrix = my_vector * my_matrix;
+        
+        /*  
+         *  ||  0  || * || 0 1 2 || = || 0  0   0  ||
+         *  || 100 ||                 || 0 100 200 ||
+         *  || 200 ||                 || 0 200 400 ||
+         */
+        if (3 == i) {
+            EXPECT_EQ(result_matrix.getSizeY(), 3) << "Multiplicated Matrix's Size Y doesn't match";
+            EXPECT_EQ(result_matrix.getSizeX(), 3) << "Multiplicated Matrix's Size X doesn't match";
+            EXPECT_EQ(result_matrix.getValues().size(), 9) << "Multiplicated Matrix's Values size doesn't match";
+            EXPECT_EQ(result_matrix.getValues().capacity(), 9) << "Multiplicated Matrix's Values capacity doesn't match";
+            EXPECT_NEAR(result_matrix(0, 0),   0, SOLEQ_FLOAT_THRESHOLD) << "Multiplicated Matrix's Values values doesn't match";
+            EXPECT_NEAR(result_matrix(0, 1),   0, SOLEQ_FLOAT_THRESHOLD) << "Multiplicated Matrix's Values values doesn't match";
+            EXPECT_NEAR(result_matrix(0, 2),   0, SOLEQ_FLOAT_THRESHOLD) << "Multiplicated Matrix's Values values doesn't match";
+            EXPECT_NEAR(result_matrix(1, 0),   0, SOLEQ_FLOAT_THRESHOLD) << "Multiplicated Matrix's Values values doesn't match";
+            EXPECT_NEAR(result_matrix(1, 1), 100, SOLEQ_FLOAT_THRESHOLD) << "Multiplicated Matrix's Values values doesn't match";
+            EXPECT_NEAR(result_matrix(1, 2), 200, SOLEQ_FLOAT_THRESHOLD) << "Multiplicated Matrix's Values values doesn't match";
+            EXPECT_NEAR(result_matrix(2, 0),   0, SOLEQ_FLOAT_THRESHOLD) << "Multiplicated Matrix's Values values doesn't match";
+            EXPECT_NEAR(result_matrix(2, 1), 200, SOLEQ_FLOAT_THRESHOLD) << "Multiplicated Matrix's Values values doesn't match";
+            EXPECT_NEAR(result_matrix(2, 2), 400, SOLEQ_FLOAT_THRESHOLD) << "Multiplicated Matrix's Values values doesn't match";
         }
     }
 }
@@ -123,4 +161,81 @@ TEST(LinalgOperationsCSRMatrixVector, Multiplication) {
     EXPECT_NEAR(result[0], 1700, SOLEQ_FLOAT_THRESHOLD) << "Multiplicated Vector's Values values doesn't match";
     EXPECT_NEAR(result[1], 1200, SOLEQ_FLOAT_THRESHOLD) << "Multiplicated Vector's Values values doesn't match";
     EXPECT_NEAR(result[2], 4600, SOLEQ_FLOAT_THRESHOLD) << "Multiplicated Vector's Values values doesn't match";
+    
+    /*  
+     *  || 1 || * || 3 0 4 || = || 3 0 4 ||
+     *  || 0 ||                 || 0 0 0 ||
+     *  || 2 ||                 || 6 0 8 ||
+     */
+    my_vector = kfsoleq::Vector(3);
+    my_vector[0] = 1;
+    my_vector[1] = 0;
+    my_vector[2] = 2;
+    lil_first_row =  { std::make_pair(0, 3), std::make_pair(2, 4) };
+    my_lil = { lil_first_row };
+    my_matrix = kfsoleq::CSR_Matrix(my_lil);
+    
+    kfsoleq::Matrix result_matrix = my_vector * my_matrix;
+    EXPECT_EQ(result_matrix.getSizeY(), 3) << "Result Matrix's Size Y doesn't match";
+    EXPECT_EQ(result_matrix.getSizeX(), 3) << "Result Matrix's Size X doesn't match";
+    EXPECT_EQ(result_matrix.getValues().size(), 9) << "Result Matrix's Values size doesn't match";
+    EXPECT_EQ(result_matrix.getValues().capacity(), 9) << "Result Matrix's Values capacity doesn't match";
+    EXPECT_NEAR(result_matrix(0, 0), 3, SOLEQ_FLOAT_THRESHOLD) << "Result Matrix's Values values doesn't match";
+    EXPECT_NEAR(result_matrix(0, 1), 0, SOLEQ_FLOAT_THRESHOLD) << "Result Matrix's Values values doesn't match";
+    EXPECT_NEAR(result_matrix(0, 2), 4, SOLEQ_FLOAT_THRESHOLD) << "Result Matrix's Values values doesn't match";
+    EXPECT_NEAR(result_matrix(1, 0), 0, SOLEQ_FLOAT_THRESHOLD) << "Result Matrix's Values values doesn't match";
+    EXPECT_NEAR(result_matrix(1, 1), 0, SOLEQ_FLOAT_THRESHOLD) << "Result Matrix's Values values doesn't match";
+    EXPECT_NEAR(result_matrix(1, 2), 0, SOLEQ_FLOAT_THRESHOLD) << "Result Matrix's Values values doesn't match";
+    EXPECT_NEAR(result_matrix(2, 0), 6, SOLEQ_FLOAT_THRESHOLD) << "Result Matrix's Values values doesn't match";
+    EXPECT_NEAR(result_matrix(2, 1), 0, SOLEQ_FLOAT_THRESHOLD) << "Result Matrix's Values values doesn't match";
+    EXPECT_NEAR(result_matrix(2, 2), 8, SOLEQ_FLOAT_THRESHOLD) << "Result Matrix's Values values doesn't match";
+    
+    /*  
+     *  ||  3 || * || 3 0 4 0 -2 || = ||  9 0 12 0 -6 ||
+     *  ||  3 ||                      ||  9 0 12 0 -6 ||
+     *  ||  2 ||                      ||  6 0  8 0 -4 ||
+     *  || -1 ||                      || -3 0 -4 0  2 ||
+     *  ||  0 ||                      ||  0 0  0 0  0 ||
+     */
+    my_vector = kfsoleq::Vector(5);
+    my_vector[0] =  3;
+    my_vector[1] =  3;
+    my_vector[2] =  2;
+    my_vector[3] = -1;
+    my_vector[4] =  0;
+    lil_first_row =  { std::make_pair(0, 3), std::make_pair(2, 4), std::make_pair(4, -2) };
+    my_lil = { lil_first_row };
+    my_matrix = kfsoleq::CSR_Matrix(my_lil);
+    
+    result_matrix = my_vector * my_matrix;
+    result_matrix.print();
+    EXPECT_EQ(result_matrix.getSizeY(), 5) << "Result Matrix's Size Y doesn't match";
+    EXPECT_EQ(result_matrix.getSizeX(), 5) << "Result Matrix's Size X doesn't match";
+    EXPECT_EQ(result_matrix.getValues().size(), 25) << "Result Matrix's Values size doesn't match";
+    EXPECT_EQ(result_matrix.getValues().capacity(), 25) << "Result Matrix's Values capacity doesn't match";
+    EXPECT_NEAR(result_matrix(0, 0),  9, SOLEQ_FLOAT_THRESHOLD) << "Result Matrix's Values values doesn't match";
+    EXPECT_NEAR(result_matrix(0, 1),  0, SOLEQ_FLOAT_THRESHOLD) << "Result Matrix's Values values doesn't match";
+    EXPECT_NEAR(result_matrix(0, 2), 12, SOLEQ_FLOAT_THRESHOLD) << "Result Matrix's Values values doesn't match";
+    EXPECT_NEAR(result_matrix(0, 3),  0, SOLEQ_FLOAT_THRESHOLD) << "Result Matrix's Values values doesn't match";
+    EXPECT_NEAR(result_matrix(0, 4), -6, SOLEQ_FLOAT_THRESHOLD) << "Result Matrix's Values values doesn't match";
+    EXPECT_NEAR(result_matrix(1, 0),  9, SOLEQ_FLOAT_THRESHOLD) << "Result Matrix's Values values doesn't match";
+    EXPECT_NEAR(result_matrix(1, 1),  0, SOLEQ_FLOAT_THRESHOLD) << "Result Matrix's Values values doesn't match";
+    EXPECT_NEAR(result_matrix(1, 2), 12, SOLEQ_FLOAT_THRESHOLD) << "Result Matrix's Values values doesn't match";
+    EXPECT_NEAR(result_matrix(1, 3),  0, SOLEQ_FLOAT_THRESHOLD) << "Result Matrix's Values values doesn't match";
+    EXPECT_NEAR(result_matrix(1, 4), -6, SOLEQ_FLOAT_THRESHOLD) << "Result Matrix's Values values doesn't match";
+    EXPECT_NEAR(result_matrix(2, 0),  6, SOLEQ_FLOAT_THRESHOLD) << "Result Matrix's Values values doesn't match";
+    EXPECT_NEAR(result_matrix(2, 1),  0, SOLEQ_FLOAT_THRESHOLD) << "Result Matrix's Values values doesn't match";
+    EXPECT_NEAR(result_matrix(2, 2),  8, SOLEQ_FLOAT_THRESHOLD) << "Result Matrix's Values values doesn't match";
+    EXPECT_NEAR(result_matrix(2, 3),  0, SOLEQ_FLOAT_THRESHOLD) << "Result Matrix's Values values doesn't match";
+    EXPECT_NEAR(result_matrix(2, 4), -4, SOLEQ_FLOAT_THRESHOLD) << "Result Matrix's Values values doesn't match";
+    EXPECT_NEAR(result_matrix(3, 0), -3, SOLEQ_FLOAT_THRESHOLD) << "Result Matrix's Values values doesn't match";
+    EXPECT_NEAR(result_matrix(3, 1),  0, SOLEQ_FLOAT_THRESHOLD) << "Result Matrix's Values values doesn't match";
+    EXPECT_NEAR(result_matrix(3, 2), -4, SOLEQ_FLOAT_THRESHOLD) << "Result Matrix's Values values doesn't match";
+    EXPECT_NEAR(result_matrix(3, 3),  0, SOLEQ_FLOAT_THRESHOLD) << "Result Matrix's Values values doesn't match";
+    EXPECT_NEAR(result_matrix(3, 4),  2, SOLEQ_FLOAT_THRESHOLD) << "Result Matrix's Values values doesn't match";
+    EXPECT_NEAR(result_matrix(4, 0),  0, SOLEQ_FLOAT_THRESHOLD) << "Result Matrix's Values values doesn't match";
+    EXPECT_NEAR(result_matrix(4, 1),  0, SOLEQ_FLOAT_THRESHOLD) << "Result Matrix's Values values doesn't match";
+    EXPECT_NEAR(result_matrix(4, 2),  0, SOLEQ_FLOAT_THRESHOLD) << "Result Matrix's Values values doesn't match";
+    EXPECT_NEAR(result_matrix(4, 3),  0, SOLEQ_FLOAT_THRESHOLD) << "Result Matrix's Values values doesn't match";
+    EXPECT_NEAR(result_matrix(4, 4),  0, SOLEQ_FLOAT_THRESHOLD) << "Result Matrix's Values values doesn't match";
 }
