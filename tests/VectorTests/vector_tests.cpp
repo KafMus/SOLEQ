@@ -197,6 +197,42 @@ TEST(VectorOperators, ToScalarMultiplication) {
     }
 }
 
+TEST(VectorOperators, ToScalarDivision) {
+    const size_t iters = 3;
+    const size_t size  = 5;
+    kfsoleq::Vector  left_vector(size);
+    SOLEQ_FLOAT right_value;
+    kfsoleq::Vector result_vector(size);
+    
+    SOLEQ_FLOAT left_vector_data[iters][size]   = { { 3, 5, 7, 9, 11 },
+                                                    { 3, 5, 7, 9, 11 },
+                                                    { 0, 0, 0, 0,  0 } };
+    
+    SOLEQ_FLOAT right_value_data[iters]  = { 1, 3, 42 };
+    
+    SOLEQ_FLOAT result_vector_data[iters][size] = { {  3, 5, 7, 9, 11 },
+                                                    {  1,
+                                         (SOLEQ_FLOAT)(5) / 3,
+                                         (SOLEQ_FLOAT)(7) / 3,
+                                         (SOLEQ_FLOAT)(9) / 3,
+                                        (SOLEQ_FLOAT)(11) / 3},
+                                                    {  0, 0, 0, 0,  0 } };
+    
+    for (size_t i = 0; i < iters; ++i) {
+        for (size_t j = 0; j < size; ++j) {
+            left_vector[j] = left_vector_data[i][j];
+        }
+        right_value = right_value_data[i];
+        
+        result_vector = left_vector / right_value;
+        for (size_t j = 0; j < size; ++j) {
+            EXPECT_NEAR(result_vector[j],
+                        result_vector_data[i][j],
+                        SOLEQ_FLOAT_THRESHOLD) << "Result Vector's values doesn't match";
+        }
+    }
+}
+
 TEST(VectorFunctions, GetNorm) {
     kfsoleq::Vector my_vector(3);
     
