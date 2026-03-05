@@ -208,7 +208,6 @@ TEST(LinalgOperationsCSRMatrixVector, Multiplication) {
     my_matrix = kfsoleq::CSR_Matrix(my_lil);
     
     result_matrix = my_vector * my_matrix;
-    result_matrix.print();
     EXPECT_EQ(result_matrix.getSizeY(), 5) << "Result Matrix's Size Y doesn't match";
     EXPECT_EQ(result_matrix.getSizeX(), 5) << "Result Matrix's Size X doesn't match";
     EXPECT_EQ(result_matrix.getValues().size(), 25) << "Result Matrix's Values size doesn't match";
