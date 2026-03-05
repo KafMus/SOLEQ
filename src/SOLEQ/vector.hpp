@@ -33,13 +33,12 @@ public:
         }
         Vector& operator += (const Vector& right_vector);
         Vector& operator -= (const Vector& right_vector);
-        SOLEQ_FLOAT operator *= (const Vector& right_vector); // Scalar Multiplication
+        SOLEQ_FLOAT operator * (const Vector& right_vector); // Scalar Multiplication
         Vector& operator *= (SOLEQ_FLOAT right_value);
 };
 
 Vector operator + (Vector left_vector, const Vector& right_vector);
 Vector operator - (Vector left_vector, const Vector& right_vector);
-SOLEQ_FLOAT operator * (Vector left_vector, const Vector& right_vector);
 Vector operator * (Vector left_vector, SOLEQ_FLOAT right_value);
 Vector operator * (SOLEQ_FLOAT left_value, Vector right_vector);
 
