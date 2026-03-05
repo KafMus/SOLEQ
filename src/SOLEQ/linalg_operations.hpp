@@ -10,6 +10,7 @@ namespace kfsoleq
 
 Vector operator * (const Matrix& left_matrix, const Vector& right_vector);
 Vector operator * (const CSR_Matrix& left_csr_matrix, const Vector& right_vector);
+std::pair<Matrix, Matrix> getQRDecompositionHouseholder(Matrix given_matrix);
 
 }
 

@@ -29,6 +29,34 @@ kfsoleq::Vector kfsoleq::operator * (const kfsoleq::CSR_Matrix& left_csr_matrix,
         }
         return result;
 }
+std::pair<kfsoleq::Matrix, kfsoleq::Matrix> kfsoleq::getQRDecompositionHouseholder(kfsoleq::Matrix given_matrix) {
+        kfsoleq::Vector x{};
+        kfsoleq::Vector v{};
+        kfsoleq::Vector e{};
+        kfsoleq::Vector x_result(given_matrix.getSizeY());
+        for (size_t iter_num = 0; iter_num < given_matrix.getSizeY() - 1; ++iter_num) {
+            x = kfsoleq::Vector(given_matrix.getSizeY() - iter_num);
+            e = kfsoleq::Vector(given_matrix.getSizeY() - iter_num);
+            for (size_t i = 0; i < (given_matrix.getSizeY() - iter_num); ++i) {
+                x[i] = given_matrix(iter_num + i, iter_num);
+            }
+            e[0] = 1;
+            v = x + (x.getNorm() * e);
+            
+            for (size_t i = 0; i < (given_matrix.getSizeX() - iter_num); ++i) {
+                for (size_t j = 0; j < (given_matrix.getSizeY() - iter_num); ++j) {
+                    x[j] = given_matrix(j + iter_num, i + iter_num);
+                }
+                x_result = x - 2 * ( (v * x) / (v * v) ) * v;
+                for (size_t j = 0; j < (given_matrix.getSizeY() - iter_num); ++j) {
+                    given_matrix(j + iter_num, i + iter_num) = x_result[j];
+                }
+            }
+        }
+        /* return pair as <Q_Matrix, R_Matrix> */
+        return std::make_pair(kfsoleq::Matrix(given_matrix.getSizeY(), given_matrix.getSizeX()),
+                              given_matrix);
+}
 
 
 
