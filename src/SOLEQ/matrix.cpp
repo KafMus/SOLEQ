@@ -40,6 +40,25 @@ void kfsoleq::Matrix::print() const {
 }
 
 
+// 
+// Operator Overloading
+//
+kfsoleq::Matrix& kfsoleq::Matrix::operator *= (const kfsoleq::Matrix& right_matrix) {
+        kfsoleq::Matrix result(this->size_y, right_matrix.size_x);
+        for (size_t i = 0; i < this->size_y; ++i) {
+            for (size_t j = 0; j < right_matrix.size_x; ++j) {
+                for (size_t z = 0; z < this->size_x; ++z) {
+                    result(i, j) += this->values[(i * this->size_x) + z] * right_matrix.values[(z * right_matrix.size_x) + j];
+                }
+            }
+        }
+        (*this) = result;
+        return (*this);
+}
+kfsoleq::Matrix kfsoleq::operator * (const kfsoleq::Matrix& left_matrix, const kfsoleq::Matrix& right_matrix) {
+        kfsoleq::Matrix result = left_matrix;
+        return result *= right_matrix;
+}
 
 
 

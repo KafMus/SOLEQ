@@ -56,3 +56,32 @@ TEST(MatrixOperators, AccessOperator) {
         }
     }
 }
+
+TEST(MatrixOperators, ToMatrixMultiplicationOperator) {
+    kfsoleq::Matrix  left_matrix(3, 3);
+    kfsoleq::Matrix right_matrix(3, 3);
+    
+    
+    SOLEQ_FLOAT  left_data[3][3] =  { { 1, 1, 1 },
+                                      { 1, 0, 1 },
+                                      { 1, 1, 1 } };
+    SOLEQ_FLOAT right_data[3][3] =  { { 3, 4, 5 },
+                                      { 4, 5, 6 },
+                                      { 5, 6, 7 } };
+    SOLEQ_FLOAT result_data[3][3] = { { 12, 15, 18 },
+                                      {  8, 10, 12 },
+                                      { 12, 15, 18 } };
+    
+    for (size_t i = 0; i < 3; ++i) {
+        for (size_t j = 0; j < 3; ++j) {
+            left_matrix(i, j)   = left_data[i][j];
+            right_matrix(i, j)  = right_data[i][j];
+        }
+    }
+    kfsoleq::Matrix result_matrix = left_matrix * right_matrix;
+    for (size_t i = 0; i < 3; ++i) {
+        for (size_t j = 0; j < 3; ++j) {
+            EXPECT_NEAR(result_matrix(i, j), result_data[i][j], SOLEQ_FLOAT_THRESHOLD) << "Matrix's values doesn't match";
+        }
+    }
+}
