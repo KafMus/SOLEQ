@@ -32,6 +32,56 @@ TEST(MatrixInitialisation, SizeBySizeInitialisation) {
     }
 }
 
+TEST(MatrixFunctions, GetTransposed) {
+    kfsoleq::Matrix my_matrix(3, 3);
+    SOLEQ_FLOAT my_matrix_data_1[3][3] = { { 1, 2, 3 },
+                                           { 4, 5, 6 },
+                                           { 7, 8, 9 } };
+    SOLEQ_FLOAT result_data_1[3][3]    = { { 1, 4, 7 },
+                                           { 2, 5, 8 },
+                                           { 3, 6, 9 } };
+    for (size_t i = 0; i < 3; ++i) {
+        for (size_t j = 0; j < 3; ++j) {
+            my_matrix(i, j) = my_matrix_data_1[i][j];
+        }
+    }
+    kfsoleq::Matrix result = my_matrix.getTransposed();
+    EXPECT_EQ(result.getSizeY(), 3) << "Matrix's Y size doesn't match";
+    EXPECT_EQ(result.getSizeX(), 3) << "Matrix's X size doesn't match";
+    EXPECT_EQ(result.getValues().size(), 9) << "Matrix's Values size doesn't match";
+    EXPECT_EQ(result.getValues().capacity(), 9) << "Matrix's Values capacity doesn't match";
+    for (size_t i = 0; i < 3; ++i) {
+        for (size_t j = 0; j < 3; ++j) {
+            EXPECT_NEAR(result(i, j), result_data_1[i][j], SOLEQ_FLOAT_THRESHOLD) << "Matrix's Values values doesn't match";
+        }
+    }
+    
+    my_matrix = kfsoleq::Matrix(2, 6);
+    SOLEQ_FLOAT my_matrix_data_2[2][6] = { { 1, 2, 3,  4,  5,  6, },
+                                           { 7, 8, 9, 10, 11, 12 } };
+    SOLEQ_FLOAT result_data_2[6][2]    = { { 1,  7 },
+                                           { 2,  8 },
+                                           { 3,  9 },
+                                           { 4, 10 },
+                                           { 5, 11 },
+                                           { 6, 12 } };
+    for (size_t i = 0; i < 2; ++i) {
+        for (size_t j = 0; j < 6; ++j) {
+            my_matrix(i, j) = my_matrix_data_2[i][j];
+        }
+    }
+    result = my_matrix.getTransposed();
+    EXPECT_EQ(result.getSizeY(), 6) << "Matrix's Y size doesn't match";
+    EXPECT_EQ(result.getSizeX(), 2) << "Matrix's X size doesn't match";
+    EXPECT_EQ(result.getValues().size(), 12) << "Matrix's Values size doesn't match";
+    EXPECT_EQ(result.getValues().capacity(), 12) << "Matrix's Values capacity doesn't match";
+    for (size_t i = 0; i < 6; ++i) {
+        for (size_t j = 0; j < 2; ++j) {
+            EXPECT_NEAR(result(i, j), result_data_2[i][j], SOLEQ_FLOAT_THRESHOLD) << "Matrix's Values values doesn't match";
+        }
+    }
+}
+
 TEST(MatrixOperators, AccessOperator) {
     kfsoleq::Matrix my_matrix(10, 30);
     std::vector<SOLEQ_FLOAT> my_matrix_values;

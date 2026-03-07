@@ -38,6 +38,15 @@ void kfsoleq::Matrix::print() const {
             std::cout << "]\n";
         }
 }
+kfsoleq::Matrix kfsoleq::Matrix::getTransposed() const {
+        kfsoleq::Matrix result(this->size_x, this->size_y);
+        for (size_t i = 0; i < this->size_y; ++i) {
+            for (size_t j = 0; j < this->size_x; ++j) {
+                result.values[(j * result.size_x) + i] = this->values[(i * this->size_x) + j];
+            }
+        }
+        return result;
+}
 
 
 // 

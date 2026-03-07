@@ -24,6 +24,7 @@ public:
         
 	// Additional infrastructure
 	void print() const;
+        Matrix getTransposed() const;
         
         // Operators overload
         SOLEQ_FLOAT  operator () (size_t y, size_t x) const {
