@@ -51,32 +51,50 @@ kfsoleq::Matrix kfsoleq::operator * (const kfsoleq::Vector& left_vector, const k
         return result;
 }
 std::pair<kfsoleq::Matrix, kfsoleq::Matrix> kfsoleq::getQRDecompositionHouseholder(kfsoleq::Matrix given_matrix) {
-        kfsoleq::Vector x{};
-        kfsoleq::Vector v{};
-        kfsoleq::Vector e{};
-        kfsoleq::Vector x_result(given_matrix.getSizeY());
+        kfsoleq::Vector v;
+        kfsoleq::Vector x_result;
+        SOLEQ_FLOAT dot_product;
+        
+        kfsoleq::Matrix Q_Matrix(given_matrix.getSizeY(), given_matrix.getSizeX());
+        for (size_t i = 0; i < given_matrix.getSizeY(); ++i) {
+            Q_Matrix(i, i) = 1;
+        }
+        
+        // Main part
         for (size_t iter_num = 0; iter_num < given_matrix.getSizeY() - 1; ++iter_num) {
-            x = kfsoleq::Vector(given_matrix.getSizeY() - iter_num);
-            e = kfsoleq::Vector(given_matrix.getSizeY() - iter_num);
-            for (size_t i = 0; i < (given_matrix.getSizeY() - iter_num); ++i) {
-                x[i] = given_matrix(iter_num + i, iter_num);
-            }
-            e[0] = 1;
-            v = x + (x.getNorm() * e);
+            v = kfsoleq::Vector(given_matrix.getSizeY() - iter_num);
             
+            for (size_t i = 0; i < (given_matrix.getSizeY() - iter_num); ++i) {
+                v[i] = given_matrix(iter_num + i, iter_num);
+            }
+            v[0] += v.getNorm();
+            
+            // R_Matrix part
             for (size_t i = 0; i < (given_matrix.getSizeX() - iter_num); ++i) {
+                dot_product = 0;
                 for (size_t j = 0; j < (given_matrix.getSizeY() - iter_num); ++j) {
-                    x[j] = given_matrix(j + iter_num, i + iter_num);
+                    dot_product += given_matrix(j + iter_num, i + iter_num) * v[j];
                 }
-                x_result = x - 2 * ( (v * x) / (v * v) ) * v;
+                x_result = (2 * dot_product / (v * v)) * v;
                 for (size_t j = 0; j < (given_matrix.getSizeY() - iter_num); ++j) {
-                    given_matrix(j + iter_num, i + iter_num) = x_result[j];
+                    given_matrix(j + iter_num, i + iter_num) -= x_result[j];
+                }
+            }
+            
+            // Q_Matrix part
+            for (size_t i = 0; i < (Q_Matrix.getSizeY()); ++i) {
+                dot_product = 0;
+                for (size_t j = 0; j < (Q_Matrix.getSizeX() - iter_num); ++j) {
+                    dot_product += Q_Matrix(i, j + iter_num) * v[j];
+                }
+                x_result = (2 * dot_product / (v * v)) * v;
+                for (size_t j = 0; j < (Q_Matrix.getSizeX() - iter_num); ++j) {
+                    Q_Matrix(i, j + iter_num) -= x_result[j];
                 }
             }
         }
-        /* return pair as <Q_Matrix, R_Matrix> */
-        return std::make_pair(kfsoleq::Matrix(given_matrix.getSizeY(), given_matrix.getSizeX()),
-                              given_matrix);
+        /* return as std::pair<Q_Matrix, R_Matrix> */
+        return std::make_pair(Q_Matrix, given_matrix);
 }
 
 
