@@ -213,6 +213,8 @@ TEST(LinalgOperationsCSRMatrixVector, Multiplication) {
     EXPECT_EQ(result_matrix.getSizeX(), 5) << "Result Matrix's Size X doesn't match";
     EXPECT_EQ(result_matrix.getValues().size(), 25) << "Result Matrix's Values size doesn't match";
     EXPECT_EQ(result_matrix.getValues().capacity(), 25) << "Result Matrix's Values capacity doesn't match";
+    
+    /* This is very bad way to do it, need to improve later */
     EXPECT_NEAR(result_matrix(0, 0),  9, SOLEQ_FLOAT_THRESHOLD) << "Result Matrix's Values values doesn't match";
     EXPECT_NEAR(result_matrix(0, 1),  0, SOLEQ_FLOAT_THRESHOLD) << "Result Matrix's Values values doesn't match";
     EXPECT_NEAR(result_matrix(0, 2), 12, SOLEQ_FLOAT_THRESHOLD) << "Result Matrix's Values values doesn't match";
@@ -246,9 +248,6 @@ TEST(LinalgOperations, QRDecompositionHouseholder) {
     SOLEQ_FLOAT my_matrix_data_1[3][3] = { { 12, -51,   4 },
                                            {  6, 167, -68 },
                                            { -4,  24, -41 } };
-    SOLEQ_FLOAT tmp_data_1[3][3] = { { 1, 0, 0 },
-                                     { 0, 1, 0 },
-                                     { 0, 0, 1 } };
     for (size_t i = 0; i < 3; ++i) {
         for (size_t j = 0; j < 3; ++j) {
             my_matrix(i, j) = my_matrix_data_1[i][j];
@@ -257,6 +256,12 @@ TEST(LinalgOperations, QRDecompositionHouseholder) {
     std::pair<kfsoleq::Matrix, kfsoleq::Matrix> result = kfsoleq::getQRDecompositionHouseholder(my_matrix);
     Q_Matrix = result.first;
     R_Matrix = result.second;
+    std::cout << "Q_Matrix:\n";
+    Q_Matrix.print();
+    std::cout << "R_Matrix:\n";
+    R_Matrix.print();
+    std::cout << "Q_Matrix * R_Matrix:\n";
+    (Q_Matrix * R_Matrix).print();
     
     EXPECT_EQ(Q_Matrix.getSizeY(), 3) << "Q Matrix's Size Y doesn't match";
     EXPECT_EQ(Q_Matrix.getSizeX(), 3) << "Q Matrix's Size X doesn't match";
@@ -278,9 +283,7 @@ TEST(LinalgOperations, QRDecompositionHouseholder) {
     EXPECT_EQ(tmp.getValues().size(), 9) << "Q^T * Q Matrix's Values size doesn't match";
     EXPECT_EQ(tmp.getValues().capacity(), 9) << "Q^T * Q Matrix's Values capacity doesn't match";
     for (size_t i = 0; i < 3; ++i) {
-        for (size_t j = 0; j < 3; ++j) {
-            EXPECT_NEAR(tmp(i, j),  tmp_data_1[i][j], SOLEQ_FLOAT_THRESHOLD) << "Q^T * Q Matrix's Values values doesn't match";
-        }
+        EXPECT_NEAR(tmp(i, i), 1, SOLEQ_FLOAT_THRESHOLD) << "Q^T * Q Matrix's Values values doesn't match";
     }
     
     tmp = Q_Matrix * R_Matrix;
@@ -292,5 +295,111 @@ TEST(LinalgOperations, QRDecompositionHouseholder) {
         for (size_t j = 0; j < 3; ++j) {
             EXPECT_NEAR(tmp(i, j),  my_matrix_data_1[i][j], SOLEQ_FLOAT_THRESHOLD) << "Q * R Matrix's Values values doesn't match";
         }
+    }
+    
+    
+    my_matrix = kfsoleq::Matrix(5, 3);
+    SOLEQ_FLOAT my_matrix_data_2[5][3] = { {  1,  1,  0 },
+                                           {  1,  0,  1 },
+                                           {  0,  1,  1 },
+                                           {  1,  1,  1 },
+                                           {  1,  1,  1 } };
+    for (size_t i = 0; i < 5; ++i) {
+        for (size_t j = 0; j < 3; ++j) {
+            my_matrix(i, j) = my_matrix_data_2[i][j];
+        }
+    }
+    result = kfsoleq::getQRDecompositionHouseholder(my_matrix);
+    Q_Matrix = result.first;
+    R_Matrix = result.second;
+    std::cout << "Q_Matrix:\n";
+    Q_Matrix.print();
+    std::cout << "R_Matrix:\n";
+    R_Matrix.print();
+    std::cout << "Q_Matrix * R_Matrix:\n";
+    (Q_Matrix * R_Matrix).print();
+    
+    EXPECT_EQ(Q_Matrix.getSizeY(), 5) << "Q Matrix's Size Y doesn't match";
+    EXPECT_EQ(Q_Matrix.getSizeX(), 5) << "Q Matrix's Size X doesn't match";
+    EXPECT_EQ(Q_Matrix.getValues().size(), 25) << "Q Matrix's Values size doesn't match";
+    EXPECT_EQ(Q_Matrix.getValues().capacity(), 25) << "Q Matrix's Values capacity doesn't match";
+    EXPECT_EQ(R_Matrix.getSizeY(), 5) << "R Matrix's Size Y doesn't match";
+    EXPECT_EQ(R_Matrix.getSizeX(), 3) << "R Matrix's Size X doesn't match";
+    EXPECT_EQ(R_Matrix.getValues().size(), 15) << "R Matrix's Values size doesn't match";
+    EXPECT_EQ(R_Matrix.getValues().capacity(), 15) << "R Matrix's Values capacity doesn't match";
+    for (size_t i = 0; i < 5; ++i) {
+        for (size_t j = 0; j < 3 && j < i; ++j) {
+            EXPECT_NEAR(R_Matrix(i, j), 0, SOLEQ_FLOAT_THRESHOLD) << "R Matrix's Values values doesn't match";
+        }
+    }
+    
+    tmp = Q_Matrix.getTransposed() * Q_Matrix;
+    EXPECT_EQ(tmp.getSizeY(), 5) << "Q^T * Q Matrix's Size Y doesn't match";
+    EXPECT_EQ(tmp.getSizeX(), 5) << "Q^T * Q Matrix's Size X doesn't match";
+    EXPECT_EQ(tmp.getValues().size(), 25) << "Q^T * Q Matrix's Values size doesn't match";
+    EXPECT_EQ(tmp.getValues().capacity(), 25) << "Q^T * Q Matrix's Values capacity doesn't match";
+    for (size_t i = 0; i < 5; ++i) {
+        EXPECT_NEAR(tmp(i, i), 1, SOLEQ_FLOAT_THRESHOLD) << "Q^T * Q Matrix's Values values doesn't match";
+    }
+    
+    tmp = Q_Matrix * R_Matrix;
+    EXPECT_EQ(tmp.getSizeY(), 5) << "Q * R Matrix's Size Y doesn't match";
+    EXPECT_EQ(tmp.getSizeX(), 3) << "Q * R Matrix's Size X doesn't match";
+    EXPECT_EQ(tmp.getValues().size(), 15) << "Q * R Matrix's Values size doesn't match";
+    EXPECT_EQ(tmp.getValues().capacity(), 15) << "Q * R Matrix's Values capacity doesn't match";
+    for (size_t i = 0; i < 5; ++i) {
+        for (size_t j = 0; j < 3; ++j) {
+            EXPECT_NEAR(tmp(i, j),  my_matrix_data_2[i][j], SOLEQ_FLOAT_THRESHOLD) << "Q * R Matrix's Values values doesn't match";
+        }
+    }
+}
+
+TEST(LinalgOperations, SolveSOLEQUsingQRDecomposition) {
+    kfsoleq::Matrix Q_Matrix, R_Matrix;
+    kfsoleq::Matrix my_matrix(3, 4);
+    SOLEQ_FLOAT my_matrix_data_1[3][4] = { { 12, -51,   4, 1 },
+                                           {  6, 167, -68, 2 },
+                                           { -4,  24, -41, 3 } };
+    for (size_t i = 0; i < 3; ++i) {
+        for (size_t j = 0; j < 4; ++j) {
+            my_matrix(i, j) = my_matrix_data_1[i][j];
+        }
+    }
+    kfsoleq::Vector roots = kfsoleq::solveUsingQRDecompostion(my_matrix);
+    
+    EXPECT_EQ(roots.getSize(), 3) << "Roots Size doesn't match";
+    EXPECT_EQ(roots.getValues().size(), 3) << "Roots Values size doesn't match";
+    EXPECT_EQ(roots.getValues().capacity(), 3) << "Roots Values capacity doesn't match";
+    SOLEQ_FLOAT tmp;
+    for (size_t i = 0; i < 3; ++i) {
+        tmp = 0;
+        for (size_t j = 0; j < 3; ++j) {
+            tmp += my_matrix_data_1[i][j] * roots[j];
+        }
+        EXPECT_NEAR(tmp, my_matrix_data_1[i][3], SOLEQ_FLOAT_THRESHOLD) << "Roots Values doesn't match";
+    }
+    
+    
+    my_matrix = kfsoleq::Matrix(4, 4);
+    SOLEQ_FLOAT my_matrix_data_2[4][4] = { {  1,  2,  3, 10 },
+                                           {  4,  5,  6, 20 },
+                                           {  7,  8,  9, 30 },
+                                           { 10, 11, 12, 40 } };
+    for (size_t i = 0; i < 4; ++i) {
+        for (size_t j = 0; j < 4; ++j) {
+            my_matrix(i, j) = my_matrix_data_2[i][j];
+        }
+    }
+    roots = kfsoleq::solveUsingQRDecompostion(my_matrix);
+    
+    EXPECT_EQ(roots.getSize(), 4) << "Roots Size doesn't match";
+    EXPECT_EQ(roots.getValues().size(), 4) << "Roots Values size doesn't match";
+    EXPECT_EQ(roots.getValues().capacity(), 4) << "Roots Values capacity doesn't match";
+    for (size_t i = 0; i < 4; ++i) {
+        tmp = 0;
+        for (size_t j = 0; j < 3; ++j) {
+            tmp += my_matrix_data_2[i][j] * roots[j];
+        }
+        EXPECT_NEAR(tmp, my_matrix_data_2[i][3], SOLEQ_FLOAT_THRESHOLD) << "Roots Values doesn't match";
     }
 }

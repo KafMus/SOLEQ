@@ -7,7 +7,6 @@
 #include <SOLEQ/vector.hpp>
 
 
-
 kfsoleq::Vector kfsoleq::operator * (const kfsoleq::Matrix& left_matrix, const kfsoleq::Vector& right_vector) {
         kfsoleq::Vector result = kfsoleq::Vector(left_matrix.getSizeY());
         for (size_t i = 0; i < left_matrix.getSizeY(); ++i) {
@@ -55,46 +54,76 @@ std::pair<kfsoleq::Matrix, kfsoleq::Matrix> kfsoleq::getQRDecompositionHousehold
         kfsoleq::Vector x_result;
         SOLEQ_FLOAT dot_product;
         
-        kfsoleq::Matrix Q_Matrix(given_matrix.getSizeY(), given_matrix.getSizeX());
+        kfsoleq::Matrix Q_Matrix(given_matrix.getSizeY(), given_matrix.getSizeY());
         for (size_t i = 0; i < given_matrix.getSizeY(); ++i) {
             Q_Matrix(i, i) = 1;
         }
         
         // Main part
-        for (size_t iter_num = 0; iter_num < given_matrix.getSizeY() - 1; ++iter_num) {
+        for (size_t iter_num = 0; iter_num < given_matrix.getSizeX(); ++iter_num) {
             v = kfsoleq::Vector(given_matrix.getSizeY() - iter_num);
             
-            for (size_t i = 0; i < (given_matrix.getSizeY() - iter_num); ++i) {
+            for (size_t i = 0; i < given_matrix.getSizeY() - iter_num; ++i) {
                 v[i] = given_matrix(iter_num + i, iter_num);
             }
-            v[0] += v.getNorm();
+            v[0] -= v.getNorm();
+            v /= v.getNorm();
             
             // R_Matrix part
-            for (size_t i = 0; i < (given_matrix.getSizeX() - iter_num); ++i) {
+            for (size_t i = 0; i < given_matrix.getSizeX() - iter_num; ++i) {
                 dot_product = 0;
-                for (size_t j = 0; j < (given_matrix.getSizeY() - iter_num); ++j) {
+                for (size_t j = 0; j < given_matrix.getSizeY() - iter_num; ++j) {
                     dot_product += given_matrix(j + iter_num, i + iter_num) * v[j];
                 }
                 x_result = (2 * dot_product / (v * v)) * v;
-                for (size_t j = 0; j < (given_matrix.getSizeY() - iter_num); ++j) {
+                for (size_t j = 0; j < given_matrix.getSizeY() - iter_num; ++j) {
                     given_matrix(j + iter_num, i + iter_num) -= x_result[j];
                 }
             }
             
             // Q_Matrix part
-            for (size_t i = 0; i < (Q_Matrix.getSizeY()); ++i) {
+            for (size_t i = 0; i < Q_Matrix.getSizeY(); ++i) {
                 dot_product = 0;
-                for (size_t j = 0; j < (Q_Matrix.getSizeX() - iter_num); ++j) {
+                for (size_t j = 0; j < Q_Matrix.getSizeX() - iter_num; ++j) {
                     dot_product += Q_Matrix(i, j + iter_num) * v[j];
                 }
                 x_result = (2 * dot_product / (v * v)) * v;
-                for (size_t j = 0; j < (Q_Matrix.getSizeX() - iter_num); ++j) {
+                for (size_t j = 0; j < Q_Matrix.getSizeX() - iter_num; ++j) {
                     Q_Matrix(i, j + iter_num) -= x_result[j];
                 }
             }
         }
         /* return as std::pair<Q_Matrix, R_Matrix> */
         return std::make_pair(Q_Matrix, given_matrix);
+}
+kfsoleq::Vector kfsoleq::solveUsingQRDecompostion(const kfsoleq::Matrix& given_matrix) {
+        kfsoleq::Vector roots(given_matrix.getSizeY());
+        kfsoleq::Matrix system_matrix(given_matrix.getSizeY(), given_matrix.getSizeX() - 1);
+        kfsoleq::Vector constant_terms(given_matrix.getSizeY());
+        
+        for (size_t i = 0; i < given_matrix.getSizeY(); ++i) {
+            for (size_t j = 0; j < given_matrix.getSizeX() - 1; ++j) {
+                system_matrix(i, j) = given_matrix(i, j);
+            }
+        }
+        for (size_t i = 0; i < given_matrix.getSizeY(); ++i) {
+            constant_terms[i] = given_matrix(i, given_matrix.getSizeX() - 1);
+        }
+        
+        std::pair<kfsoleq::Matrix, kfsoleq::Matrix> qr_decomposition = kfsoleq::getQRDecompositionHouseholder(system_matrix);
+        kfsoleq::Matrix Q_Matrix = qr_decomposition.first;
+        kfsoleq::Matrix R_Matrix = qr_decomposition.second;
+        
+        constant_terms = Q_Matrix.getTransposed() * constant_terms;
+        
+        for (long long int i = (long long int)R_Matrix.getSizeX() - 1; i >= 0; --i) {
+            roots[(size_t)i] = constant_terms[(size_t)i];
+            for (long long int j = (long long int)R_Matrix.getSizeX() - 1; j > i; --j) {
+                roots[(size_t)i] -= R_Matrix((size_t)i, (size_t)j) * roots[(size_t)j];
+            }
+            roots[(size_t)i] /= R_Matrix((size_t)i, (size_t)i);
+        }
+        return roots;
 }
 
 
