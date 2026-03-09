@@ -22,25 +22,25 @@ TEST(DiagThreeInitialization, DefaultInitialization) {
 TEST(DiagThreeInitialization, FullInitialization) {
     
     size_t max_size = 5;
-    SOLEQ_FLOAT diag_salt  = 100;
-    SOLEQ_FLOAT cons_salt = 10000;
+    kfsoleq::soleq_float diag_salt  = 100;
+    kfsoleq::soleq_float cons_salt = 10000;
     kfsoleq::DiagThree my_diagthree{};
     
     
     for (size_t size = 3; size < max_size; ++size) {
         // Constructing DiagThree
-        std::array<std::vector<SOLEQ_FLOAT>, 3> diagonals;
-        std::vector<SOLEQ_FLOAT> constant_terms;
+        std::array<std::vector<kfsoleq::soleq_float>, 3> diagonals;
+        std::vector<kfsoleq::soleq_float> constant_terms;
         
         for (size_t i = 0; i < 3; ++i) {
-            diagonals[i] = std::vector<SOLEQ_FLOAT>(size);
+            diagonals[i] = std::vector<kfsoleq::soleq_float>(size);
             for (size_t j = 0; j < size; ++j) {
-                diagonals[i][j] = (SOLEQ_FLOAT)i * diag_salt + (SOLEQ_FLOAT)j;
+                diagonals[i][j] = (kfsoleq::soleq_float)i * diag_salt + (kfsoleq::soleq_float)j;
             }
         }
-        constant_terms = std::vector<SOLEQ_FLOAT>(size);
+        constant_terms = std::vector<kfsoleq::soleq_float>(size);
         for (size_t i = 0; i < size; ++i) {
-            constant_terms[i] = cons_salt + (SOLEQ_FLOAT)i;
+            constant_terms[i] = cons_salt + (kfsoleq::soleq_float)i;
         }
         my_diagthree = kfsoleq::DiagThree(size, diagonals, constant_terms);
         
@@ -58,11 +58,11 @@ TEST(DiagThreeInitialization, FullInitialization) {
         EXPECT_EQ(my_diagthree.getRoots().capacity(), size) << "DiagThree's Roots capacity doesn't match";
         
         for (size_t i = 0; i < size; ++i) {
-            EXPECT_NEAR(my_diagthree.getDiagonals()[0][i], (SOLEQ_FLOAT)i, SOLEQ_FLOAT_THRESHOLD) << "DiagThree's Diagonals[0] values doesn't match";
-            EXPECT_NEAR(my_diagthree.getDiagonals()[1][i], diag_salt + (SOLEQ_FLOAT)i, SOLEQ_FLOAT_THRESHOLD) << "DiagThree's Diagonals[1] values doesn't match";
-            EXPECT_NEAR(my_diagthree.getDiagonals()[2][i], 2 * diag_salt + (SOLEQ_FLOAT)i, SOLEQ_FLOAT_THRESHOLD) << "DiagThree's Diagonals[2] values doesn't match";
-            EXPECT_NEAR(my_diagthree.getConstantTerms()[i], cons_salt + (SOLEQ_FLOAT)i, SOLEQ_FLOAT_THRESHOLD) << "DiagThree's ConstantTerms values doesn't match";
-            EXPECT_NEAR(my_diagthree.getRoots()[i], 0, SOLEQ_FLOAT_THRESHOLD) << "DiagThree's Roots values doesn't match";
+            EXPECT_NEAR(my_diagthree.getDiagonals()[0][i], (kfsoleq::soleq_float)i, kfsoleq::tolerance) << "DiagThree's Diagonals[0] values doesn't match";
+            EXPECT_NEAR(my_diagthree.getDiagonals()[1][i], diag_salt + (kfsoleq::soleq_float)i, kfsoleq::tolerance) << "DiagThree's Diagonals[1] values doesn't match";
+            EXPECT_NEAR(my_diagthree.getDiagonals()[2][i], 2 * diag_salt + (kfsoleq::soleq_float)i, kfsoleq::tolerance) << "DiagThree's Diagonals[2] values doesn't match";
+            EXPECT_NEAR(my_diagthree.getConstantTerms()[i], cons_salt + (kfsoleq::soleq_float)i, kfsoleq::tolerance) << "DiagThree's ConstantTerms values doesn't match";
+            EXPECT_NEAR(my_diagthree.getRoots()[i], 0, kfsoleq::tolerance) << "DiagThree's Roots values doesn't match";
         }
     }
 }
@@ -72,8 +72,8 @@ TEST(DiagThreeFunctions, Solver) {
     size_t size = 5;
     kfsoleq::DiagThree my_diagthree{};
     
-    std::array<std::vector<SOLEQ_FLOAT>, 3> diagonals;
-    std::vector<SOLEQ_FLOAT> constant_terms;
+    std::array<std::vector<kfsoleq::soleq_float>, 3> diagonals;
+    std::vector<kfsoleq::soleq_float> constant_terms;
     
     /*
      *  || 3 2 0 0 0  || * || x1 || = || 5 ||
@@ -99,11 +99,11 @@ TEST(DiagThreeFunctions, Solver) {
     // Checking DiagThree
     EXPECT_EQ(my_diagthree.getRoots().size(), size) << "DiagThree's Roots size doesn't match";
     EXPECT_EQ(my_diagthree.getRoots().capacity(), size) << "DiagThree's Roots capacity doesn't match";
-    EXPECT_NEAR(my_diagthree.getRoots()[0], 1.3148637, SOLEQ_FLOAT_THRESHOLD) << "DiagThree's Roots values doesn't match";
-    EXPECT_NEAR(my_diagthree.getRoots()[1], 0.5277045, SOLEQ_FLOAT_THRESHOLD) << "DiagThree's Roots values doesn't match";
-    EXPECT_NEAR(my_diagthree.getRoots()[2], 0.5233069, SOLEQ_FLOAT_THRESHOLD) << "DiagThree's Roots values doesn't match";
-    EXPECT_NEAR(my_diagthree.getRoots()[3], 0.4045734, SOLEQ_FLOAT_THRESHOLD) << "DiagThree's Roots values doesn't match";
-    EXPECT_NEAR(my_diagthree.getRoots()[4], 0.4177661, SOLEQ_FLOAT_THRESHOLD) << "DiagThree's Roots values doesn't match";
+    EXPECT_NEAR(my_diagthree.getRoots()[0], 1.3148637, kfsoleq::tolerance) << "DiagThree's Roots values doesn't match";
+    EXPECT_NEAR(my_diagthree.getRoots()[1], 0.5277045, kfsoleq::tolerance) << "DiagThree's Roots values doesn't match";
+    EXPECT_NEAR(my_diagthree.getRoots()[2], 0.5233069, kfsoleq::tolerance) << "DiagThree's Roots values doesn't match";
+    EXPECT_NEAR(my_diagthree.getRoots()[3], 0.4045734, kfsoleq::tolerance) << "DiagThree's Roots values doesn't match";
+    EXPECT_NEAR(my_diagthree.getRoots()[4], 0.4177661, kfsoleq::tolerance) << "DiagThree's Roots values doesn't match";
 }
 
 TEST(DiagThreeFunctions, CheckDiagonalDomination) {
@@ -111,8 +111,8 @@ TEST(DiagThreeFunctions, CheckDiagonalDomination) {
     size_t size = 5;
     kfsoleq::DiagThree my_diagthree{};
     
-    std::array<std::vector<SOLEQ_FLOAT>, 3> diagonals;
-    std::vector<SOLEQ_FLOAT> constant_terms;
+    std::array<std::vector<kfsoleq::soleq_float>, 3> diagonals;
+    std::vector<kfsoleq::soleq_float> constant_terms;
     
     /*
      *  || 3 2 0 0 0  ||

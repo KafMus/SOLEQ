@@ -11,7 +11,7 @@ namespace kfsoleq
 class Vector {
 private:
         size_t size;
-        std::vector<SOLEQ_FLOAT> values;
+        std::vector<soleq_float> values;
 public:
 	// Constructors and destructors
         Vector(); // Default constructor
@@ -19,31 +19,31 @@ public:
 	
 	// Getters and setters
         size_t getSize() const { return size; }
-        std::vector<SOLEQ_FLOAT> getValues() const { return values; }
+        const std::vector<soleq_float>& getValues() const { return values; }
         
 	// Additional infrastructure
 	void print() const;
-        SOLEQ_FLOAT getNorm() const;
+        soleq_float getNorm() const;
         
         // Operators overload
-        SOLEQ_FLOAT  operator [] (size_t ind) const {
+        soleq_float  operator [] (size_t ind) const {
             return this->values[ind];
         }
-        SOLEQ_FLOAT& operator [] (size_t ind) {
+        soleq_float& operator [] (size_t ind) {
             return this->values[ind];
         }
         Vector& operator += (const Vector& right_vector);
         Vector& operator -= (const Vector& right_vector);
-        SOLEQ_FLOAT operator * (const Vector& right_vector); // Scalar Multiplication
-        Vector& operator *= (SOLEQ_FLOAT right_value);
-        Vector& operator /= (SOLEQ_FLOAT right_value);
+        soleq_float operator * (const Vector& right_vector); // Scalar Multiplication
+        Vector& operator *= (soleq_float right_value);
+        Vector& operator /= (soleq_float right_value);
 };
 
 Vector operator + (Vector left_vector, const Vector& right_vector);
 Vector operator - (Vector left_vector, const Vector& right_vector);
-Vector operator * (Vector left_vector, SOLEQ_FLOAT right_value);
-Vector operator * (SOLEQ_FLOAT left_value, Vector right_vector);
-Vector operator / (Vector left_vector, SOLEQ_FLOAT right_value);
+Vector operator * (Vector left_vector, soleq_float right_value);
+Vector operator * (soleq_float left_value, Vector right_vector);
+Vector operator / (Vector left_vector, soleq_float right_value);
 
 
 }

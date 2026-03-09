@@ -15,11 +15,11 @@
 kfsoleq::Matrix::Matrix() :
     size_y(0),
     size_x(0),
-    values(std::vector<SOLEQ_FLOAT>{}) {}
+    values(std::vector<kfsoleq::soleq_float>{}) {}
 kfsoleq::Matrix::Matrix(size_t given_size_y, size_t given_size_x) :
     size_y(given_size_y),
     size_x(given_size_x) {
-        this->values = std::vector<SOLEQ_FLOAT>(given_size_y * given_size_x);
+        this->values = std::vector<kfsoleq::soleq_float>(given_size_y * given_size_x);
 }
 
 

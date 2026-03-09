@@ -13,7 +13,7 @@ TEST(VectorInitialization, DefaultInitialization) {
 
 TEST(VectorInitialisation, BySizeInitialisation) {
     kfsoleq::Vector my_vector;
-    std::vector<SOLEQ_FLOAT> my_vector_values;
+    std::vector<kfsoleq::soleq_float> my_vector_values;
     size_t size[6] = { 0, 3, 5, 5000, 1, 10000 };
     
     for (size_t i = 0; i < 6; ++i) {
@@ -24,26 +24,26 @@ TEST(VectorInitialisation, BySizeInitialisation) {
         
         my_vector_values = my_vector.getValues();
         for (size_t j = 0; j < size[i]; ++j) {
-            EXPECT_NEAR(my_vector_values[j], 0, SOLEQ_FLOAT_THRESHOLD) << "Vector's Values values doesn't match";
+            EXPECT_NEAR(my_vector_values[j], 0, kfsoleq::tolerance) << "Vector's Values values doesn't match";
         }
     }
 }
 
 TEST(VectorOperators, AccessOperator) {
     kfsoleq::Vector my_vector(10);
-    std::vector<SOLEQ_FLOAT> my_vector_values;
-    SOLEQ_FLOAT salt_num = 11037;
+    std::vector<kfsoleq::soleq_float> my_vector_values;
+    kfsoleq::soleq_float salt_num = 11037;
     
     for (size_t i = 0; i < 10; ++i) {
-        my_vector[i] = (salt_num * (SOLEQ_FLOAT)i);
+        my_vector[i] = (salt_num * (kfsoleq::soleq_float)i);
     }
     for (size_t i = 0; i < 10; ++i) {
-        EXPECT_NEAR(my_vector[i], (salt_num * (SOLEQ_FLOAT)i), SOLEQ_FLOAT_THRESHOLD) << "Vector's Values values doesn't match";
+        EXPECT_NEAR(my_vector[i], (salt_num * (kfsoleq::soleq_float)i), kfsoleq::tolerance) << "Vector's Values values doesn't match";
     }
     
     my_vector_values = my_vector.getValues();
     for (size_t i = 0; i < 10; ++i) {
-        EXPECT_NEAR(my_vector_values[i], (salt_num * (SOLEQ_FLOAT)i), SOLEQ_FLOAT_THRESHOLD) << "Vector's Values values doesn't match";
+        EXPECT_NEAR(my_vector_values[i], (salt_num * (kfsoleq::soleq_float)i), kfsoleq::tolerance) << "Vector's Values values doesn't match";
     }
 }
 
@@ -54,20 +54,20 @@ TEST(VectorOperators, VectorSum) {
     kfsoleq::Vector right_vector(size);
     kfsoleq::Vector result_vector{};
     
-    SOLEQ_FLOAT left_vector_data[iters][size]   = { { 3, 5, 7, 9, 11 },
-                                                    { 3, 5, 7, 9, 11 },
-                                                    { 1, 1, 1, 1,  1 },
-                                                    { 3, 5, 7, 9, 11 } };
+    kfsoleq::soleq_float left_vector_data[iters][size]   = { { 3, 5, 7, 9, 11 },
+                                                             { 3, 5, 7, 9, 11 },
+                                                             { 1, 1, 1, 1,  1 },
+                                                             { 3, 5, 7, 9, 11 } };
 
-    SOLEQ_FLOAT right_vector_data[iters][size]  = { { 0, 0, 0, 0,  0 },
-                                                    { 1, 1, 1, 1,  1 },
-                                                    { 3, 5, 7, 9, 11 },
-                                                    { 2, 4, 6, 8, 10 } };
+    kfsoleq::soleq_float right_vector_data[iters][size]  = { { 0, 0, 0, 0,  0 },
+                                                             { 1, 1, 1, 1,  1 },
+                                                             { 3, 5, 7, 9, 11 },
+                                                             { 2, 4, 6, 8, 10 } };
     
-    SOLEQ_FLOAT result_vector_data[iters][size] = { { 3, 5,  7,  9, 11 },
-                                                    { 4, 6,  8, 10, 12 },
-                                                    { 4, 6,  8, 10, 12 },
-                                                    { 5, 9, 13, 17, 21 } };
+    kfsoleq::soleq_float result_vector_data[iters][size] = { { 3, 5,  7,  9, 11 },
+                                                             { 4, 6,  8, 10, 12 },
+                                                             { 4, 6,  8, 10, 12 },
+                                                             { 5, 9, 13, 17, 21 } };
     
     for (size_t i = 0; i < iters; ++i) {
         for (size_t j = 0; j < size; ++j) {
@@ -78,7 +78,7 @@ TEST(VectorOperators, VectorSum) {
         for (size_t j = 0; j < size; ++j) {
             EXPECT_NEAR(result_vector[j],
                         result_vector_data[i][j],
-                        SOLEQ_FLOAT_THRESHOLD) << "Result Vector's values doesn't match";
+                        kfsoleq::tolerance) << "Result Vector's values doesn't match";
         }
     }
 }
@@ -90,20 +90,20 @@ TEST(VectorOperators, VectorSubtraction) {
     kfsoleq::Vector right_vector(size);
     kfsoleq::Vector result_vector{};
     
-    SOLEQ_FLOAT left_vector_data[iters][size]   = { { 3, 5, 7, 9, 11 },
-                                                    { 3, 5, 7, 9, 11 },
-                                                    { 1, 1, 1, 1,  1 },
-                                                    { 3, 5, 7, 9, 11 } };
+    kfsoleq::soleq_float left_vector_data[iters][size]   = { { 3, 5, 7, 9, 11 },
+                                                             { 3, 5, 7, 9, 11 },
+                                                             { 1, 1, 1, 1,  1 },
+                                                             { 3, 5, 7, 9, 11 } };
 
-    SOLEQ_FLOAT right_vector_data[iters][size]  = { { 0, 0, 0, 0,  0 },
-                                                    { 1, 1, 1, 1,  1 },
-                                                    { 3, 5, 7, 9, 11 },
-                                                    { 2, 4, 6, 8, 10 } };
+    kfsoleq::soleq_float right_vector_data[iters][size]  = { { 0, 0, 0, 0,  0 },
+                                                             { 1, 1, 1, 1,  1 },
+                                                             { 3, 5, 7, 9, 11 },
+                                                             { 2, 4, 6, 8, 10 } };
     
-    SOLEQ_FLOAT result_vector_data[iters][size] = { {  3,  5,  7,  9,  11 },
-                                                    {  2,  4,  6,  8,  10 },
-                                                    { -2, -4, -6, -8, -10 },
-                                                    {  1,  1,  1,  1,   1 } };
+    kfsoleq::soleq_float result_vector_data[iters][size] = { {  3,  5,  7,  9,  11 },
+                                                             {  2,  4,  6,  8,  10 },
+                                                             { -2, -4, -6, -8, -10 },
+                                                             {  1,  1,  1,  1,   1 } };
     
     for (size_t i = 0; i < iters; ++i) {
         for (size_t j = 0; j < size; ++j) {
@@ -114,7 +114,7 @@ TEST(VectorOperators, VectorSubtraction) {
         for (size_t j = 0; j < size; ++j) {
             EXPECT_NEAR(result_vector[j],
                         result_vector_data[i][j],
-                        SOLEQ_FLOAT_THRESHOLD) << "Result Vector's values doesn't match";
+                        kfsoleq::tolerance) << "Result Vector's values doesn't match";
         }
     }
 }
@@ -124,19 +124,19 @@ TEST(VectorOperators, VectorScalarMultiplication) {
     const size_t size  = 5;
     kfsoleq::Vector  left_vector(size);
     kfsoleq::Vector right_vector(size);
-    SOLEQ_FLOAT result;
+    kfsoleq::soleq_float result;
     
-    SOLEQ_FLOAT left_vector_data[iters][size]   = { { 3, 5, 7, 9, 11 },
-                                                    { 3, 5, 7, 9, 11 },
-                                                    { 1, 1, 1, 1,  1 },
-                                                    { 3, 5, 7, 9, 11 } };
+    kfsoleq::soleq_float left_vector_data[iters][size]   = { { 3, 5, 7, 9, 11 },
+                                                             { 3, 5, 7, 9, 11 },
+                                                             { 1, 1, 1, 1,  1 },
+                                                             { 3, 5, 7, 9, 11 } };
     
-    SOLEQ_FLOAT right_vector_data[iters][size]  = { { 0, 0, 0, 0,  0 },
-                                                    { 1, 1, 1, 1,  1 },
-                                                    { 3, 5, 7, 9, 11 },
-                                                    { 2, 4, 6, 8, 10 } };
+    kfsoleq::soleq_float right_vector_data[iters][size]  = { { 0, 0, 0, 0,  0 },
+                                                             { 1, 1, 1, 1,  1 },
+                                                             { 3, 5, 7, 9, 11 },
+                                                             { 2, 4, 6, 8, 10 } };
     
-    SOLEQ_FLOAT result_data[iters] = { 0, 35, 35, 250 };
+    kfsoleq::soleq_float result_data[iters] = { 0, 35, 35, 250 };
     
     for (size_t i = 0; i < iters; ++i) {
         for (size_t j = 0; j < size; ++j) {
@@ -146,7 +146,7 @@ TEST(VectorOperators, VectorScalarMultiplication) {
         result = left_vector * right_vector;
         EXPECT_NEAR(result,
                     result_data[i],
-                    SOLEQ_FLOAT_THRESHOLD) << "Result value doesn't match";
+                    kfsoleq::tolerance) << "Result value doesn't match";
     }
 }
 
@@ -154,20 +154,20 @@ TEST(VectorOperators, ToScalarMultiplication) {
     const size_t iters = 4;
     const size_t size  = 5;
     kfsoleq::Vector  left_vector(size);
-    SOLEQ_FLOAT right_value;
+    kfsoleq::soleq_float right_value;
     kfsoleq::Vector result_vector(size);
     
-    SOLEQ_FLOAT left_vector_data[iters][size]   = { { 3, 5, 7, 9, 11 },
-                                                    { 3, 5, 7, 9, 11 },
-                                                    { 3, 5, 7, 9, 11 },
-                                                    { 3, 5, 7, 9, 11 } };
+    kfsoleq::soleq_float left_vector_data[iters][size]   = { { 3, 5, 7, 9, 11 },
+                                                             { 3, 5, 7, 9, 11 },
+                                                             { 3, 5, 7, 9, 11 },
+                                                             { 3, 5, 7, 9, 11 } };
     
-    SOLEQ_FLOAT right_value_data[iters]  = { 0, 1, 3, -1 };
+    kfsoleq::soleq_float right_value_data[iters]  = { 0, 1, 3, -1 };
     
-    SOLEQ_FLOAT result_vector_data[iters][size] = { {  0,  0,  0,  0,   0 },
-                                                    {  3,  5,  7,  9,  11 },
-                                                    {  9, 15, 21, 27,  33 },
-                                                    { -3, -5, -7, -9, -11 } };
+    kfsoleq::soleq_float result_vector_data[iters][size] = { {  0,  0,  0,  0,   0 },
+                                                             {  3,  5,  7,  9,  11 },
+                                                             {  9, 15, 21, 27,  33 },
+                                                             { -3, -5, -7, -9, -11 } };
     
     for (size_t i = 0; i < iters; ++i) {
         for (size_t j = 0; j < size; ++j) {
@@ -179,7 +179,7 @@ TEST(VectorOperators, ToScalarMultiplication) {
         for (size_t j = 0; j < size; ++j) {
             EXPECT_NEAR(result_vector[j],
                         result_vector_data[i][j],
-                        SOLEQ_FLOAT_THRESHOLD) << "Result Vector's values doesn't match";
+                        kfsoleq::tolerance) << "Result Vector's values doesn't match";
         }
     }
     for (size_t i = 0; i < iters; ++i) {
@@ -192,7 +192,7 @@ TEST(VectorOperators, ToScalarMultiplication) {
         for (size_t j = 0; j < size; ++j) {
             EXPECT_NEAR(result_vector[j],
                         result_vector_data[i][j],
-                        SOLEQ_FLOAT_THRESHOLD) << "Result Vector's values doesn't match";
+                        kfsoleq::tolerance) << "Result Vector's values doesn't match";
         }
     }
 }
@@ -201,21 +201,21 @@ TEST(VectorOperators, ToScalarDivision) {
     const size_t iters = 3;
     const size_t size  = 5;
     kfsoleq::Vector  left_vector(size);
-    SOLEQ_FLOAT right_value;
+    kfsoleq::soleq_float right_value;
     kfsoleq::Vector result_vector(size);
     
-    SOLEQ_FLOAT left_vector_data[iters][size]   = { { 3, 5, 7, 9, 11 },
-                                                    { 3, 5, 7, 9, 11 },
-                                                    { 0, 0, 0, 0,  0 } };
+    kfsoleq::soleq_float left_vector_data[iters][size]   = { { 3, 5, 7, 9, 11 },
+                                                             { 3, 5, 7, 9, 11 },
+                                                             { 0, 0, 0, 0,  0 } };
     
-    SOLEQ_FLOAT right_value_data[iters]  = { 1, 3, 42 };
+    kfsoleq::soleq_float right_value_data[iters]  = { 1, 3, 42 };
     
-    SOLEQ_FLOAT result_vector_data[iters][size] = { {  3, 5, 7, 9, 11 },
+    kfsoleq::soleq_float result_vector_data[iters][size] = { {  3, 5, 7, 9, 11 },
                                                     {  1,
-                                         (SOLEQ_FLOAT)(5) / 3,
-                                         (SOLEQ_FLOAT)(7) / 3,
-                                         (SOLEQ_FLOAT)(9) / 3,
-                                        (SOLEQ_FLOAT)(11) / 3},
+                                (kfsoleq::soleq_float)(5) / 3,
+                                (kfsoleq::soleq_float)(7) / 3,
+                                (kfsoleq::soleq_float)(9) / 3,
+                                (kfsoleq::soleq_float)(11) / 3},
                                                     {  0, 0, 0, 0,  0 } };
     
     for (size_t i = 0; i < iters; ++i) {
@@ -228,7 +228,7 @@ TEST(VectorOperators, ToScalarDivision) {
         for (size_t j = 0; j < size; ++j) {
             EXPECT_NEAR(result_vector[j],
                         result_vector_data[i][j],
-                        SOLEQ_FLOAT_THRESHOLD) << "Result Vector's values doesn't match";
+                        kfsoleq::tolerance) << "Result Vector's values doesn't match";
         }
     }
 }
@@ -239,23 +239,23 @@ TEST(VectorFunctions, GetNorm) {
     my_vector[0] = 2;
     my_vector[1] = 2;
     my_vector[2] = 2;
-    EXPECT_NEAR(my_vector.getNorm(), (SOLEQ_FLOAT)(2 * std::sqrt(3)), SOLEQ_FLOAT_THRESHOLD) << "Vector's getNorm() made a mistake";
+    EXPECT_NEAR(my_vector.getNorm(), (kfsoleq::soleq_float)(2 * std::sqrt(3)), kfsoleq::tolerance) << "Vector's getNorm() made a mistake";
     my_vector[0] = 0;
     my_vector[1] = 0;
     my_vector[2] = 0;
-    EXPECT_NEAR(my_vector.getNorm(), (SOLEQ_FLOAT)0, SOLEQ_FLOAT_THRESHOLD) << "Vector's getNorm() made a mistake";
+    EXPECT_NEAR(my_vector.getNorm(), (kfsoleq::soleq_float)0, kfsoleq::tolerance) << "Vector's getNorm() made a mistake";
     my_vector[0] = 1;
     my_vector[1] = 10;
     my_vector[2] = 100;
-    EXPECT_NEAR(my_vector.getNorm(), (SOLEQ_FLOAT)(std::sqrt(10101)), SOLEQ_FLOAT_THRESHOLD) << "Vector's getNorm() made a mistake";
+    EXPECT_NEAR(my_vector.getNorm(), (kfsoleq::soleq_float)(std::sqrt(10101)), kfsoleq::tolerance) << "Vector's getNorm() made a mistake";
     my_vector = kfsoleq::Vector(1);
     my_vector[0] = -42;
-    EXPECT_NEAR(my_vector.getNorm(), 42, SOLEQ_FLOAT_THRESHOLD) << "Vector's getNorm() made a mistake";
+    EXPECT_NEAR(my_vector.getNorm(), 42, kfsoleq::tolerance) << "Vector's getNorm() made a mistake";
     my_vector = kfsoleq::Vector(5);
     my_vector[0] = 1;
     my_vector[1] = 1;
     my_vector[2] = 1;
     my_vector[3] = 1;
     my_vector[4] = 1;
-    EXPECT_NEAR(my_vector.getNorm(), (SOLEQ_FLOAT)(std::sqrt(5)), SOLEQ_FLOAT_THRESHOLD) << "Vector's getNorm() made a mistake";
+    EXPECT_NEAR(my_vector.getNorm(), (kfsoleq::soleq_float)(std::sqrt(5)), kfsoleq::tolerance) << "Vector's getNorm() made a mistake";
 }

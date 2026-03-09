@@ -9,9 +9,14 @@
 
 kfsoleq::Vector kfsoleq::operator * (const kfsoleq::Matrix& left_matrix, const kfsoleq::Vector& right_vector) {
         kfsoleq::Vector result = kfsoleq::Vector(left_matrix.getSizeY());
-        for (size_t i = 0; i < left_matrix.getSizeY(); ++i) {
-            for (size_t j = 0; j < left_matrix.getSizeX(); ++j) {
-                result[i] += left_matrix(i, j) * right_vector[j];
+        size_t size_y, size_x, jmp_ind;
+        size_y = left_matrix.getSizeY();
+        size_x = left_matrix.getSizeX();
+        
+        for (size_t i = 0; i < size_y; ++i) {
+            jmp_ind = i * size_x;
+            for (size_t j = 0; j < size_x; ++j) {
+                result[i] += left_matrix.getValues()[jmp_ind + j] * right_vector[j];
             }
         }
         return result;
@@ -30,8 +35,12 @@ kfsoleq::Vector kfsoleq::operator * (const kfsoleq::CSR_Matrix& left_csr_matrix,
             return kfsoleq::Vector{};
         }
         kfsoleq::Vector result = kfsoleq::Vector(left_csr_matrix.getRowIndexes().size() - 1);
+        size_t begin_ind, end_ind;
+        
         for (size_t i = 0; i < left_csr_matrix.getRowIndexes().size() - 1; ++i) {
-            for (size_t j = left_csr_matrix.getRowIndexes()[i]; j < left_csr_matrix.getRowIndexes()[i + 1]; ++j) {
+            begin_ind = left_csr_matrix.getRowIndexes()[i];
+            end_ind   = left_csr_matrix.getRowIndexes()[i + 1];
+            for (size_t j = begin_ind; j < end_ind; ++j) {
                 result[i] += left_csr_matrix.getValues()[j] * right_vector[left_csr_matrix.getColumnIndexes()[j]];
             }
         }
@@ -52,7 +61,7 @@ kfsoleq::Matrix kfsoleq::operator * (const kfsoleq::Vector& left_vector, const k
 std::pair<kfsoleq::Matrix, kfsoleq::Matrix> kfsoleq::getQRDecompositionHouseholder(kfsoleq::Matrix given_matrix) {
         kfsoleq::Vector v;
         kfsoleq::Vector x_result;
-        SOLEQ_FLOAT dot_product;
+        kfsoleq::soleq_float dot_product;
         
         kfsoleq::Matrix Q_Matrix(given_matrix.getSizeY(), given_matrix.getSizeY());
         for (size_t i = 0; i < given_matrix.getSizeY(); ++i) {

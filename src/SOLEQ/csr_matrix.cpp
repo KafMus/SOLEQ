@@ -14,10 +14,10 @@
 // Constructors and destructors
 // 
 kfsoleq::CSR_Matrix::CSR_Matrix() :
-    values(std::vector<SOLEQ_FLOAT>{}),
+    values(std::vector<kfsoleq::soleq_float>{}),
     col_ind(std::vector<size_t>{}),
     row_ind(std::vector<size_t>{}) {}
-kfsoleq::CSR_Matrix::CSR_Matrix(const std::list<std::list<std::pair<size_t, SOLEQ_FLOAT>>>& lil) {
+kfsoleq::CSR_Matrix::CSR_Matrix(const std::list<std::list<std::pair<size_t, kfsoleq::soleq_float>>>& lil) {
         row_ind.reserve(lil.size() + 1);
         size_t k = 0; // Number of non-zero elements above current row
         

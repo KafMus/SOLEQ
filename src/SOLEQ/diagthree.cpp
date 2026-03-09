@@ -15,18 +15,18 @@
 // 
 kfsoleq::DiagThree::DiagThree() :
     size(0),
-    constant_terms(std::vector<SOLEQ_FLOAT>{}),
-    roots(std::vector<SOLEQ_FLOAT>{}) {
+    constant_terms(std::vector<kfsoleq::soleq_float>{}),
+    roots(std::vector<kfsoleq::soleq_float>{}) {
         for (size_t i = 0; i < 3; ++i) {
-            this->diagonals[i] = std::vector<SOLEQ_FLOAT>{};
+            this->diagonals[i] = std::vector<kfsoleq::soleq_float>{};
         }
 }
 kfsoleq::DiagThree::DiagThree(size_t given_size,
-                              const std::array<std::vector<SOLEQ_FLOAT>, 3>& given_diagonals,
-                              const std::vector<SOLEQ_FLOAT>& given_constant_terms) :
+                              const std::array<std::vector<kfsoleq::soleq_float>, 3>& given_diagonals,
+                              const std::vector<kfsoleq::soleq_float>& given_constant_terms) :
     size(given_size),
     constant_terms(given_constant_terms),
-    roots(std::vector<SOLEQ_FLOAT>(given_size)) {
+    roots(std::vector<kfsoleq::soleq_float>(given_size)) {
         /*
          * shrink_to_fit() may not be the greatest way to shrink vectors,
          * because it doesn't necessarily do anything at all. Also maybe
@@ -85,7 +85,7 @@ void kfsoleq::DiagThree::printRoots() const {
         std::cout << "]\n";
 }
 void kfsoleq::DiagThree::solve() {
-        std::vector<std::pair<SOLEQ_FLOAT, SOLEQ_FLOAT>> coeffs(this->size - 1);
+        std::vector<std::pair<kfsoleq::soleq_float, kfsoleq::soleq_float>> coeffs(this->size - 1);
         
         // Forward
         coeffs[0].first = -(this->diagonals[2][0] / this->diagonals[1][0]);

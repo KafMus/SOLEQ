@@ -1,45 +1,144 @@
-Size:	100	Actual Density:	50	Matrix:	0.0074626	CSR_Matrix:	0.0336591
-Size:	100	Actual Density:	20	Matrix:	0.0071367	CSR_Matrix:	0.0173959
-Size:	100	Actual Density:	10	Matrix:	0.0070091	CSR_Matrix:	0.0119916
-Size:	100	Actual Density:	5	Matrix:	0.0064208	CSR_Matrix:	0.0083315
-Size:	100	Actual Density:	2	Matrix:	0.0078082	CSR_Matrix:	0.007108
-Size:	100	Actual Density:	0	Matrix:	0.0071107	CSR_Matrix:	0.0058368
-Size:	100	Actual Density:	0	Matrix:	0.0075171	CSR_Matrix:	0.006302
-Size:	100	Actual Density:	0	Matrix:	0.0087836	CSR_Matrix:	0.0066621
-Size:	100	Actual Density:	0	Matrix:	0.0071035	CSR_Matrix:	0.0062805
-Size:	2500	Actual Density:	50	Matrix:	0.0429197	CSR_Matrix:	0.509737
-Size:	2500	Actual Density:	20	Matrix:	0.0461787	CSR_Matrix:	0.155299
-Size:	2500	Actual Density:	10	Matrix:	0.0450758	CSR_Matrix:	0.0750929
-Size:	2500	Actual Density:	5	Matrix:	0.0449027	CSR_Matrix:	0.0320206
-Size:	2500	Actual Density:	2	Matrix:	0.0444633	CSR_Matrix:	0.0169223
-Size:	2500	Actual Density:	0.48	Matrix:	0.0465525	CSR_Matrix:	0.0105447
-Size:	2500	Actual Density:	0.2	Matrix:	0.044016	CSR_Matrix:	0.0094809
-Size:	2500	Actual Density:	0.08	Matrix:	0.0440664	CSR_Matrix:	0.0089496
-Size:	2500	Actual Density:	0.04	Matrix:	0.0437447	CSR_Matrix:	0.0088852
-Size:	62500	Actual Density:	50	Matrix:	1.10878	CSR_Matrix:	280.946
-Size:	62500	Actual Density:	20	Matrix:	1.04641	CSR_Matrix:	45.1329
-Size:	62500	Actual Density:	10	Matrix:	1.03897	CSR_Matrix:	12.9225
-Size:	62500	Actual Density:	5	Matrix:	1.03129	CSR_Matrix:	3.5469
-Size:	62500	Actual Density:	2	Matrix:	1.03829	CSR_Matrix:	0.53907
-Size:	62500	Actual Density:	0.4992	Matrix:	1.02561	CSR_Matrix:	0.152517
-Size:	62500	Actual Density:	0.2	Matrix:	1.04006	CSR_Matrix:	0.0851174
-Size:	62500	Actual Density:	0.0992	Matrix:	1.05332	CSR_Matrix:	0.071349
-Size:	62500	Actual Density:	0.0496	Matrix:	1.0537	CSR_Matrix:	0.0644345
-Size:	250000	Actual Density:	50	Matrix:	4.12693	CSR_Matrix:	11183.4
-Size:	250000	Actual Density:	20	Matrix:	5.02483	CSR_Matrix:	1418.07
-Size:	250000	Actual Density:	10	Matrix:	4.9057	CSR_Matrix:	194.047
-Size:	250000	Actual Density:	5	Matrix:	4.59546	CSR_Matrix:	53.1255
-Size:	250000	Actual Density:	2	Matrix:	4.58068	CSR_Matrix:	9.48255
-Size:	250000	Actual Density:	0.5	Matrix:	4.60988	CSR_Matrix:	0.769484
-Size:	250000	Actual Density:	0.2	Matrix:	4.60709	CSR_Matrix:	0.341051
-Size:	250000	Actual Density:	0.1	Matrix:	4.70074	CSR_Matrix:	0.250584
-Size:	250000	Actual Density:	0.05	Matrix:	4.73777	CSR_Matrix:	0.199651
-Size:	1000000	Actual Density:	50	Matrix:	18.4127	CSR_Matrix:	290828
-Size:	1000000	Actual Density:	20	Matrix:	16.129	CSR_Matrix:	28759.6
-Size:	1000000	Actual Density:	10	Matrix:	20.062	CSR_Matrix:	6975.84
-Size:	1000000	Actual Density:	5	Matrix:	20.1195	CSR_Matrix:	1512.59
-Size:	1000000	Actual Density:	2	Matrix:	19.1767	CSR_Matrix:	121.861
-Size:	1000000	Actual Density:	0.5	Matrix:	18.358	CSR_Matrix:	10.5146
-Size:	1000000	Actual Density:	0.2	Matrix:	18.3867	CSR_Matrix:	2.50188
-Size:	1000000	Actual Density:	0.1	Matrix:	18.5317	CSR_Matrix:	0.802146
-Size:	1000000	Actual Density:	0.05	Matrix:	18.2802	CSR_Matrix:	0.531837
+NEW ENTRY OF BENCHMARK DATA
+Iterations:	10000	Size:	100	Actual Density:	99	Matrix:	0.00213557	CSR_Matrix:	0.00210441
+Iterations:	10000	Size:	100	Actual Density:	50	Matrix:	0.00167512	CSR_Matrix:	0.00113752
+Iterations:	10000	Size:	100	Actual Density:	33	Matrix:	0.00167015	CSR_Matrix:	0.000885013
+Iterations:	10000	Size:	100	Actual Density:	25	Matrix:	0.00164235	CSR_Matrix:	0.000732104
+Iterations:	10000	Size:	100	Actual Density:	20	Matrix:	0.0016364	CSR_Matrix:	0.00064354
+Iterations:	10000	Size:	100	Actual Density:	12	Matrix:	0.0016235	CSR_Matrix:	0.00049013
+Iterations:	10000	Size:	100	Actual Density:	10	Matrix:	0.00162727	CSR_Matrix:	0.000461812
+Iterations:	10000	Size:	100	Actual Density:	5	Matrix:	0.00166149	CSR_Matrix:	0.00037407
+Iterations:	10000	Size:	100	Actual Density:	3	Matrix:	0.0016396	CSR_Matrix:	0.00034341
+Iterations:	10000	Size:	100	Actual Density:	2	Matrix:	0.00166701	CSR_Matrix:	0.000315021
+Iterations:	10000	Size:	100	Actual Density:	1	Matrix:	0.00166243	CSR_Matrix:	0.000302274
+Iterations:	10000	Size:	100	Actual Density:	1	Matrix:	0.0016786	CSR_Matrix:	0.00031269
+Iterations:	10000	Size:	100	Actual Density:	0	Matrix:	0.00166977	CSR_Matrix:	0.000280081
+Iterations:	10000	Size:	100	Actual Density:	0	Matrix:	0.00164352	CSR_Matrix:	0.00028108
+Iterations:	10000	Size:	100	Actual Density:	0	Matrix:	0.00165705	CSR_Matrix:	0.000294098
+Iterations:	10000	Size:	100	Actual Density:	0	Matrix:	0.00163649	CSR_Matrix:	0.000283918
+Iterations:	10000	Size:	100	Actual Density:	0	Matrix:	0.00164754	CSR_Matrix:	0.000281788
+NEW ENTRY OF BENCHMARK DATA
+Iterations:	10000	Size:	2500	Actual Density:	99.96	Matrix:	0.0343836	CSR_Matrix:	0.0437052
+Iterations:	10000	Size:	2500	Actual Density:	50	Matrix:	0.0342634	CSR_Matrix:	0.0222676
+Iterations:	10000	Size:	2500	Actual Density:	33.32	Matrix:	0.0338248	CSR_Matrix:	0.0152083
+Iterations:	10000	Size:	2500	Actual Density:	25	Matrix:	0.0339952	CSR_Matrix:	0.0118585
+Iterations:	10000	Size:	2500	Actual Density:	20	Matrix:	0.0338602	CSR_Matrix:	0.00967779
+Iterations:	10000	Size:	2500	Actual Density:	12.48	Matrix:	0.0340176	CSR_Matrix:	0.00616586
+Iterations:	10000	Size:	2500	Actual Density:	10	Matrix:	0.0337767	CSR_Matrix:	0.00498427
+Iterations:	10000	Size:	2500	Actual Density:	5	Matrix:	0.033941	CSR_Matrix:	0.00288468
+Iterations:	10000	Size:	2500	Actual Density:	3.32	Matrix:	0.0339428	CSR_Matrix:	0.00214169
+Iterations:	10000	Size:	2500	Actual Density:	2	Matrix:	0.0338279	CSR_Matrix:	0.00159524
+Iterations:	10000	Size:	2500	Actual Density:	1.24	Matrix:	0.0338548	CSR_Matrix:	0.00130871
+Iterations:	10000	Size:	2500	Actual Density:	1	Matrix:	0.0339127	CSR_Matrix:	0.00117382
+Iterations:	10000	Size:	2500	Actual Density:	0.32	Matrix:	0.0337815	CSR_Matrix:	0.000883273
+Iterations:	10000	Size:	2500	Actual Density:	0.2	Matrix:	0.0338892	CSR_Matrix:	0.000838563
+Iterations:	10000	Size:	2500	Actual Density:	0.08	Matrix:	0.0339481	CSR_Matrix:	0.000803072
+Iterations:	10000	Size:	2500	Actual Density:	0.04	Matrix:	0.0338572	CSR_Matrix:	0.000777848
+Iterations:	10000	Size:	2500	Actual Density:	0	Matrix:	0.0338091	CSR_Matrix:	0.00074371
+NEW ENTRY OF BENCHMARK DATA
+Iterations:	2000	Size:	10000	Actual Density:	99.99	Matrix:	0.135178	CSR_Matrix:	0.173478
+Iterations:	2000	Size:	10000	Actual Density:	50	Matrix:	0.135825	CSR_Matrix:	0.0872305
+Iterations:	2000	Size:	10000	Actual Density:	33.33	Matrix:	0.135427	CSR_Matrix:	0.0586061
+Iterations:	2000	Size:	10000	Actual Density:	25	Matrix:	0.134949	CSR_Matrix:	0.0443576
+Iterations:	2000	Size:	10000	Actual Density:	20	Matrix:	0.135121	CSR_Matrix:	0.0360258
+Iterations:	2000	Size:	10000	Actual Density:	12.5	Matrix:	0.134226	CSR_Matrix:	0.0232177
+Iterations:	2000	Size:	10000	Actual Density:	10	Matrix:	0.135109	CSR_Matrix:	0.0190569
+Iterations:	2000	Size:	10000	Actual Density:	5	Matrix:	0.134504	CSR_Matrix:	0.00990346
+Iterations:	2000	Size:	10000	Actual Density:	3.33	Matrix:	0.134324	CSR_Matrix:	0.00719004
+Iterations:	2000	Size:	10000	Actual Density:	2	Matrix:	0.134773	CSR_Matrix:	0.00463746
+Iterations:	2000	Size:	10000	Actual Density:	1.25	Matrix:	0.134174	CSR_Matrix:	0.00336408
+Iterations:	2000	Size:	10000	Actual Density:	1	Matrix:	0.13438	CSR_Matrix:	0.00297349
+Iterations:	2000	Size:	10000	Actual Density:	0.33	Matrix:	0.134397	CSR_Matrix:	0.00182077
+Iterations:	2000	Size:	10000	Actual Density:	0.2	Matrix:	0.13503	CSR_Matrix:	0.00162329
+Iterations:	2000	Size:	10000	Actual Density:	0.1	Matrix:	0.134485	CSR_Matrix:	0.00149128
+Iterations:	2000	Size:	10000	Actual Density:	0.05	Matrix:	0.134628	CSR_Matrix:	0.00147023
+Iterations:	2000	Size:	10000	Actual Density:	0.01	Matrix:	0.134395	CSR_Matrix:	0.00130874
+NEW ENTRY OF BENCHMARK DATA
+Iterations:	1000	Size:	40000	Actual Density:	99.9975	Matrix:	0.543377	CSR_Matrix:	0.700626
+Iterations:	1000	Size:	40000	Actual Density:	50	Matrix:	0.548529	CSR_Matrix:	0.354513
+Iterations:	1000	Size:	40000	Actual Density:	33.3325	Matrix:	0.549157	CSR_Matrix:	0.240453
+Iterations:	1000	Size:	40000	Actual Density:	25	Matrix:	0.547955	CSR_Matrix:	0.180579
+Iterations:	1000	Size:	40000	Actual Density:	20	Matrix:	0.549527	CSR_Matrix:	0.145664
+Iterations:	1000	Size:	40000	Actual Density:	12.5	Matrix:	0.549712	CSR_Matrix:	0.0921842
+Iterations:	1000	Size:	40000	Actual Density:	10	Matrix:	0.550388	CSR_Matrix:	0.0748249
+Iterations:	1000	Size:	40000	Actual Density:	5	Matrix:	0.550372	CSR_Matrix:	0.0395934
+Iterations:	1000	Size:	40000	Actual Density:	3.3325	Matrix:	0.550554	CSR_Matrix:	0.0265507
+Iterations:	1000	Size:	40000	Actual Density:	2	Matrix:	0.550814	CSR_Matrix:	0.0165377
+Iterations:	1000	Size:	40000	Actual Density:	1.25	Matrix:	0.551636	CSR_Matrix:	0.0113667
+Iterations:	1000	Size:	40000	Actual Density:	1	Matrix:	0.550845	CSR_Matrix:	0.0095675
+Iterations:	1000	Size:	40000	Actual Density:	0.3325	Matrix:	0.551414	CSR_Matrix:	0.00472618
+Iterations:	1000	Size:	40000	Actual Density:	0.2	Matrix:	0.551444	CSR_Matrix:	0.00384698
+Iterations:	1000	Size:	40000	Actual Density:	0.1	Matrix:	0.550783	CSR_Matrix:	0.00321167
+Iterations:	1000	Size:	40000	Actual Density:	0.05	Matrix:	0.550805	CSR_Matrix:	0.00288961
+Iterations:	1000	Size:	40000	Actual Density:	0.01	Matrix:	0.550796	CSR_Matrix:	0.00262683
+NEW ENTRY OF BENCHMARK DATA
+Iterations:	500	Size:	160000	Actual Density:	99.9994	Matrix:	2.13572	CSR_Matrix:	2.72999
+Iterations:	500	Size:	160000	Actual Density:	50	Matrix:	2.13924	CSR_Matrix:	1.37433
+Iterations:	500	Size:	160000	Actual Density:	33.3331	Matrix:	2.13187	CSR_Matrix:	0.919823
+Iterations:	500	Size:	160000	Actual Density:	25	Matrix:	2.13312	CSR_Matrix:	0.691552
+Iterations:	500	Size:	160000	Actual Density:	20	Matrix:	2.13497	CSR_Matrix:	0.5549
+Iterations:	500	Size:	160000	Actual Density:	12.5	Matrix:	2.13445	CSR_Matrix:	0.349678
+Iterations:	500	Size:	160000	Actual Density:	10	Matrix:	2.14102	CSR_Matrix:	0.282154
+Iterations:	500	Size:	160000	Actual Density:	5	Matrix:	2.13543	CSR_Matrix:	0.144651
+Iterations:	500	Size:	160000	Actual Density:	3.33312	Matrix:	2.13433	CSR_Matrix:	0.0987392
+Iterations:	500	Size:	160000	Actual Density:	2	Matrix:	2.30539	CSR_Matrix:	0.070796
+Iterations:	500	Size:	160000	Actual Density:	1.25	Matrix:	2.47595	CSR_Matrix:	0.044625
+Iterations:	500	Size:	160000	Actual Density:	1	Matrix:	2.44086	CSR_Matrix:	0.0359764
+Iterations:	500	Size:	160000	Actual Density:	0.333125	Matrix:	2.42774	CSR_Matrix:	0.0152413
+Iterations:	500	Size:	160000	Actual Density:	0.2	Matrix:	2.41241	CSR_Matrix:	0.011114
+Iterations:	500	Size:	160000	Actual Density:	0.1	Matrix:	2.41882	CSR_Matrix:	0.00827798
+Iterations:	500	Size:	160000	Actual Density:	0.05	Matrix:	2.41059	CSR_Matrix:	0.00664354
+Iterations:	500	Size:	160000	Actual Density:	0.01	Matrix:	2.40214	CSR_Matrix:	0.00573836
+NEW ENTRY OF BENCHMARK DATA
+Iterations:	50	Size:	1000000	Actual Density:	99.9999	Matrix:	13.816	CSR_Matrix:	17.7296
+Iterations:	50	Size:	1000000	Actual Density:	50	Matrix:	13.8825	CSR_Matrix:	8.93696
+Iterations:	50	Size:	1000000	Actual Density:	33.3333	Matrix:	13.8653	CSR_Matrix:	5.90728
+Iterations:	50	Size:	1000000	Actual Density:	25	Matrix:	13.8697	CSR_Matrix:	4.43756
+Iterations:	50	Size:	1000000	Actual Density:	20	Matrix:	13.9018	CSR_Matrix:	3.56126
+Iterations:	50	Size:	1000000	Actual Density:	12.5	Matrix:	13.9258	CSR_Matrix:	2.25275
+Iterations:	50	Size:	1000000	Actual Density:	10	Matrix:	13.9088	CSR_Matrix:	1.80593
+Iterations:	50	Size:	1000000	Actual Density:	5	Matrix:	13.9435	CSR_Matrix:	0.915036
+Iterations:	50	Size:	1000000	Actual Density:	3.3333	Matrix:	13.9287	CSR_Matrix:	0.620103
+Iterations:	50	Size:	1000000	Actual Density:	2	Matrix:	13.9817	CSR_Matrix:	0.377518
+Iterations:	50	Size:	1000000	Actual Density:	1.25	Matrix:	13.9369	CSR_Matrix:	0.249505
+Iterations:	50	Size:	1000000	Actual Density:	1	Matrix:	13.9634	CSR_Matrix:	0.200048
+Iterations:	50	Size:	1000000	Actual Density:	0.3333	Matrix:	13.9427	CSR_Matrix:	0.0735242
+Iterations:	50	Size:	1000000	Actual Density:	0.2	Matrix:	15.1034	CSR_Matrix:	0.0539906
+Iterations:	50	Size:	1000000	Actual Density:	0.1	Matrix:	15.9788	CSR_Matrix:	0.0327292
+Iterations:	50	Size:	1000000	Actual Density:	0.05	Matrix:	16.0302	CSR_Matrix:	0.0235992
+Iterations:	50	Size:	1000000	Actual Density:	0.01	Matrix:	16.0204	CSR_Matrix:	0.0152683
+NEW ENTRY OF BENCHMARK DATA
+Iterations:	10	Size:	25000000	Actual Density:	100	Matrix:	347.981	CSR_Matrix:	500.493
+Iterations:	10	Size:	25000000	Actual Density:	50	Matrix:	389.898	CSR_Matrix:	245.026
+Iterations:	10	Size:	25000000	Actual Density:	33.3333	Matrix:	379.976	CSR_Matrix:	162.242
+Iterations:	10	Size:	25000000	Actual Density:	25	Matrix:	384.034	CSR_Matrix:	122.237
+Iterations:	10	Size:	25000000	Actual Density:	20	Matrix:	379.524	CSR_Matrix:	97.9271
+Iterations:	10	Size:	25000000	Actual Density:	12.5	Matrix:	385.551	CSR_Matrix:	60.6144
+Iterations:	10	Size:	25000000	Actual Density:	10	Matrix:	381.187	CSR_Matrix:	49.2649
+Iterations:	10	Size:	25000000	Actual Density:	5	Matrix:	386.222	CSR_Matrix:	24.3096
+Iterations:	10	Size:	25000000	Actual Density:	3.33333	Matrix:	382.806	CSR_Matrix:	16.3333
+Iterations:	10	Size:	25000000	Actual Density:	2	Matrix:	381.334	CSR_Matrix:	9.80262
+Iterations:	10	Size:	25000000	Actual Density:	1.25	Matrix:	393.006	CSR_Matrix:	6.18799
+Iterations:	10	Size:	25000000	Actual Density:	1	Matrix:	388.072	CSR_Matrix:	5.07974
+Iterations:	10	Size:	25000000	Actual Density:	0.333332	Matrix:	390.096	CSR_Matrix:	1.77419
+Iterations:	10	Size:	25000000	Actual Density:	0.2	Matrix:	387.607	CSR_Matrix:	1.1085
+Iterations:	10	Size:	25000000	Actual Density:	0.1	Matrix:	392.704	CSR_Matrix:	0.555644
+Iterations:	10	Size:	25000000	Actual Density:	0.05	Matrix:	380.938	CSR_Matrix:	0.308424
+Iterations:	10	Size:	25000000	Actual Density:	0.01	Matrix:	386.199	CSR_Matrix:	0.111723
+NEW ENTRY OF BENCHMARK DATA
+Iterations:	5	Size:	100000000	Actual Density:	100	Matrix:	1656.74	CSR_Matrix:	2772.51
+Iterations:	5	Size:	100000000	Actual Density:	50	Matrix:	1712.04	CSR_Matrix:	1225.05
+Iterations:	5	Size:	100000000	Actual Density:	33.3333	Matrix:	1892.72	CSR_Matrix:	879.511
+Iterations:	5	Size:	100000000	Actual Density:	25	Matrix:	1776.74	CSR_Matrix:	675.829
+Iterations:	5	Size:	100000000	Actual Density:	20	Matrix:	1959.57	CSR_Matrix:	437.105
+Iterations:	5	Size:	100000000	Actual Density:	12.5	Matrix:	1712.14	CSR_Matrix:	259.61
+Iterations:	5	Size:	100000000	Actual Density:	10	Matrix:	1626.67	CSR_Matrix:	208.494
+Iterations:	5	Size:	100000000	Actual Density:	5	Matrix:	1585.4	CSR_Matrix:	99.0842
+Iterations:	5	Size:	100000000	Actual Density:	3.33333	Matrix:	1546.15	CSR_Matrix:	65.7944
+Iterations:	5	Size:	100000000	Actual Density:	2	Matrix:	1557.93	CSR_Matrix:	39.9448
+Iterations:	5	Size:	100000000	Actual Density:	1.25	Matrix:	1546.66	CSR_Matrix:	24.5404
+Iterations:	5	Size:	100000000	Actual Density:	1	Matrix:	1561.67	CSR_Matrix:	19.977
+Iterations:	5	Size:	100000000	Actual Density:	0.333333	Matrix:	1570.87	CSR_Matrix:	6.92768
+Iterations:	5	Size:	100000000	Actual Density:	0.2	Matrix:	1584.09	CSR_Matrix:	4.26806
+Iterations:	5	Size:	100000000	Actual Density:	0.1	Matrix:	1570.61	CSR_Matrix:	2.24787
+Iterations:	5	Size:	100000000	Actual Density:	0.05	Matrix:	1579.82	CSR_Matrix:	1.08182
+Iterations:	5	Size:	100000000	Actual Density:	0.01	Matrix:	1559.85	CSR_Matrix:	0.333258

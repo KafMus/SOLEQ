@@ -9,8 +9,8 @@
 #include <iostream>
 #include <fstream>
 
-#define SIZES_NUM  6
-#define DENSES_NUM 6
+#define SIZES_NUM  1
+#define DENSES_NUM 17
 int main(int argc, char* argv[]) {
     
     if (argc < 2) {
@@ -32,18 +32,21 @@ int main(int argc, char* argv[]) {
     kfsoleq::Matrix my_matrix;
     kfsoleq::CSR_Matrix my_csr_matrix;
     kfsoleq::Vector result;
-    std::list<std::list<std::pair<size_t, SOLEQ_FLOAT>>> my_lil;
-    size_t size_y[SIZES_NUM] =                     { 10,   50,  250, 500, 1000, 10000 };
-    size_t size_x[SIZES_NUM] =                     { 10,   50,  250, 500, 1000, 10000 };
-    unsigned int number_of_iterations[SIZES_NUM] = { 1000, 500, 200, 50,  50,   50    };
-    SOLEQ_FLOAT salt = 420;
-    SOLEQ_FLOAT vector_salt = 100;
+    std::list<std::list<std::pair<size_t, kfsoleq::soleq_float>>> my_lil;
+    size_t size_y[SIZES_NUM] =                     { 10000 };
+    size_t size_x[SIZES_NUM] =                     { 10000 };
+    unsigned int number_of_iterations[SIZES_NUM] = { 5 };
+    kfsoleq::soleq_float salt = 420;
+    kfsoleq::soleq_float vector_salt = 100;
+    long long int time_duration_in_ns;
+    std::chrono::time_point<std::chrono::high_resolution_clock> saved_time, current_time;
+    
     
     /*
      * We will fill matrix somewhere. every_which
      * describes which element we will fill.
      */
-    unsigned int every_which[DENSES_NUM] = { 500, 2000, 5000, 10000, 100000, 1000000 };
+    unsigned int every_which[DENSES_NUM] = { 1, 2, 3, 4, 5, 8, 10, 20, 30, 50, 80, 100, 300, 500, 1000, 2000, 10000 };
     double aver_matrix_time[DENSES_NUM * SIZES_NUM]     = { 0 };
     double aver_csr_matrix_time[DENSES_NUM * SIZES_NUM] = { 0 };
     double actual_density[DENSES_NUM * SIZES_NUM]       = { 0 };
@@ -56,7 +59,7 @@ int main(int argc, char* argv[]) {
             std::cout << "Creating etalon Vector...\n";
             etalon_vector = kfsoleq::Vector(size_x[i]);
             for (size_t j = 0; j < size_x[i]; ++j) {
-                etalon_vector[j] = (SOLEQ_FLOAT)(j + 1) * vector_salt;
+                etalon_vector[j] = (kfsoleq::soleq_float)(j + 1) * vector_salt;
             }
             std::cout << "Creating etalon Vector DONE!\n";
             
@@ -68,7 +71,7 @@ int main(int argc, char* argv[]) {
                 for (size_t z = 0; z < size_x[i]; ++z) {
                     if (every_which[dens_ind] == k) {
                         k = 0;
-                        my_matrix(j, z) = salt * (SOLEQ_FLOAT)(j + z);
+                        my_matrix(j, z) = salt * (kfsoleq::soleq_float)(j + z);
                     }
                     k++;
                 }
@@ -78,9 +81,9 @@ int main(int argc, char* argv[]) {
             // Creating CSR_Matrix using Matrix
             std::cout << "Creating CSR_Matrix...\n";
             for (size_t j = 0; j < size_y[i]; ++j) {
-                std::list<std::pair<size_t, SOLEQ_FLOAT>> tmp_list;
+                std::list<std::pair<size_t, kfsoleq::soleq_float>> tmp_list;
                 for (size_t z = 0; z < size_x[i]; ++z) {
-                    // We can use '0 !=' even with the fact, that this is SOLEQ_FLOAT
+                    // We can use '0 !=' even with the fact, that this is soleq_float
                     if (0 != my_matrix(j, z)) {
                         tmp_list.push_back(std::make_pair(z, my_matrix(j, z)));
                     }
@@ -88,40 +91,39 @@ int main(int argc, char* argv[]) {
                 my_lil.push_back(std::list(tmp_list));
             }
             my_csr_matrix = kfsoleq::CSR_Matrix(my_lil);
-            my_lil = std::list<std::list<std::pair<size_t, SOLEQ_FLOAT>>>{};
+            my_lil = std::list<std::list<std::pair<size_t, kfsoleq::soleq_float>>>{};
             std::cout << "Creating CSR_Matrix DONE!\n";
+            
+            // PRINTING
+            //my_matrix.print();
+            //my_csr_matrix.print();
            
             // Calculation of actual density that we've got
             actual_density[i * SIZES_NUM + dens_ind] = (double)(my_csr_matrix.getRowIndexes().back()) / (double)(size_y[i] * size_x[i]);
             
             // Main iterations loops
             std::cout << "Iterations loops...\n";
-            long long int time_duration_in_ns = 0;
-            std::chrono::high_resolution_clock::time_point current_time, saved_time;
+            saved_time = std::chrono::high_resolution_clock::now();
             for (unsigned int iter_num = 0; iter_num < number_of_iterations[i]; ++iter_num) {
-                saved_time = std::chrono::high_resolution_clock::now();
-                
                 result = my_matrix * etalon_vector;
-                
-                current_time = std::chrono::high_resolution_clock::now();
-                time_duration_in_ns += std::chrono::duration_cast<std::chrono::nanoseconds>(current_time - saved_time).count();
             }
+            current_time = std::chrono::high_resolution_clock::now();
+            time_duration_in_ns = std::chrono::duration_cast<std::chrono::nanoseconds>(current_time - saved_time).count();
             aver_matrix_time[i * SIZES_NUM + dens_ind] = (double)time_duration_in_ns / (double)number_of_iterations[i];
-            time_duration_in_ns = 0;
+            
+            saved_time = std::chrono::high_resolution_clock::now();
             for (unsigned int iter_num = 0; iter_num < number_of_iterations[i]; ++iter_num) {
-                saved_time = std::chrono::high_resolution_clock::now();
-                
                 result = my_csr_matrix * etalon_vector;
-                
-                current_time = std::chrono::high_resolution_clock::now();
-                time_duration_in_ns += std::chrono::duration_cast<std::chrono::nanoseconds>(current_time - saved_time).count();
             }
+            current_time = std::chrono::high_resolution_clock::now();
+            time_duration_in_ns = std::chrono::duration_cast<std::chrono::nanoseconds>(current_time - saved_time).count();
             aver_csr_matrix_time[i * SIZES_NUM + dens_ind] = (double)time_duration_in_ns / (double)number_of_iterations[i];
             std::cout << "Iterations loops DONE!\n";
             
             // Output
             std::cout << "Density: " << every_which[dens_ind] << '\n';
             std::cout << "Actual Density in %: " << actual_density[i * SIZES_NUM + dens_ind] * 100 << '\n';
+            std::cout << "Iterations: " << number_of_iterations[i] << '\n';
             std::cout << "\tSize Y: " << size_y[i] << '\n';
             std::cout << "\tSize X: " << size_x[i] << '\n';
             std::cout << "\t\tAverage Matrix time in ns:\t" << aver_matrix_time[i * SIZES_NUM + dens_ind] << '\n';
@@ -132,7 +134,8 @@ int main(int argc, char* argv[]) {
             std::cout << "\t\tAverage CSR_Matrix time in ms:\t" << aver_csr_matrix_time[i * SIZES_NUM + dens_ind] / 1000000 << '\n';
             
             // Saving to datafile
-            datafile << "Size:\t" << size_y[i] * size_x[i]
+            datafile << "Iterations:\t" << number_of_iterations[i]
+                     << "\tSize:\t" << size_y[i] * size_x[i]
                      << "\tActual Density:\t" << actual_density[i * SIZES_NUM + dens_ind] * 100
                      << "\tMatrix:\t" << aver_matrix_time[i * SIZES_NUM + dens_ind] / 1000000
                      << "\tCSR_Matrix:\t" << aver_csr_matrix_time[i * SIZES_NUM + dens_ind] / 1000000 << std::endl;
