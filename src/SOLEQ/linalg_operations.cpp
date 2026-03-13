@@ -172,6 +172,27 @@ kfsoleq::Vector kfsoleq::solveUsingJacobiMethod(const kfsoleq::CSR_Matrix& given
         
         return roots;
 }
+kfsoleq::Vector kfsoleq::solveUsingFixedPointIterationMethod(const kfsoleq::CSR_Matrix& given_csr_matrix,
+                                                const kfsoleq::Vector& constant_terms,
+                                                kfsoleq::soleq_float needed_precision,
+                                                const kfsoleq::Vector& initial_root,
+                                                kfsoleq::soleq_float tau,
+                                                size_t iters_block_size,
+                                                size_t max_iters) {
+        kfsoleq::Vector roots_prev = initial_root;
+        kfsoleq::Vector roots(given_csr_matrix.getRowIndexes().size() - 1);
+        
+        size_t outer_ind = 0;
+        while (((given_csr_matrix * roots) - constant_terms).getFirstNorm() > needed_precision && outer_ind < max_iters) {
+            for (size_t iter_num = 0; iter_num < iters_block_size; ++iter_num) {
+                roots = roots_prev - (given_csr_matrix * roots_prev - constant_terms) * tau;
+                roots_prev = roots;
+            }
+            outer_ind += iters_block_size;
+        }
+        
+        return roots;
+}
 
 
 
