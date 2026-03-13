@@ -4,6 +4,7 @@
 #include <SOLEQ/matrix.hpp>
 #include <SOLEQ/csr_matrix.hpp>
 #include <SOLEQ/vector.hpp>
+#include <cmath>
 
 namespace kfsoleq
 {
@@ -14,6 +15,11 @@ Vector operator * (const CSR_Matrix& left_csr_matrix, const Vector& right_vector
 Matrix operator * (const Vector& left_vector, const CSR_Matrix& right_csr_matrix);
 std::pair<Matrix, Matrix> getQRDecompositionHouseholder(Matrix given_matrix);
 Vector solveUsingQRDecompostion(const Matrix& given_matrix);
+Vector solveUsingJacobiMethod(const CSR_Matrix& given_csr_matrix,
+                              const Vector& constant_terms,
+                              soleq_float needed_precision,
+                              size_t iters_block_size,
+                              size_t max_iters);
 
 }
 

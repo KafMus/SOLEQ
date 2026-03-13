@@ -31,7 +31,14 @@ void kfsoleq::Vector::print() const {
         }
         std::cout << "]\n";
 }
-kfsoleq::soleq_float kfsoleq::Vector::getNorm() const {
+kfsoleq::soleq_float kfsoleq::Vector::getFirstNorm() const {
+        kfsoleq::soleq_float result = 0;
+        for (auto iter = values.begin(); iter != values.end(); ++iter) {
+            result += std::abs(*iter);
+        }
+        return result;
+}
+kfsoleq::soleq_float kfsoleq::Vector::getEuclidNorm() const {
         kfsoleq::soleq_float result = 0;
         for (auto iter = values.begin(); iter != values.end(); ++iter) {
             result += std::pow((*iter), 2);

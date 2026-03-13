@@ -23,7 +23,8 @@ public:
         
 	// Additional infrastructure
 	void print() const;
-        soleq_float getNorm() const;
+        soleq_float getFirstNorm() const;
+        soleq_float getEuclidNorm() const;
         
         // Operators overload
         soleq_float  operator [] (size_t ind) const {

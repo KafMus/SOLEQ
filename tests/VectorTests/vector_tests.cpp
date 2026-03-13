@@ -233,29 +233,56 @@ TEST(VectorOperators, ToScalarDivision) {
     }
 }
 
-TEST(VectorFunctions, GetNorm) {
+TEST(VectorFunctions, GetFirstNorm) {
     kfsoleq::Vector my_vector(3);
     
     my_vector[0] = 2;
     my_vector[1] = 2;
     my_vector[2] = 2;
-    EXPECT_NEAR(my_vector.getNorm(), (kfsoleq::soleq_float)(2 * std::sqrt(3)), kfsoleq::tolerance) << "Vector's getNorm() made a mistake";
+    EXPECT_NEAR(my_vector.getFirstNorm(), (kfsoleq::soleq_float)6, kfsoleq::tolerance) << "Vector's getFirstNorm() made a mistake";
     my_vector[0] = 0;
     my_vector[1] = 0;
     my_vector[2] = 0;
-    EXPECT_NEAR(my_vector.getNorm(), (kfsoleq::soleq_float)0, kfsoleq::tolerance) << "Vector's getNorm() made a mistake";
+    EXPECT_NEAR(my_vector.getFirstNorm(), (kfsoleq::soleq_float)0, kfsoleq::tolerance) << "Vector's getFirstNorm() made a mistake";
     my_vector[0] = 1;
     my_vector[1] = 10;
     my_vector[2] = 100;
-    EXPECT_NEAR(my_vector.getNorm(), (kfsoleq::soleq_float)(std::sqrt(10101)), kfsoleq::tolerance) << "Vector's getNorm() made a mistake";
+    EXPECT_NEAR(my_vector.getFirstNorm(), (kfsoleq::soleq_float)111, kfsoleq::tolerance) << "Vector's getFirstNorm() made a mistake";
     my_vector = kfsoleq::Vector(1);
     my_vector[0] = -42;
-    EXPECT_NEAR(my_vector.getNorm(), 42, kfsoleq::tolerance) << "Vector's getNorm() made a mistake";
+    EXPECT_NEAR(my_vector.getFirstNorm(), (kfsoleq::soleq_float)42, kfsoleq::tolerance) << "Vector's getFirstNorm() made a mistake";
     my_vector = kfsoleq::Vector(5);
     my_vector[0] = 1;
     my_vector[1] = 1;
     my_vector[2] = 1;
     my_vector[3] = 1;
     my_vector[4] = 1;
-    EXPECT_NEAR(my_vector.getNorm(), (kfsoleq::soleq_float)(std::sqrt(5)), kfsoleq::tolerance) << "Vector's getNorm() made a mistake";
+    EXPECT_NEAR(my_vector.getFirstNorm(), (kfsoleq::soleq_float)5, kfsoleq::tolerance) << "Vector's getFirstNorm() made a mistake";
+}
+
+TEST(VectorFunctions, GetEuclidNorm) {
+    kfsoleq::Vector my_vector(3);
+    
+    my_vector[0] = 2;
+    my_vector[1] = 2;
+    my_vector[2] = 2;
+    EXPECT_NEAR(my_vector.getEuclidNorm(), (kfsoleq::soleq_float)(2 * std::sqrt(3)), kfsoleq::tolerance) << "Vector's getEuclidNorm() made a mistake";
+    my_vector[0] = 0;
+    my_vector[1] = 0;
+    my_vector[2] = 0;
+    EXPECT_NEAR(my_vector.getEuclidNorm(), (kfsoleq::soleq_float)0, kfsoleq::tolerance) << "Vector's getEuclidNorm() made a mistake";
+    my_vector[0] = 1;
+    my_vector[1] = 10;
+    my_vector[2] = 100;
+    EXPECT_NEAR(my_vector.getEuclidNorm(), (kfsoleq::soleq_float)(std::sqrt(10101)), kfsoleq::tolerance) << "Vector's getEuclidNorm() made a mistake";
+    my_vector = kfsoleq::Vector(1);
+    my_vector[0] = -42;
+    EXPECT_NEAR(my_vector.getEuclidNorm(), (kfsoleq::soleq_float)42, kfsoleq::tolerance) << "Vector's getEuclidNorm() made a mistake";
+    my_vector = kfsoleq::Vector(5);
+    my_vector[0] = 1;
+    my_vector[1] = 1;
+    my_vector[2] = 1;
+    my_vector[3] = 1;
+    my_vector[4] = 1;
+    EXPECT_NEAR(my_vector.getEuclidNorm(), (kfsoleq::soleq_float)(std::sqrt(5)), kfsoleq::tolerance) << "Vector's getEuclidNorm() made a mistake";
 }

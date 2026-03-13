@@ -5,6 +5,7 @@
 #include <SOLEQ/matrix.hpp>
 #include <SOLEQ/csr_matrix.hpp>
 #include <SOLEQ/vector.hpp>
+#include <cmath>
 
 
 kfsoleq::Vector kfsoleq::operator * (const kfsoleq::Matrix& left_matrix, const kfsoleq::Vector& right_vector) {
@@ -75,8 +76,8 @@ std::pair<kfsoleq::Matrix, kfsoleq::Matrix> kfsoleq::getQRDecompositionHousehold
             for (size_t i = 0; i < given_matrix.getSizeY() - iter_num; ++i) {
                 v[i] = given_matrix(iter_num + i, iter_num);
             }
-            v[0] -= v.getNorm();
-            v /= v.getNorm();
+            v[0] -= v.getEuclidNorm();
+            v /= v.getEuclidNorm();
             
             // R_Matrix part
             for (size_t i = 0; i < given_matrix.getSizeX() - iter_num; ++i) {
@@ -132,6 +133,43 @@ kfsoleq::Vector kfsoleq::solveUsingQRDecompostion(const kfsoleq::Matrix& given_m
             }
             roots[(size_t)i] /= R_Matrix((size_t)i, (size_t)i);
         }
+        return roots;
+}
+kfsoleq::Vector kfsoleq::solveUsingJacobiMethod(const kfsoleq::CSR_Matrix& given_csr_matrix,
+                                                const kfsoleq::Vector& constant_terms,
+                                                kfsoleq::soleq_float needed_precision,
+                                                size_t iters_block_size,
+                                                size_t max_iters) {
+        const size_t size_y = given_csr_matrix.getRowIndexes().size() - 1;
+        size_t begin_ind, end_ind, col_ind;
+        kfsoleq::Vector roots_prev(size_y);
+        kfsoleq::Vector roots(size_y);
+        kfsoleq::soleq_float mult_LUx;
+        kfsoleq::soleq_float diagonal_element = 0;
+        
+        size_t outer_ind = 0;
+        while (((given_csr_matrix * roots) - constant_terms).getFirstNorm() > needed_precision && outer_ind < max_iters) {
+            for (size_t iter_num = 0; iter_num < iters_block_size; ++iter_num) {
+                for (size_t row_ind = 0; row_ind < size_y; ++row_ind) {
+                    mult_LUx = 0;
+                    begin_ind = given_csr_matrix.getRowIndexes()[row_ind];
+                    end_ind   = given_csr_matrix.getRowIndexes()[row_ind + 1];
+                    for (size_t val_ind = begin_ind; val_ind < end_ind; ++val_ind) {
+                        col_ind = given_csr_matrix.getColumnIndexes()[val_ind];
+                        if (row_ind == col_ind) {
+                            diagonal_element = given_csr_matrix.getValues()[val_ind];
+                            continue;
+                        }
+                        mult_LUx += given_csr_matrix.getValues()[val_ind] * roots_prev[col_ind];
+                    }
+                    
+                    roots[row_ind] = (constant_terms[row_ind] - mult_LUx) / diagonal_element;
+                }
+                roots_prev = roots;
+            }
+            outer_ind += iters_block_size;
+        }
+        
         return roots;
 }
 
