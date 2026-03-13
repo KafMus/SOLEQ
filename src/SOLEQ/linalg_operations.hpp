@@ -27,6 +27,12 @@ Vector solveUsingFixedPointIterationMethod(const CSR_Matrix& given_csr_matrix,
                               soleq_float tau,
                               size_t iters_block_size,
                               size_t max_iters);
+Vector solveUsingGaussSeidelMethod(const CSR_Matrix& given_csr_matrix,
+                              const Vector& constant_terms,
+                              soleq_float needed_precision,
+                              const Vector& initial_root,
+                              size_t iters_block_size,
+                              size_t max_iters);
 
 }
 

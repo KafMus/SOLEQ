@@ -193,6 +193,42 @@ kfsoleq::Vector kfsoleq::solveUsingFixedPointIterationMethod(const kfsoleq::CSR_
         
         return roots;
 }
+kfsoleq::Vector kfsoleq::solveUsingGaussSeidelMethod(const kfsoleq::CSR_Matrix& given_csr_matrix,
+                                                const kfsoleq::Vector& constant_terms,
+                                                kfsoleq::soleq_float needed_precision,
+                                                const kfsoleq::Vector& initial_root,
+                                                size_t iters_block_size,
+                                                size_t max_iters) {
+        const size_t size_y = given_csr_matrix.getRowIndexes().size() - 1;
+        size_t begin_ind, end_ind, col_ind;
+        kfsoleq::Vector roots = initial_root;
+        kfsoleq::soleq_float mult_LUx;
+        kfsoleq::soleq_float diagonal_element = 0;
+        
+        size_t outer_ind = 0;
+        while (((given_csr_matrix * roots) - constant_terms).getFirstNorm() > needed_precision && outer_ind < max_iters) {
+            for (size_t iter_num = 0; iter_num < iters_block_size; ++iter_num) {
+                for (size_t row_ind = 0; row_ind < size_y; ++row_ind) {
+                    mult_LUx = 0;
+                    begin_ind = given_csr_matrix.getRowIndexes()[row_ind];
+                    end_ind   = given_csr_matrix.getRowIndexes()[row_ind + 1];
+                    for (size_t val_ind = begin_ind; val_ind < end_ind; ++val_ind) {
+                        col_ind = given_csr_matrix.getColumnIndexes()[val_ind];
+                        if (row_ind == col_ind) {
+                            diagonal_element = given_csr_matrix.getValues()[val_ind];
+                            continue;
+                        }
+                        mult_LUx += given_csr_matrix.getValues()[val_ind] * roots[col_ind];
+                    }
+                    
+                    roots[row_ind] = (constant_terms[row_ind] - mult_LUx) / diagonal_element;
+                }
+            }
+            outer_ind += iters_block_size;
+        }
+        
+        return roots;
+}
 
 
 

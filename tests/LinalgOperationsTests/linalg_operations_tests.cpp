@@ -5,7 +5,7 @@
 #include <SOLEQ/vector.hpp>
 
 
-TEST(LinalgOperationsMatrixVector, Multiplication) {
+TEST(LinalgOperations, MatrixVectorMultiplication) {
     size_t size_y[4] = { 0, 3, 3, 1 };
     size_t size_x[4] = { 0, 3, 5, 3 };
     kfsoleq::Matrix my_matrix;
@@ -106,7 +106,7 @@ TEST(LinalgOperationsMatrixVector, Multiplication) {
     }
 }
 
-TEST(LinalgOperationsCSRMatrixVector, Multiplication) {
+TEST(LinalgOperations, CSRMatrixVectorMultiplication) {
     kfsoleq::CSR_Matrix my_matrix{};
     kfsoleq::Vector my_vector{};
     kfsoleq::Vector result;
@@ -256,12 +256,6 @@ TEST(LinalgOperations, QRDecompositionHouseholder) {
     std::pair<kfsoleq::Matrix, kfsoleq::Matrix> result = kfsoleq::getQRDecompositionHouseholder(my_matrix);
     Q_Matrix = result.first;
     R_Matrix = result.second;
-    std::cout << "Q_Matrix:\n";
-    Q_Matrix.print();
-    std::cout << "R_Matrix:\n";
-    R_Matrix.print();
-    std::cout << "Q_Matrix * R_Matrix:\n";
-    (Q_Matrix * R_Matrix).print();
     
     EXPECT_EQ(Q_Matrix.getSizeY(), 3) << "Q Matrix's Size Y doesn't match";
     EXPECT_EQ(Q_Matrix.getSizeX(), 3) << "Q Matrix's Size X doesn't match";
@@ -312,12 +306,6 @@ TEST(LinalgOperations, QRDecompositionHouseholder) {
     result = kfsoleq::getQRDecompositionHouseholder(my_matrix);
     Q_Matrix = result.first;
     R_Matrix = result.second;
-    std::cout << "Q_Matrix:\n";
-    Q_Matrix.print();
-    std::cout << "R_Matrix:\n";
-    R_Matrix.print();
-    std::cout << "Q_Matrix * R_Matrix:\n";
-    (Q_Matrix * R_Matrix).print();
     
     EXPECT_EQ(Q_Matrix.getSizeY(), 5) << "Q Matrix's Size Y doesn't match";
     EXPECT_EQ(Q_Matrix.getSizeX(), 5) << "Q Matrix's Size X doesn't match";
@@ -354,7 +342,7 @@ TEST(LinalgOperations, QRDecompositionHouseholder) {
     }
 }
 
-TEST(LinalgOperations, SolveSOLEQUsingQRDecomposition) {
+TEST(LinalgOperations, SolveUsingQRDecomposition) {
     kfsoleq::Matrix Q_Matrix, R_Matrix;
     kfsoleq::Matrix my_matrix(3, 4);
     kfsoleq::soleq_float my_matrix_data_1[3][4] = { { 12, -51,   4, 1 },
@@ -422,7 +410,11 @@ TEST(LinalgOperations, SolveUsingJacobiMethod) {
     for (size_t i = 0; i < 3; ++i) {
         constant_terms[i] = const_terms_data_1[i];
     }
-    kfsoleq::Vector roots = kfsoleq::solveUsingJacobiMethod(my_csr_matrix, constant_terms, kfsoleq::tolerance, iters_block_size, max_iters);
+    kfsoleq::Vector roots = kfsoleq::solveUsingJacobiMethod(my_csr_matrix,
+                                                            constant_terms,
+                                                            kfsoleq::tolerance,
+                                                            iters_block_size,
+                                                            max_iters);
     
     
     EXPECT_EQ(roots.getSize(), 3) << "Roots Size doesn't match";
@@ -451,7 +443,11 @@ TEST(LinalgOperations, SolveUsingJacobiMethod) {
     for (size_t i = 0; i < 2; ++i) {
         constant_terms[i] = const_terms_data_2[i];
     }
-    roots = kfsoleq::solveUsingJacobiMethod(my_csr_matrix, constant_terms, kfsoleq::tolerance, iters_block_size, max_iters);
+    roots = kfsoleq::solveUsingJacobiMethod(my_csr_matrix,
+                                            constant_terms,
+                                            kfsoleq::tolerance,
+                                            iters_block_size,
+                                            max_iters);
     
     
     EXPECT_EQ(roots.getSize(), 2) << "Roots Size doesn't match";
@@ -520,12 +516,84 @@ TEST(LinalgOperations, SolveUsingFixedPointIterationMethod) {
         constant_terms[i] = const_terms_data_2[i];
     }
     roots = kfsoleq::solveUsingFixedPointIterationMethod(my_csr_matrix,
-                                                                         constant_terms,
-                                                                         kfsoleq::tolerance,
-                                                                         kfsoleq::Vector(2),
-                                                                         0.153846153846,
-                                                                         iters_block_size,
-                                                                         max_iters);
+                                                         constant_terms,
+                                                         kfsoleq::tolerance,
+                                                         kfsoleq::Vector(2),
+                                                         0.153846153846,
+                                                         iters_block_size,
+                                                         max_iters);
+    
+    
+    EXPECT_EQ(roots.getSize(), 2) << "Roots Size doesn't match";
+    EXPECT_EQ(roots.getValues().size(), 2) << "Roots Values size doesn't match";
+    EXPECT_EQ(roots.getValues().capacity(), 2) << "Roots Values capacity doesn't match";
+    for (size_t i = 0; i < 2; ++i) {
+        tmp = 0;
+        for (size_t j = 0; j < 2; ++j) {
+            tmp += my_matrix_data_2[i][j] * roots[j];
+        }
+        EXPECT_NEAR(tmp, const_terms_data_2[i], kfsoleq::tolerance) << "Roots Values doesn't match";
+    }
+}
+
+TEST(LinalgOperations, SolveUsingGaussSeidelMethod) {
+    size_t iters_block_size = 16;
+    size_t max_iters = 1000;
+    kfsoleq::CSR_Matrix my_csr_matrix;
+    kfsoleq::soleq_float my_matrix_data_1[3][3] = { { 5, 1,  0 },
+                                                    { 0, 4, -1 },
+                                                    { 1, 0,  2 } };
+    std::list<std::pair<size_t, kfsoleq::soleq_float>>  lil_first_row = { std::make_pair(0, 5), std::make_pair(1,  1) };
+    std::list<std::pair<size_t, kfsoleq::soleq_float>> lil_second_row = { std::make_pair(1, 4), std::make_pair(2, -1) };
+    std::list<std::pair<size_t, kfsoleq::soleq_float>>  lil_third_row = { std::make_pair(0, 1), std::make_pair(2,  2) };
+    std::list<std::list<std::pair<size_t, kfsoleq::soleq_float>>> my_lil = { lil_first_row, lil_second_row, lil_third_row };
+    my_csr_matrix = kfsoleq::CSR_Matrix(my_lil);
+    
+    kfsoleq::Vector constant_terms(3);
+    kfsoleq::soleq_float const_terms_data_1[3] = { 44, 4, 32 };
+    for (size_t i = 0; i < 3; ++i) {
+        constant_terms[i] = const_terms_data_1[i];
+    }
+    kfsoleq::Vector roots = kfsoleq::solveUsingGaussSeidelMethod(my_csr_matrix,
+                                                                 constant_terms,
+                                                                 kfsoleq::tolerance,
+                                                                 kfsoleq::Vector(3),
+                                                                 iters_block_size,
+                                                                 max_iters);
+    
+    
+    EXPECT_EQ(roots.getSize(), 3) << "Roots Size doesn't match";
+    EXPECT_EQ(roots.getValues().size(), 3) << "Roots Values size doesn't match";
+    EXPECT_EQ(roots.getValues().capacity(), 3) << "Roots Values capacity doesn't match";
+    kfsoleq::soleq_float tmp;
+    for (size_t i = 0; i < 3; ++i) {
+        tmp = 0;
+        for (size_t j = 0; j < 3; ++j) {
+            tmp += my_matrix_data_1[i][j] * roots[j];
+        }
+        EXPECT_NEAR(tmp, const_terms_data_1[i], kfsoleq::tolerance) << "Roots Values doesn't match";
+    }
+    
+    
+    
+    kfsoleq::soleq_float my_matrix_data_2[2][2] = { { 10, 4 },
+                                                    {  2, 3 } };
+    lil_first_row  = { std::make_pair(0, 10), std::make_pair(1, 4) };
+    lil_second_row = { std::make_pair(0, 2),  std::make_pair(1, 3) };
+    my_lil = { lil_first_row, lil_second_row };
+    my_csr_matrix = kfsoleq::CSR_Matrix(my_lil);
+    
+    constant_terms = kfsoleq::Vector(2);
+    kfsoleq::soleq_float const_terms_data_2[2] = { 2, 10 };
+    for (size_t i = 0; i < 2; ++i) {
+        constant_terms[i] = const_terms_data_2[i];
+    }
+    roots = kfsoleq::solveUsingGaussSeidelMethod(my_csr_matrix,
+                                                 constant_terms,
+                                                 kfsoleq::tolerance,
+                                                 kfsoleq::Vector(2),
+                                                 iters_block_size,
+                                                 max_iters);
     
     
     EXPECT_EQ(roots.getSize(), 2) << "Roots Size doesn't match";
