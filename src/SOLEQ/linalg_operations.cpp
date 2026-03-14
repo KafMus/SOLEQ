@@ -106,7 +106,7 @@ std::pair<kfsoleq::Matrix, kfsoleq::Matrix> kfsoleq::getQRDecompositionHousehold
         /* return as std::pair<Q_Matrix, R_Matrix> */
         return std::make_pair(Q_Matrix, given_matrix);
 }
-kfsoleq::Vector kfsoleq::solveUsingQRDecompostion(const kfsoleq::Matrix& given_matrix) {
+kfsoleq::Vector kfsoleq::solveUsingQRDecomposition(const kfsoleq::Matrix& given_matrix) {
         kfsoleq::Vector roots(given_matrix.getSizeY());
         kfsoleq::Matrix system_matrix(given_matrix.getSizeY(), given_matrix.getSizeX() - 1);
         kfsoleq::Vector constant_terms(given_matrix.getSizeY());
@@ -120,9 +120,34 @@ kfsoleq::Vector kfsoleq::solveUsingQRDecompostion(const kfsoleq::Matrix& given_m
             constant_terms[i] = given_matrix(i, given_matrix.getSizeX() - 1);
         }
         
-        std::pair<kfsoleq::Matrix, kfsoleq::Matrix> qr_decomposition = kfsoleq::getQRDecompositionHouseholder(system_matrix);
-        kfsoleq::Matrix Q_Matrix = qr_decomposition.first;
-        kfsoleq::Matrix R_Matrix = qr_decomposition.second;
+        auto [Q_Matrix, R_Matrix] = kfsoleq::getQRDecompositionHouseholder(system_matrix);
+        
+        constant_terms = Q_Matrix.getTransposed() * constant_terms;
+        
+        for (long long int i = (long long int)R_Matrix.getSizeX() - 1; i >= 0; --i) {
+            roots[(size_t)i] = constant_terms[(size_t)i];
+            for (long long int j = (long long int)R_Matrix.getSizeX() - 1; j > i; --j) {
+                roots[(size_t)i] -= R_Matrix((size_t)i, (size_t)j) * roots[(size_t)j];
+            }
+            roots[(size_t)i] /= R_Matrix((size_t)i, (size_t)i);
+        }
+        return roots;
+}
+kfsoleq::Vector kfsoleq::solveUsingQRDecomposition(const kfsoleq::Matrix& given_matrix,
+                                                   const kfsoleq::Matrix& Q_Matrix,
+                                                   const kfsoleq::Matrix& R_Matrix) {
+        kfsoleq::Vector roots(given_matrix.getSizeY());
+        kfsoleq::Matrix system_matrix(given_matrix.getSizeY(), given_matrix.getSizeX() - 1);
+        kfsoleq::Vector constant_terms(given_matrix.getSizeY());
+        
+        for (size_t i = 0; i < given_matrix.getSizeY(); ++i) {
+            for (size_t j = 0; j < given_matrix.getSizeX() - 1; ++j) {
+                system_matrix(i, j) = given_matrix(i, j);
+            }
+        }
+        for (size_t i = 0; i < given_matrix.getSizeY(); ++i) {
+            constant_terms[i] = given_matrix(i, given_matrix.getSizeX() - 1);
+        }
         
         constant_terms = Q_Matrix.getTransposed() * constant_terms;
         

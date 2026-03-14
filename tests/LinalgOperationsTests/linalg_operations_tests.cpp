@@ -343,7 +343,6 @@ TEST(LinalgOperations, QRDecompositionHouseholder) {
 }
 
 TEST(LinalgOperations, SolveUsingQRDecomposition) {
-    kfsoleq::Matrix Q_Matrix, R_Matrix;
     kfsoleq::Matrix my_matrix(3, 4);
     kfsoleq::soleq_float my_matrix_data_1[3][4] = { { 12, -51,   4, 1 },
                                                     {  6, 167, -68, 2 },
@@ -353,12 +352,32 @@ TEST(LinalgOperations, SolveUsingQRDecomposition) {
             my_matrix(i, j) = my_matrix_data_1[i][j];
         }
     }
-    kfsoleq::Vector roots = kfsoleq::solveUsingQRDecompostion(my_matrix);
+    kfsoleq::Vector roots = kfsoleq::solveUsingQRDecomposition(my_matrix);
     
     EXPECT_EQ(roots.getSize(), 3) << "Roots Size doesn't match";
     EXPECT_EQ(roots.getValues().size(), 3) << "Roots Values size doesn't match";
     EXPECT_EQ(roots.getValues().capacity(), 3) << "Roots Values capacity doesn't match";
     kfsoleq::soleq_float tmp;
+    for (size_t i = 0; i < 3; ++i) {
+        tmp = 0;
+        for (size_t j = 0; j < 3; ++j) {
+            tmp += my_matrix_data_1[i][j] * roots[j];
+        }
+        EXPECT_NEAR(tmp, my_matrix_data_1[i][3], kfsoleq::tolerance) << "Roots Values doesn't match";
+    }
+    
+    kfsoleq::Matrix cutted_my_matrix(3, 3);
+    for (size_t i = 0; i < 3; ++i) {
+        for (size_t j = 0; j < 3; ++j) {
+            cutted_my_matrix(i, j) = my_matrix_data_1[i][j];
+        }
+    }
+    auto [Q_Matrix, R_Matrix] = getQRDecompositionHouseholder(cutted_my_matrix);
+    roots = kfsoleq::solveUsingQRDecomposition(my_matrix, Q_Matrix, R_Matrix);
+    
+    EXPECT_EQ(roots.getSize(), 3) << "Roots Size doesn't match";
+    EXPECT_EQ(roots.getValues().size(), 3) << "Roots Values size doesn't match";
+    EXPECT_EQ(roots.getValues().capacity(), 3) << "Roots Values capacity doesn't match";
     for (size_t i = 0; i < 3; ++i) {
         tmp = 0;
         for (size_t j = 0; j < 3; ++j) {
@@ -378,7 +397,7 @@ TEST(LinalgOperations, SolveUsingQRDecomposition) {
             my_matrix(i, j) = my_matrix_data_2[i][j];
         }
     }
-    roots = kfsoleq::solveUsingQRDecompostion(my_matrix);
+    roots = kfsoleq::solveUsingQRDecomposition(my_matrix);
     
     EXPECT_EQ(roots.getSize(), 4) << "Roots Size doesn't match";
     EXPECT_EQ(roots.getValues().size(), 4) << "Roots Values size doesn't match";
