@@ -3,3 +3,4 @@ This "library" tries to solve SOLEQs.
 
 ## TODO
  - Remove redundant repetitive code in tests.
+ - Fix text formatting issues.
