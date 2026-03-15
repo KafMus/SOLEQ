@@ -1,0 +1,100 @@
+NEW ENTRY OF BENCHMARK DATA OF FIXED POINT ITERATION SOLVER
+Matrix Size:	1172889	 | Solver Invokations Iters Block Size:	20	 | Solver Iters Block Size:	128
+Residual:	9.744	 | Aver Time (ms):	177.756	 | Aver Iters:	15488
+Residual:	8.51797	 | Aver Time (ms):	178.139	 | Aver Iters:	16902.4
+Residual:	7.4462	 | Aver Time (ms):	204.246	 | Aver Iters:	17613.1
+Residual:	6.16841	 | Aver Time (ms):	233.597	 | Aver Iters:	18544.7
+Residual:	4.84229	 | Aver Time (ms):	251.266	 | Aver Iters:	19743.2
+Residual:	3.6022	 | Aver Time (ms):	261.987	 | Aver Iters:	21211.2
+Residual:	2.40638	 | Aver Time (ms):	293.296	 | Aver Iters:	23204.6
+Residual:	1.13322	 | Aver Time (ms):	331.873	 | Aver Iters:	26888.2
+NEW ENTRY OF BENCHMARK DATA OF FIXED POINT ITERATION SOLVER
+Matrix Size:	1172889	 | Solver Invokations Iters Block Size:	20	 | Solver Iters Block Size:	128
+Residual:	0.990637	 | Aver Time (ms):	299.927	 | Aver Iters:	26368
+Residual:	0.865991	 | Aver Time (ms):	294.346	 | Aver Iters:	28326.4
+Residual:	0.736939	 | Aver Time (ms):	310.09	 | Aver Iters:	29192.3
+Residual:	0.610478	 | Aver Time (ms):	361.209	 | Aver Iters:	30131.6
+Residual:	0.492298	 | Aver Time (ms):	391.696	 | Aver Iters:	31202.6
+Residual:	0.366222	 | Aver Time (ms):	400.132	 | Aver Iters:	32664.1
+Residual:	0.238156	 | Aver Time (ms):	434.095	 | Aver Iters:	34785.2
+Residual:	0.115211	 | Aver Time (ms):	467.703	 | Aver Iters:	38347.3
+NEW ENTRY OF BENCHMARK DATA OF FIXED POINT ITERATION SOLVER
+Matrix Size:	1172889	 | Solver Invokations Iters Block Size:	20	 | Solver Iters Block Size:	128
+Residual:	0.0980419	 | Aver Time (ms):	437.583	 | Aver Iters:	37376
+Residual:	0.0857059	 | Aver Time (ms):	431.463	 | Aver Iters:	39884.8
+Residual:	0.0729338	 | Aver Time (ms):	486.374	 | Aver Iters:	40778.2
+Residual:	0.0620651	 | Aver Time (ms):	514.331	 | Aver Iters:	41590.9
+Residual:	0.048722	 | Aver Time (ms):	540.226	 | Aver Iters:	42783.5
+Residual:	0.0362445	 | Aver Time (ms):	544.307	 | Aver Iters:	44251.2
+Residual:	0.0242124	 | Aver Time (ms):	580.783	 | Aver Iters:	46244.6
+Residual:	0.0114022	 | Aver Time (ms):	613.681	 | Aver Iters:	49928.2
+NEW ENTRY OF BENCHMARK DATA OF FIXED POINT ITERATION SOLVER
+Matrix Size:	1172889	 | Solver Invokations Iters Block Size:	20	 | Solver Iters Block Size:	128
+Residual:	0.00996757	 | Aver Time (ms):	574.08	 | Aver Iters:	48256
+Residual:	0.0087134	 | Aver Time (ms):	625.55	 | Aver Iters:	51308.8
+Residual:	0.00741492	 | Aver Time (ms):	654.17	 | Aver Iters:	52229.4
+Residual:	0.00614249	 | Aver Time (ms):	645.5	 | Aver Iters:	53171.5
+Residual:	0.00482194	 | Aver Time (ms):	683.369	 | Aver Iters:	54370.6
+Residual:	0.00368485	 | Aver Time (ms):	675.686	 | Aver Iters:	55710.5
+Residual:	0.00239627	 | Aver Time (ms):	725.739	 | Aver Iters:	57825.5
+Residual:	0.00115923	 | Aver Time (ms):	752.007	 | Aver Iters:	61387.3
+NEW ENTRY OF BENCHMARK DATA OF FIXED POINT ITERATION SOLVER
+Matrix Size:	1172889	 | Solver Invokations Iters Block Size:	20	 | Solver Iters Block Size:	256
+Residual:	0.000960298	 | Aver Time (ms):	739.816	 | Aver Iters:	59392
+Residual:	0.000862353	 | Aver Time (ms):	774.997	 | Aver Iters:	62873.6
+Residual:	0.000733843	 | Aver Time (ms):	807.837	 | Aver Iters:	63815.7
+Residual:	0.000591781	 | Aver Time (ms):	795.374	 | Aver Iters:	64886.8
+Residual:	0.00047722	 | Aver Time (ms):	830.558	 | Aver Iters:	65964.3
+Residual:	0.000364684	 | Aver Time (ms):	824.263	 | Aver Iters:	67298.2
+Residual:	0.000237155	 | Aver Time (ms):	878.854	 | Aver Iters:	69412.9
+Residual:	0.000111682	 | Aver Time (ms):	902.626	 | Aver Iters:	73102.6
+NEW ENTRY OF BENCHMARK DATA OF FIXED POINT ITERATION SOLVER
+Matrix Size:	1172889	 | Solver Invokations Iters Block Size:	20	 | Solver Iters Block Size:	256
+Residual:	9.50393e-05	 | Aver Time (ms):	874.307	 | Aver Iters:	70400
+Residual:	8.53458e-05	 | Aver Time (ms):	917.737	 | Aver Iters:	74432
+Residual:	7.26274e-05	 | Aver Time (ms):	949.254	 | Aver Iters:	75401.6
+Residual:	6.18043e-05	 | Aver Time (ms):	933.814	 | Aver Iters:	76218.1
+Residual:	4.72298e-05	 | Aver Time (ms):	978.553	 | Aver Iters:	77538.9
+Residual:	3.60922e-05	 | Aver Time (ms):	971.194	 | Aver Iters:	78884.9
+Residual:	2.34709e-05	 | Aver Time (ms):	1017.58	 | Aver Iters:	81000.2
+Residual:	1.10531e-05	 | Aver Time (ms):	1046.36	 | Aver Iters:	84690
+NEW ENTRY OF BENCHMARK DATA OF FIXED POINT ITERATION SOLVER
+Matrix Size:	1172889	 | Solver Invokations Iters Block Size:	20	 | Solver Iters Block Size:	256
+Residual:	9.92569e-06	 | Aver Time (ms):	952.434	 | Aver Iters:	81152
+Residual:	8.44654e-06	 | Aver Time (ms):	1016.96	 | Aver Iters:	85977.6
+Residual:	7.18783e-06	 | Aver Time (ms):	1080.28	 | Aver Iters:	86986.9
+Residual:	6.11668e-06	 | Aver Time (ms):	1067.94	 | Aver Iters:	87805.3
+Residual:	4.93257e-06	 | Aver Time (ms):	1102.56	 | Aver Iters:	88870.3
+Residual:	3.572e-06	 | Aver Time (ms):	1096.84	 | Aver Iters:	90459.5
+Residual:	2.32288e-06	 | Aver Time (ms):	1151.25	 | Aver Iters:	92587
+Residual:	1.15436e-06	 | Aver Time (ms):	1169.42	 | Aver Iters:	96021.3
+NEW ENTRY OF BENCHMARK DATA OF FIXED POINT ITERATION SOLVER
+Matrix Size:	1172889	 | Solver Invokations Iters Block Size:	20	 | Solver Iters Block Size:	512
+Residual:	9.82332e-07	 | Aver Time (ms):	1146.71	 | Aver Iters:	92160
+Residual:	7.92161e-07	 | Aver Time (ms):	1189.75	 | Aver Iters:	97792
+Residual:	7.11368e-07	 | Aver Time (ms):	1223.5	 | Aver Iters:	98585.6
+Residual:	5.73665e-07	 | Aver Time (ms):	1204.76	 | Aver Iters:	99649.3
+Residual:	4.6261e-07	 | Aver Time (ms):	1253.6	 | Aver Iters:	100726
+Residual:	3.35e-07	 | Aver Time (ms):	1236.51	 | Aver Iters:	102316
+Residual:	2.17854e-07	 | Aver Time (ms):	1295.56	 | Aver Iters:	104444
+Residual:	1.14256e-07	 | Aver Time (ms):	1308.16	 | Aver Iters:	107622
+NEW ENTRY OF BENCHMARK DATA OF FIXED POINT ITERATION SOLVER
+Matrix Size:	1172889	 | Solver Invokations Iters Block Size:	20	 | Solver Iters Block Size:	512
+Residual:	9.21176e-08	 | Aver Time (ms):	1222.97	 | Aver Iters:	103424
+Residual:	8.27371e-08	 | Aver Time (ms):	1340.59	 | Aver Iters:	109107
+Residual:	7.42874e-08	 | Aver Time (ms):	1378.7	 | Aver Iters:	109903
+Residual:	5.99119e-08	 | Aver Time (ms):	1369.28	 | Aver Iters:	110967
+Residual:	4.83171e-08	 | Aver Time (ms):	1411.38	 | Aver Iters:	112044
+Residual:	3.49929e-08	 | Aver Time (ms):	1393.06	 | Aver Iters:	113634
+Residual:	2.2751e-08	 | Aver Time (ms):	1450.94	 | Aver Iters:	115762
+Residual:	1.0734e-08	 | Aver Time (ms):	1460.24	 | Aver Iters:	119452
+NEW ENTRY OF BENCHMARK DATA OF FIXED POINT ITERATION SOLVER
+Matrix Size:	1172889	 | Solver Invokations Iters Block Size:	20	 | Solver Iters Block Size:	1024
+Residual:	8.651e-09	 | Aver Time (ms):	1373.97	 | Aver Iters:	114688
+Residual:	8.651e-09	 | Aver Time (ms):	1466.65	 | Aver Iters:	120422
+Residual:	6.97373e-09	 | Aver Time (ms):	1512.43	 | Aver Iters:	121733
+Residual:	5.62418e-09	 | Aver Time (ms):	1487.19	 | Aver Iters:	122823
+Residual:	4.5406e-09	 | Aver Time (ms):	1534.7	 | Aver Iters:	123901
+Residual:	3.66922e-09	 | Aver Time (ms):	1514.89	 | Aver Iters:	124979
+Residual:	2.07828e-09	 | Aver Time (ms):	1594.6	 | Aver Iters:	128105
+Residual:	1.01838e-09	 | Aver Time (ms):	1597.92	 | Aver Iters:	131333

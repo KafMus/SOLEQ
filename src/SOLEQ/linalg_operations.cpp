@@ -163,11 +163,13 @@ kfsoleq::Vector kfsoleq::solveUsingQRDecomposition(const kfsoleq::Matrix& given_
 kfsoleq::Vector kfsoleq::solveUsingJacobiMethod(const kfsoleq::CSR_Matrix& given_csr_matrix,
                                                 const kfsoleq::Vector& constant_terms,
                                                 kfsoleq::soleq_float needed_precision,
+                                                const kfsoleq::Vector& initial_root,
                                                 size_t iters_block_size,
-                                                size_t max_iters) {
+                                                size_t max_iters,
+                                                size_t* overall_iters_ptr) {
         const size_t size_y = given_csr_matrix.getRowIndexes().size() - 1;
         size_t begin_ind, end_ind, col_ind;
-        kfsoleq::Vector roots_prev(size_y);
+        kfsoleq::Vector roots_prev = initial_root;
         kfsoleq::Vector roots(size_y);
         kfsoleq::soleq_float mult_LUx;
         kfsoleq::soleq_float diagonal_element = 0;
@@ -195,6 +197,9 @@ kfsoleq::Vector kfsoleq::solveUsingJacobiMethod(const kfsoleq::CSR_Matrix& given
             outer_ind += iters_block_size;
         }
         
+        if (overall_iters_ptr) {
+            (*overall_iters_ptr) = outer_ind;
+        }
         return roots;
 }
 kfsoleq::Vector kfsoleq::solveUsingFixedPointIterationMethod(const kfsoleq::CSR_Matrix& given_csr_matrix,
@@ -203,7 +208,8 @@ kfsoleq::Vector kfsoleq::solveUsingFixedPointIterationMethod(const kfsoleq::CSR_
                                                 const kfsoleq::Vector& initial_root,
                                                 kfsoleq::soleq_float tau,
                                                 size_t iters_block_size,
-                                                size_t max_iters) {
+                                                size_t max_iters,
+                                                size_t* overall_iters_ptr) {
         kfsoleq::Vector roots_prev = initial_root;
         kfsoleq::Vector roots(given_csr_matrix.getRowIndexes().size() - 1);
         
@@ -216,6 +222,9 @@ kfsoleq::Vector kfsoleq::solveUsingFixedPointIterationMethod(const kfsoleq::CSR_
             outer_ind += iters_block_size;
         }
         
+        if (overall_iters_ptr) {
+            (*overall_iters_ptr) = outer_ind;
+        }
         return roots;
 }
 kfsoleq::Vector kfsoleq::solveUsingGaussSeidelMethod(const kfsoleq::CSR_Matrix& given_csr_matrix,
@@ -223,7 +232,8 @@ kfsoleq::Vector kfsoleq::solveUsingGaussSeidelMethod(const kfsoleq::CSR_Matrix& 
                                                 kfsoleq::soleq_float needed_precision,
                                                 const kfsoleq::Vector& initial_root,
                                                 size_t iters_block_size,
-                                                size_t max_iters) {
+                                                size_t max_iters,
+                                                size_t* overall_iters_ptr) {
         const size_t size_y = given_csr_matrix.getRowIndexes().size() - 1;
         size_t begin_ind, end_ind, col_ind;
         kfsoleq::Vector roots = initial_root;
@@ -252,6 +262,9 @@ kfsoleq::Vector kfsoleq::solveUsingGaussSeidelMethod(const kfsoleq::CSR_Matrix& 
             outer_ind += iters_block_size;
         }
         
+        if (overall_iters_ptr) {
+            (*overall_iters_ptr) = outer_ind;
+        }
         return roots;
 }
 

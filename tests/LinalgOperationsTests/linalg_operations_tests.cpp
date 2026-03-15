@@ -432,6 +432,7 @@ TEST(LinalgOperations, SolveUsingJacobiMethod) {
     kfsoleq::Vector roots = kfsoleq::solveUsingJacobiMethod(my_csr_matrix,
                                                             constant_terms,
                                                             kfsoleq::tolerance,
+                                                            kfsoleq::Vector(3),
                                                             iters_block_size,
                                                             max_iters);
     
@@ -465,6 +466,7 @@ TEST(LinalgOperations, SolveUsingJacobiMethod) {
     roots = kfsoleq::solveUsingJacobiMethod(my_csr_matrix,
                                             constant_terms,
                                             kfsoleq::tolerance,
+                                            kfsoleq::Vector(2),
                                             iters_block_size,
                                             max_iters);
     

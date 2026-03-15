@@ -21,21 +21,25 @@ Vector solveUsingQRDecomposition(const Matrix& given_matrix,
 Vector solveUsingJacobiMethod(const CSR_Matrix& given_csr_matrix,
                               const Vector& constant_terms,
                               soleq_float needed_precision,
+                              const Vector& initial_root,
                               size_t iters_block_size,
-                              size_t max_iters);
+                              size_t max_iters,
+                              size_t* overall_iters_ptr = nullptr);
 Vector solveUsingFixedPointIterationMethod(const CSR_Matrix& given_csr_matrix,
                               const Vector& constant_terms,
                               soleq_float needed_precision,
                               const Vector& initial_root,
                               soleq_float tau,
                               size_t iters_block_size,
-                              size_t max_iters);
+                              size_t max_iters,
+                              size_t* overall_iters_ptr = nullptr);
 Vector solveUsingGaussSeidelMethod(const CSR_Matrix& given_csr_matrix,
                               const Vector& constant_terms,
                               soleq_float needed_precision,
                               const Vector& initial_root,
                               size_t iters_block_size,
-                              size_t max_iters);
+                              size_t max_iters,
+                              size_t* overall_iters_ptr = nullptr);
 
 }
 
