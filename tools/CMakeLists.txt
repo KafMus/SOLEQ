@@ -1,22 +1,22 @@
 if(MATRIX_BUILD AND CSR_MATRIX_BUILD AND VECTOR_BUILD AND LINALG_OPERATIONS_BUILD)
-    message("Adding Matrix Vector Multiplication Benchmark Executable...")
-    add_executable(MatrixVectorMultiplicationBenchmark)
+    message("Adding Matrix And CSR_Matrix To Vector Multiplication Benchmark Executable...")
+    add_executable(MatrixAndCSRMatrixToVectorMultiplicationBenchmark)
 
-    target_sources(MatrixVectorMultiplicationBenchmark
+    target_sources(MatrixAndCSRMatrixToVectorMultiplicationBenchmark
         PRIVATE
-            matrixbenchmark.cpp
+            MatrixAndCSRMatrixToVectorMultiplicationBenchmark.cpp
     )
-    target_link_libraries(MatrixVectorMultiplicationBenchmark
+    target_link_libraries(MatrixAndCSRMatrixToVectorMultiplicationBenchmark
         PRIVATE
             SOLEQ
     )
-    message("Adding Matrix Vector Multiplication Benchmark Executable DONE!")
+    message("Adding Matrix And CSR_Matrix To Vector Multiplication Benchmark Executable DONE!")
     message("Adding Solver Jacobi Benchmark Executable...")
     add_executable(SolverJacobiBenchmark)
 
     target_sources(SolverJacobiBenchmark
         PRIVATE
-            solverJacobiBenchmark.cpp
+            SolverJacobiBenchmark.cpp
     )
     target_link_libraries(SolverJacobiBenchmark
         PRIVATE
@@ -28,7 +28,7 @@ if(MATRIX_BUILD AND CSR_MATRIX_BUILD AND VECTOR_BUILD AND LINALG_OPERATIONS_BUIL
 
     target_sources(SolverSeidelBenchmark
         PRIVATE
-            solverSeidelBenchmark.cpp
+            SolverSeidelBenchmark.cpp
     )
     target_link_libraries(SolverSeidelBenchmark
         PRIVATE
@@ -40,7 +40,7 @@ if(MATRIX_BUILD AND CSR_MATRIX_BUILD AND VECTOR_BUILD AND LINALG_OPERATIONS_BUIL
 
     target_sources(SolverFixedPointIterationBenchmark
         PRIVATE
-            solverFixedPointIterationBenchmark.cpp
+            SolverFixedPointIterationBenchmark.cpp
     )
     target_link_libraries(SolverFixedPointIterationBenchmark
         PRIVATE
