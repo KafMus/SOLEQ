@@ -13,17 +13,17 @@ private:
         size_t size_y, size_x;
         std::vector<soleq_float> values;
 public:
-	// Constructors and destructors
+        // Constructors and destructors
         Matrix(); // Default constructor
         Matrix(size_t given_size_y, size_t given_size_x);
-	
-	// Getters and setters
+        
+        // Getters and setters
         size_t getSizeY() const { return size_y; }
         size_t getSizeX() const { return size_x; }
         const std::vector<soleq_float>& getValues() const { return values; }
         
-	// Additional infrastructure
-	void print() const;
+        // Additional infrastructure
+        void print() const;
         Matrix getTransposed() const;
         
         // Operators overload

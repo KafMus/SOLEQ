@@ -45,10 +45,10 @@ kfsoleq::DiagThree::DiagThree(size_t given_size,
 // Additional infrastructure
 // 
 void kfsoleq::DiagThree::print() const {
-	std::cout << "Size:[" << this->size << "]\n";
-	std::cout << "Diagonals ptr:[" << &this->diagonals << "]\n";
-	std::cout << "Constant Terms ptr:[" << &this->constant_terms << "]\n";
-	std::cout << "Roots ptr:[" << &this->roots << "]\n";
+        std::cout << "Size:[" << this->size << "]\n";
+        std::cout << "Diagonals ptr:[" << &this->diagonals << "]\n";
+        std::cout << "Constant Terms ptr:[" << &this->constant_terms << "]\n";
+        std::cout << "Roots ptr:[" << &this->roots << "]\n";
 }
 void kfsoleq::DiagThree::printDiagonals() const {
         for (size_t i = 0; i < 3; ++i) {

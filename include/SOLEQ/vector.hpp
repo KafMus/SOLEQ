@@ -13,16 +13,16 @@ private:
         size_t size;
         std::vector<soleq_float> values;
 public:
-	// Constructors and destructors
+        // Constructors and destructors
         Vector(); // Default constructor
         Vector(size_t given_size);
-	
-	// Getters and setters
+        
+        // Getters and setters
         size_t getSize() const { return size; }
         const std::vector<soleq_float>& getValues() const { return values; }
         
-	// Additional infrastructure
-	void print() const;
+        // Additional infrastructure
+        void print() const;
         soleq_float getFirstNorm() const;
         soleq_float getEuclidNorm() const;
         

@@ -16,20 +16,20 @@ private:
         std::vector<soleq_float> constant_terms;
         std::vector<soleq_float> roots;
 public:
-	// Constructors and destructors
-	DiagThree(); // Default constructor
+        // Constructors and destructors
+        DiagThree(); // Default constructor
         DiagThree(size_t given_size,
                   const std::array<std::vector<soleq_float>, 3>& given_diagonals,
                   const std::vector<soleq_float>& given_constant_terms);
-	
-	// Getters and setters
+        
+        // Getters and setters
         size_t getSize() const { return size; }
         const std::array<std::vector<soleq_float>, 3>& getDiagonals() const { return diagonals; }
         const std::vector<soleq_float>& getConstantTerms() const { return constant_terms; }
         const std::vector<soleq_float>& getRoots() const { return roots; }
         
-	// Additional infrastructure
-	void print() const;
+        // Additional infrastructure
+        void print() const;
         void printDiagonals() const;
         void printConstantTerms() const;
         void printRoots() const;

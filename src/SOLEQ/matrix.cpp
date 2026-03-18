@@ -27,7 +27,7 @@ kfsoleq::Matrix::Matrix(size_t given_size_y, size_t given_size_x) :
 // Additional infrastructure
 // 
 void kfsoleq::Matrix::print() const {
-	std::cout << "Size Y:[" << this->size_y << "]\n";
+        std::cout << "Size Y:[" << this->size_y << "]\n";
         std::cout << "Size X:[" << this->size_x << "]\n";
         std::cout << "Values:\n";
         for (size_t i = 0; i < this->size_y; ++i) {

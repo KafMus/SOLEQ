@@ -24,7 +24,7 @@ kfsoleq::Vector::Vector(size_t given_size) :
 // Additional infrastructure
 // 
 void kfsoleq::Vector::print() const {
-	std::cout << "Size:[" << this->size << "]\n";
+        std::cout << "Size:[" << this->size << "]\n";
         std::cout << "Values:[ ";
         for (auto iter = values.begin(); iter != values.end(); ++iter) {
             std::cout << (*iter) << ' ';
