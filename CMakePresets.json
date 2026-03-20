@@ -11,6 +11,8 @@
             "binaryDir": "${sourceDir}/build",
             "hidden": true,
             "cacheVariables": {
+                "CMAKE_CXX_STANDARD": "20",
+                "CMAKE_CXX_STANDARD_REQUIRED": "OFF",
                 "CMAKE_COMPILE_WARNING_AS_ERROR": true
             },
             "warnings": {
