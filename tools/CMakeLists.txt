@@ -47,4 +47,16 @@ if(MATRIX_BUILD AND CSR_MATRIX_BUILD AND VECTOR_BUILD AND LINALG_OPERATIONS_BUIL
             SOLEQ
     )
     message("Adding Solver Fixed Point Iteration Benchmark Executable DONE!")
+    message("Adding Solver Chebyshev Fixed Point Iteration Benchmark Executable...")
+    add_executable(SolverChebyshevFixedPointIterationBenchmark)
+
+    target_sources(SolverChebyshevFixedPointIterationBenchmark
+        PRIVATE
+            SolverChebyshevFixedPointIterationBenchmark.cpp
+    )
+    target_link_libraries(SolverChebyshevFixedPointIterationBenchmark
+        PRIVATE
+            SOLEQ
+    )
+    message("Adding Solver Chebyshev Fixed Point Iteration Benchmark Executable DONE!")
 endif()

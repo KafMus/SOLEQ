@@ -6,6 +6,7 @@
 #include <SOLEQ/csr_matrix.hpp>
 #include <SOLEQ/vector.hpp>
 #include <cmath>
+#include <numbers>
 
 
 kfsoleq::Vector kfsoleq::operator * (const kfsoleq::Matrix& left_matrix, const kfsoleq::Vector& right_vector) {
@@ -56,6 +57,54 @@ kfsoleq::Matrix kfsoleq::operator * (const kfsoleq::Vector& left_vector, const k
             for (size_t j = 0; j < right_csr_matrix.getColumnIndexes().size(); ++j) {
                 result(i, right_csr_matrix.getColumnIndexes()[j]) = left_vector[i] * right_csr_matrix.getValues()[j];
             }
+        }
+        return result;
+}
+kfsoleq::soleq_float kfsoleq::getMaxEigenValuePowerMethod(const kfsoleq::CSR_Matrix& given_csr_matrix,
+                                                          const kfsoleq::Vector initial_vector,
+                                                          size_t iters_num) {
+        kfsoleq::Vector eigen_vector = given_csr_matrix * initial_vector;
+        eigen_vector /= eigen_vector.getEuclidNorm();
+        for (size_t i = 0; i < iters_num - 1; ++i) {
+            eigen_vector = given_csr_matrix * eigen_vector;
+            eigen_vector /= eigen_vector.getEuclidNorm();
+        }
+        return (eigen_vector * (given_csr_matrix * eigen_vector)) / (eigen_vector * eigen_vector);
+}
+kfsoleq::Vector kfsoleq::getChebyshevPolynomialRoots(size_t degree) {
+        kfsoleq::Vector roots(degree);
+        kfsoleq::soleq_float init_sin = std::numbers::pi_v<soleq_float> / (kfsoleq::soleq_float)(2 * degree);
+        kfsoleq::soleq_float sin_pi_n = std::numbers::pi_v<soleq_float> / (kfsoleq::soleq_float)degree;
+        kfsoleq::soleq_float cos_pi_n;
+        
+        roots[0] = std::cos(init_sin);
+        init_sin = std::sin(init_sin);
+        cos_pi_n = std::cos(sin_pi_n);
+        sin_pi_n = std::sin(sin_pi_n);
+        
+        for (size_t i = 1; i < (size_t)((double)degree / 2); ++i) {
+            roots[i] = (roots[i - 1] * cos_pi_n) - (init_sin * sin_pi_n);
+            init_sin = (init_sin * cos_pi_n) + (roots[i - 1] * sin_pi_n);
+        }
+        for (size_t i = (size_t)((double)degree / 2); i < degree; ++i) {
+            roots[i] = -roots[degree - i - 1];
+        }
+        return roots;
+}
+kfsoleq::Vector kfsoleq::reorderChebyshevPolynomialRoots(const kfsoleq::Vector& roots) {
+        kfsoleq::Vector result(roots.getSize());
+        for (size_t i = 0; i < (size_t)((double)roots.getSize() / 2); ++i) {
+            result[2 * i] = roots[i];
+            result[2 * i + 1] = roots[roots.getSize() - i - 1];
+        }
+        return result;
+}
+kfsoleq::Vector kfsoleq::getTauFromChebyshevPolynomialRoots(const kfsoleq::Vector& roots,
+                                                            kfsoleq::soleq_float min_value,
+                                                            kfsoleq::soleq_float max_value) {
+        kfsoleq::Vector result(roots.getSize());
+        for (size_t i = 0; i < roots.getSize(); ++i) {
+            result[i] = 2 / (min_value + max_value + (max_value - min_value) * roots[i]);
         }
         return result;
 }
@@ -258,6 +307,59 @@ kfsoleq::Vector kfsoleq::solveUsingGaussSeidelMethod(const kfsoleq::CSR_Matrix& 
                     
                     roots[row_ind] = (constant_terms[row_ind] - mult_LUx) / diagonal_element;
                 }
+            }
+            outer_ind += iters_block_size;
+        }
+        
+        if (overall_iters_ptr) {
+            (*overall_iters_ptr) = outer_ind;
+        }
+        return roots;
+}
+kfsoleq::Vector kfsoleq::solveUsingChebyshevFixedPointIterationMethod(const kfsoleq::CSR_Matrix& given_csr_matrix,
+                                                                      const kfsoleq::Vector& constant_terms,
+                                                                      kfsoleq::soleq_float needed_precision,
+                                                                      const kfsoleq::Vector& initial_root,
+                                                                      const kfsoleq::Vector& tau,
+                                                                      size_t max_iters,
+                                                                      size_t* overall_iters_ptr) {
+        kfsoleq::Vector roots_prev = initial_root;
+        kfsoleq::Vector roots(given_csr_matrix.getRowIndexes().size() - 1);
+        
+        size_t outer_ind = 0;
+        while (((given_csr_matrix * roots) - constant_terms).getFirstNorm() > needed_precision && outer_ind < max_iters) {
+            for (size_t iter_num = 0; iter_num < tau.getSize(); ++iter_num) {
+                roots = roots_prev - (given_csr_matrix * roots_prev - constant_terms) * tau[iter_num];
+                roots_prev = roots;
+            }
+            outer_ind += tau.getSize();
+        }
+        
+        if (overall_iters_ptr) {
+            (*overall_iters_ptr) = outer_ind;
+        }
+        return roots;
+}
+kfsoleq::Vector kfsoleq::solveUsingChebyshevFixedPointIterationMethod(const kfsoleq::CSR_Matrix& given_csr_matrix,
+                                                                      const kfsoleq::Vector& constant_terms,
+                                                                      kfsoleq::soleq_float needed_precision,
+                                                                      const kfsoleq::Vector& initial_root,
+                                                                      kfsoleq::soleq_float min_eigen_value,
+                                                                      kfsoleq::soleq_float max_eigen_value,
+                                                                      size_t iters_block_size,
+                                                                      size_t max_iters,
+                                                                      size_t* overall_iters_ptr) {
+        kfsoleq::Vector roots_prev = initial_root;
+        kfsoleq::Vector roots(given_csr_matrix.getRowIndexes().size() - 1);
+        kfsoleq::Vector tau = kfsoleq::getTauFromChebyshevPolynomialRoots(
+                              kfsoleq::reorderChebyshevPolynomialRoots(
+                              kfsoleq::getChebyshevPolynomialRoots(iters_block_size)), min_eigen_value, max_eigen_value);
+        
+        size_t outer_ind = 0;
+        while (((given_csr_matrix * roots) - constant_terms).getFirstNorm() > needed_precision && outer_ind < max_iters) {
+            for (size_t iter_num = 0; iter_num < iters_block_size; ++iter_num) {
+                roots = roots_prev - (given_csr_matrix * roots_prev - constant_terms) * tau[iter_num];
+                roots_prev = roots;
             }
             outer_ind += iters_block_size;
         }

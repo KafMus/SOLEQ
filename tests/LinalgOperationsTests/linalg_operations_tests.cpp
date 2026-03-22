@@ -242,7 +242,103 @@ TEST(LinalgOperations, CSRMatrixVectorMultiplication) {
     EXPECT_NEAR(result_matrix(4, 4),  0, kfsoleq::tolerance) << "Result Matrix's Values values doesn't match";
 }
 
-TEST(LinalgOperations, QRDecompositionHouseholder) {
+TEST(LinalgOperationsSideFunctions, GetMaxEigenValuePowerMethod) {
+    size_t iters_num = 100;
+    kfsoleq::CSR_Matrix my_csr_matrix;
+    
+    /*
+     *  || 5 1 0 ||
+     *  || 1 4 1 ||
+     *  || 0 1 2 ||
+     *  max_eigen_value \approx 5.6996281
+     */
+    std::list<std::pair<size_t, kfsoleq::soleq_float>>  lil_first_row = { std::make_pair(0, 5), std::make_pair(1, 1) };
+    std::list<std::pair<size_t, kfsoleq::soleq_float>> lil_second_row = { std::make_pair(0, 1), std::make_pair(1, 4), std::make_pair(2, 1) };
+    std::list<std::pair<size_t, kfsoleq::soleq_float>>  lil_third_row = { std::make_pair(1, 1), std::make_pair(2, 2) };
+    std::list<std::list<std::pair<size_t, kfsoleq::soleq_float>>> my_lil = { lil_first_row, lil_second_row, lil_third_row };
+    my_csr_matrix = kfsoleq::CSR_Matrix(my_lil);
+    
+    kfsoleq::Vector initial_vector(3);
+    for (size_t i = 0; i < 3; ++i) {
+        initial_vector[i] = 1;
+    }
+    
+    kfsoleq::soleq_float max_eigen_value = getMaxEigenValuePowerMethod(my_csr_matrix,
+                                                                       initial_vector,
+                                                                       iters_num);
+    EXPECT_NEAR(max_eigen_value, 5.6996281, kfsoleq::tolerance) << "Max Eigen Value of CSR_Matrix doesn't match";
+    
+    /*
+     *  || 10 1 ||
+     *  || 1 40 ||
+     *  max_eigen_value = 25 + sqrt(226)
+     */
+    lil_first_row  = { std::make_pair(0, 10), std::make_pair(1, 1) };
+    lil_second_row = { std::make_pair(0, 1), std::make_pair(1, 40) };
+    my_lil = { lil_first_row, lil_second_row };
+    my_csr_matrix = kfsoleq::CSR_Matrix(my_lil);
+    
+    max_eigen_value = getMaxEigenValuePowerMethod(my_csr_matrix,
+                                                  initial_vector,
+                                                  iters_num);
+    EXPECT_NEAR(max_eigen_value, 25 + std::sqrt(226), kfsoleq::tolerance) << "Max Eigen Value of CSR_Matrix doesn't match";
+}
+
+TEST(LinalgOperationsSideFunctions, GetChebyshevPolynomialRoots) {
+    kfsoleq::soleq_float roots_data_1[2] = { 1.0f / std::sqrt(2), -1.0f / std::sqrt(2) };
+    kfsoleq::soleq_float roots_data_2[5] = { std::sqrt(std::sqrt(5) + 5) / (2 * std::sqrt(2)),
+                                             std::sqrt(5 - std::sqrt(5)) / (2 * std::sqrt(2)),
+                                             0,
+                                            -std::sqrt(5 - std::sqrt(5)) / (2 * std::sqrt(2)),
+                                            -std::sqrt(std::sqrt(5) + 5) / (2 * std::sqrt(2)) };
+    kfsoleq::soleq_float roots_data_3[6] = { std::cos(std::numbers::pi_v<kfsoleq::soleq_float> / 12),
+                                             1.0f / std::sqrt(2),
+                                             std::cos(5 * std::numbers::pi_v<kfsoleq::soleq_float> / 12),
+                                            -std::cos(5 * std::numbers::pi_v<kfsoleq::soleq_float> / 12),
+                                            -1.0f / std::sqrt(2),
+                                            -std::cos(std::numbers::pi_v<kfsoleq::soleq_float> / 12) };
+    
+    kfsoleq::Vector roots = kfsoleq::getChebyshevPolynomialRoots(2);
+    for (size_t i = 0; i < 2; ++i) {
+        EXPECT_NEAR(roots[i], roots_data_1[i], kfsoleq::tolerance) << "Chebyshev roots didn't match";
+    }
+    roots = kfsoleq::getChebyshevPolynomialRoots(5);
+    for (size_t i = 0; i < 5; ++i) {
+        EXPECT_NEAR(roots[i], roots_data_2[i], kfsoleq::tolerance) << "Chebyshev roots didn't match";
+    }
+    roots = kfsoleq::getChebyshevPolynomialRoots(6);
+    for (size_t i = 0; i < 6; ++i) {
+        EXPECT_NEAR(roots[i], roots_data_3[i], kfsoleq::tolerance) << "Chebyshev roots didn't match";
+    }
+}
+
+TEST(LinalgOperationsSideFunctions, ReorderChebyshevPolynomialRoots) {
+    kfsoleq::soleq_float roots_data_1[2] = { 1.0f / std::sqrt(2), -1.0f / std::sqrt(2) };
+    kfsoleq::soleq_float roots_data_2[4] = { std::sqrt((std::sqrt(2) + 1) / std::sqrt(8)),
+                                            -std::sqrt((std::sqrt(2) + 1) / std::sqrt(8)),
+                                             std::sqrt((std::sqrt(2) - 1) / std::sqrt(8)),
+                                            -std::sqrt((std::sqrt(2) - 1) / std::sqrt(8)) };
+    kfsoleq::Vector roots = kfsoleq::reorderChebyshevPolynomialRoots(kfsoleq::getChebyshevPolynomialRoots(2));
+    for (size_t i = 0; i < 2; ++i) {
+        EXPECT_NEAR(roots[i], roots_data_1[i], kfsoleq::tolerance) << "Reordered Chebyshev roots didn't match";
+    }
+    roots = kfsoleq::reorderChebyshevPolynomialRoots(kfsoleq::getChebyshevPolynomialRoots(4));
+    for (size_t i = 0; i < 4; ++i) {
+        EXPECT_NEAR(roots[i], roots_data_2[i], kfsoleq::tolerance) << "Reordered Chebyshev roots didn't match";
+    }
+}
+
+TEST(LinalgOperationsSideFunctions, GetTauFromChebyshevPolynomialRoots) {
+    kfsoleq::soleq_float tau_data[4] = { 0.180463, 0.588985, 0.226471, 0.354163 };
+    
+    kfsoleq::Vector roots = kfsoleq::reorderChebyshevPolynomialRoots(kfsoleq::getChebyshevPolynomialRoots(4));
+    kfsoleq::Vector tau = kfsoleq::getTauFromChebyshevPolynomialRoots(roots, 1.5395, 5.6996281);
+    for (size_t i = 0; i < 4; ++i) {
+        EXPECT_NEAR(tau[i], tau_data[i], kfsoleq::tolerance) << "Tau from Reordered Chebyshev roots didn't match";
+    }
+}
+
+TEST(LinalgOperations, GetQRDecompositionHouseholder) {
     kfsoleq::Matrix Q_Matrix, R_Matrix;
     kfsoleq::Matrix my_matrix(3, 3);
     kfsoleq::soleq_float my_matrix_data_1[3][3] = { { 12, -51,   4 },
@@ -342,7 +438,7 @@ TEST(LinalgOperations, QRDecompositionHouseholder) {
     }
 }
 
-TEST(LinalgOperations, SolveUsingQRDecomposition) {
+TEST(LinalgOperationsSolvers, SolveUsingQRDecomposition) {
     kfsoleq::Matrix my_matrix(3, 4);
     kfsoleq::soleq_float my_matrix_data_1[3][4] = { { 12, -51,   4, 1 },
                                                     {  6, 167, -68, 2 },
@@ -411,7 +507,7 @@ TEST(LinalgOperations, SolveUsingQRDecomposition) {
     }
 }
 
-TEST(LinalgOperations, SolveUsingJacobiMethod) {
+TEST(LinalgOperationsSolvers, SolveUsingJacobiMethod) {
     size_t iters_block_size = 16;
     size_t max_iters = 1000;
     kfsoleq::CSR_Matrix my_csr_matrix;
@@ -483,7 +579,7 @@ TEST(LinalgOperations, SolveUsingJacobiMethod) {
     }
 }
 
-TEST(LinalgOperations, SolveUsingFixedPointIterationMethod) {
+TEST(LinalgOperationsSolvers, SolveUsingFixedPointIterationMethod) {
     size_t iters_block_size = 16;
     size_t max_iters = 1000;
     kfsoleq::CSR_Matrix my_csr_matrix;
@@ -557,7 +653,7 @@ TEST(LinalgOperations, SolveUsingFixedPointIterationMethod) {
     }
 }
 
-TEST(LinalgOperations, SolveUsingGaussSeidelMethod) {
+TEST(LinalgOperationsSolvers, SolveUsingGaussSeidelMethod) {
     size_t iters_block_size = 16;
     size_t max_iters = 1000;
     kfsoleq::CSR_Matrix my_csr_matrix;
@@ -626,5 +722,71 @@ TEST(LinalgOperations, SolveUsingGaussSeidelMethod) {
             tmp += my_matrix_data_2[i][j] * roots[j];
         }
         EXPECT_NEAR(tmp, const_terms_data_2[i], kfsoleq::tolerance) << "Roots Values doesn't match";
+    }
+}
+
+
+
+TEST(LinalgOperationsSolvers, SolveUsingChebyshevFixedPointIterationMethod) {
+    size_t max_iters = 1000;
+    kfsoleq::CSR_Matrix my_csr_matrix;
+    kfsoleq::soleq_float my_matrix_data_1[3][3] = { { 5, 1, 0 },
+                                                    { 1, 4, 1 },
+                                                    { 0, 1, 2 } };
+    std::list<std::pair<size_t, kfsoleq::soleq_float>>  lil_first_row = { std::make_pair(0, 5), std::make_pair(1, 1) };
+    std::list<std::pair<size_t, kfsoleq::soleq_float>> lil_second_row = { std::make_pair(0, 1), std::make_pair(1, 4), std::make_pair(2, 1) };
+    std::list<std::pair<size_t, kfsoleq::soleq_float>>  lil_third_row = { std::make_pair(1, 1), std::make_pair(2, 2) };
+    std::list<std::list<std::pair<size_t, kfsoleq::soleq_float>>> my_lil = { lil_first_row, lil_second_row, lil_third_row };
+    my_csr_matrix = kfsoleq::CSR_Matrix(my_lil);
+    
+    kfsoleq::Vector constant_terms(3);
+    kfsoleq::soleq_float const_terms_data_1[3] = { 44, 4, 32 };
+    for (size_t i = 0; i < 3; ++i) {
+        constant_terms[i] = const_terms_data_1[i];
+    }
+    kfsoleq::soleq_float min_eigen_value = 1.5395;
+    kfsoleq::soleq_float max_eigen_value = 5.6996281;
+    kfsoleq::Vector tau = kfsoleq::getTauFromChebyshevPolynomialRoots(
+                          kfsoleq::reorderChebyshevPolynomialRoots(
+                          kfsoleq::getChebyshevPolynomialRoots(4)), min_eigen_value, max_eigen_value);
+    kfsoleq::Vector roots = kfsoleq::solveUsingChebyshevFixedPointIterationMethod(my_csr_matrix,
+                                                                                  constant_terms,
+                                                                                  kfsoleq::tolerance,
+                                                                                  kfsoleq::Vector(3),
+                                                                                  tau,
+                                                                                  max_iters);
+    
+    EXPECT_EQ(roots.getSize(), 3) << "Roots Size doesn't match";
+    EXPECT_EQ(roots.getValues().size(), 3) << "Roots Values size doesn't match";
+    EXPECT_EQ(roots.getValues().capacity(), 3) << "Roots Values capacity doesn't match";
+    kfsoleq::soleq_float tmp;
+    for (size_t i = 0; i < 3; ++i) {
+        tmp = 0;
+        for (size_t j = 0; j < 3; ++j) {
+            tmp += my_matrix_data_1[i][j] * roots[j];
+        }
+        EXPECT_NEAR(tmp, const_terms_data_1[i], kfsoleq::tolerance) << "Roots Values doesn't match";
+    }
+    
+    
+    roots = kfsoleq::Vector(42);
+    roots = kfsoleq::solveUsingChebyshevFixedPointIterationMethod(my_csr_matrix,
+                                                                  constant_terms,
+                                                                  kfsoleq::tolerance,
+                                                                  kfsoleq::Vector(3),
+                                                                  min_eigen_value,
+                                                                  max_eigen_value,
+                                                                  4,
+                                                                  max_iters);
+    
+    EXPECT_EQ(roots.getSize(), 3) << "Roots Size doesn't match";
+    EXPECT_EQ(roots.getValues().size(), 3) << "Roots Values size doesn't match";
+    EXPECT_EQ(roots.getValues().capacity(), 3) << "Roots Values capacity doesn't match";
+    for (size_t i = 0; i < 3; ++i) {
+        tmp = 0;
+        for (size_t j = 0; j < 3; ++j) {
+            tmp += my_matrix_data_1[i][j] * roots[j];
+        }
+        EXPECT_NEAR(tmp, const_terms_data_1[i], kfsoleq::tolerance) << "Roots Values doesn't match";
     }
 }
