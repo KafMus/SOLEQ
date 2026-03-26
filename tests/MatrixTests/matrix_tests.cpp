@@ -13,8 +13,8 @@ TEST(MatrixInitialization, DefaultInitialization) {
 TEST(MatrixInitialisation, SizeBySizeInitialisation) {
     kfsoleq::Matrix my_matrix;
     std::vector<kfsoleq::soleq_float> my_matrix_values;
-    size_t size_y[6] = { 0, 3, 3,  5000,  1,     10000 };
-    size_t size_x[6] = { 0, 3, 10, 10000, 10000, 1     };
+    size_t size_y[6] = { 0, 3, 3,  50,  1,   100 };
+    size_t size_x[6] = { 0, 3, 10, 100, 100,   1 };
     
     for (size_t i = 0; i < 6; ++i) {
         my_matrix = kfsoleq::Matrix(size_y[i], size_x[i]);

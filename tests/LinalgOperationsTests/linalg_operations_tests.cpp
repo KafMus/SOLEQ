@@ -88,20 +88,19 @@ TEST(LinalgOperations, MatrixVectorMultiplication) {
          *  || 100 ||                 || 0 100 200 ||
          *  || 200 ||                 || 0 200 400 ||
          */
+        kfsoleq::soleq_float result_data[3][3] = { { 0,   0,   0 },
+                                                   { 0, 100, 200 },
+                                                   { 0, 200, 400 } };
         if (3 == i) {
             EXPECT_EQ(result_matrix.getSizeY(), 3) << "Multiplicated Matrix's Size Y doesn't match";
             EXPECT_EQ(result_matrix.getSizeX(), 3) << "Multiplicated Matrix's Size X doesn't match";
             EXPECT_EQ(result_matrix.getValues().size(), 9) << "Multiplicated Matrix's Values size doesn't match";
             EXPECT_EQ(result_matrix.getValues().capacity(), 9) << "Multiplicated Matrix's Values capacity doesn't match";
-            EXPECT_NEAR(result_matrix(0, 0),   0, kfsoleq::tolerance) << "Multiplicated Matrix's Values values doesn't match";
-            EXPECT_NEAR(result_matrix(0, 1),   0, kfsoleq::tolerance) << "Multiplicated Matrix's Values values doesn't match";
-            EXPECT_NEAR(result_matrix(0, 2),   0, kfsoleq::tolerance) << "Multiplicated Matrix's Values values doesn't match";
-            EXPECT_NEAR(result_matrix(1, 0),   0, kfsoleq::tolerance) << "Multiplicated Matrix's Values values doesn't match";
-            EXPECT_NEAR(result_matrix(1, 1), 100, kfsoleq::tolerance) << "Multiplicated Matrix's Values values doesn't match";
-            EXPECT_NEAR(result_matrix(1, 2), 200, kfsoleq::tolerance) << "Multiplicated Matrix's Values values doesn't match";
-            EXPECT_NEAR(result_matrix(2, 0),   0, kfsoleq::tolerance) << "Multiplicated Matrix's Values values doesn't match";
-            EXPECT_NEAR(result_matrix(2, 1), 200, kfsoleq::tolerance) << "Multiplicated Matrix's Values values doesn't match";
-            EXPECT_NEAR(result_matrix(2, 2), 400, kfsoleq::tolerance) << "Multiplicated Matrix's Values values doesn't match";
+            for (size_t j = 0; j < 3; ++j) {
+                for (size_t z = 0; z < 3; ++z) {
+                    EXPECT_NEAR(result_matrix(j, z), result_data[j][z], kfsoleq::tolerance) << "Multiplicated Matrix's Values values doesn't match";
+                }
+            }
         }
     }
 }
@@ -175,21 +174,20 @@ TEST(LinalgOperations, CSRMatrixVectorMultiplication) {
     lil_first_row =  { std::make_pair(0, 3), std::make_pair(2, 4) };
     my_lil = { lil_first_row };
     my_matrix = kfsoleq::CSR_Matrix(my_lil);
+    kfsoleq::soleq_float result_data_1[3][3] = { { 3, 0, 4 },
+                                                 { 0, 0, 0 },
+                                                 { 6, 0, 8 } };
     
     kfsoleq::Matrix result_matrix = my_vector * my_matrix;
     EXPECT_EQ(result_matrix.getSizeY(), 3) << "Result Matrix's Size Y doesn't match";
     EXPECT_EQ(result_matrix.getSizeX(), 3) << "Result Matrix's Size X doesn't match";
     EXPECT_EQ(result_matrix.getValues().size(), 9) << "Result Matrix's Values size doesn't match";
     EXPECT_EQ(result_matrix.getValues().capacity(), 9) << "Result Matrix's Values capacity doesn't match";
-    EXPECT_NEAR(result_matrix(0, 0), 3, kfsoleq::tolerance) << "Result Matrix's Values values doesn't match";
-    EXPECT_NEAR(result_matrix(0, 1), 0, kfsoleq::tolerance) << "Result Matrix's Values values doesn't match";
-    EXPECT_NEAR(result_matrix(0, 2), 4, kfsoleq::tolerance) << "Result Matrix's Values values doesn't match";
-    EXPECT_NEAR(result_matrix(1, 0), 0, kfsoleq::tolerance) << "Result Matrix's Values values doesn't match";
-    EXPECT_NEAR(result_matrix(1, 1), 0, kfsoleq::tolerance) << "Result Matrix's Values values doesn't match";
-    EXPECT_NEAR(result_matrix(1, 2), 0, kfsoleq::tolerance) << "Result Matrix's Values values doesn't match";
-    EXPECT_NEAR(result_matrix(2, 0), 6, kfsoleq::tolerance) << "Result Matrix's Values values doesn't match";
-    EXPECT_NEAR(result_matrix(2, 1), 0, kfsoleq::tolerance) << "Result Matrix's Values values doesn't match";
-    EXPECT_NEAR(result_matrix(2, 2), 8, kfsoleq::tolerance) << "Result Matrix's Values values doesn't match";
+    for (size_t i = 0; i < 3; ++i) {
+        for (size_t j = 0; j < 3; ++j) {
+            EXPECT_NEAR(result_matrix(i, j), result_data_1[i][j], kfsoleq::tolerance) << "Result Matrix's Values values doesn't match";
+        }
+    }
     
     /*  
      *  ||  3 || * || 3 0 4 0 -2 || = ||  9 0 12 0 -6 ||
@@ -207,6 +205,11 @@ TEST(LinalgOperations, CSRMatrixVectorMultiplication) {
     lil_first_row =  { std::make_pair(0, 3), std::make_pair(2, 4), std::make_pair(4, -2) };
     my_lil = { lil_first_row };
     my_matrix = kfsoleq::CSR_Matrix(my_lil);
+    kfsoleq::soleq_float result_data_2[5][5] = { {  9, 0, 12, 0, -6 },
+                                                 {  9, 0, 12, 0, -6 },
+                                                 {  6, 0,  8, 0, -4 },
+                                                 { -3, 0, -4, 0,  2 },
+                                                 {  0, 0,  0, 0,  0 } };
     
     result_matrix = my_vector * my_matrix;
     EXPECT_EQ(result_matrix.getSizeY(), 5) << "Result Matrix's Size Y doesn't match";
@@ -214,32 +217,11 @@ TEST(LinalgOperations, CSRMatrixVectorMultiplication) {
     EXPECT_EQ(result_matrix.getValues().size(), 25) << "Result Matrix's Values size doesn't match";
     EXPECT_EQ(result_matrix.getValues().capacity(), 25) << "Result Matrix's Values capacity doesn't match";
     
-    /* This is very bad way to do it, need to improve later */
-    EXPECT_NEAR(result_matrix(0, 0),  9, kfsoleq::tolerance) << "Result Matrix's Values values doesn't match";
-    EXPECT_NEAR(result_matrix(0, 1),  0, kfsoleq::tolerance) << "Result Matrix's Values values doesn't match";
-    EXPECT_NEAR(result_matrix(0, 2), 12, kfsoleq::tolerance) << "Result Matrix's Values values doesn't match";
-    EXPECT_NEAR(result_matrix(0, 3),  0, kfsoleq::tolerance) << "Result Matrix's Values values doesn't match";
-    EXPECT_NEAR(result_matrix(0, 4), -6, kfsoleq::tolerance) << "Result Matrix's Values values doesn't match";
-    EXPECT_NEAR(result_matrix(1, 0),  9, kfsoleq::tolerance) << "Result Matrix's Values values doesn't match";
-    EXPECT_NEAR(result_matrix(1, 1),  0, kfsoleq::tolerance) << "Result Matrix's Values values doesn't match";
-    EXPECT_NEAR(result_matrix(1, 2), 12, kfsoleq::tolerance) << "Result Matrix's Values values doesn't match";
-    EXPECT_NEAR(result_matrix(1, 3),  0, kfsoleq::tolerance) << "Result Matrix's Values values doesn't match";
-    EXPECT_NEAR(result_matrix(1, 4), -6, kfsoleq::tolerance) << "Result Matrix's Values values doesn't match";
-    EXPECT_NEAR(result_matrix(2, 0),  6, kfsoleq::tolerance) << "Result Matrix's Values values doesn't match";
-    EXPECT_NEAR(result_matrix(2, 1),  0, kfsoleq::tolerance) << "Result Matrix's Values values doesn't match";
-    EXPECT_NEAR(result_matrix(2, 2),  8, kfsoleq::tolerance) << "Result Matrix's Values values doesn't match";
-    EXPECT_NEAR(result_matrix(2, 3),  0, kfsoleq::tolerance) << "Result Matrix's Values values doesn't match";
-    EXPECT_NEAR(result_matrix(2, 4), -4, kfsoleq::tolerance) << "Result Matrix's Values values doesn't match";
-    EXPECT_NEAR(result_matrix(3, 0), -3, kfsoleq::tolerance) << "Result Matrix's Values values doesn't match";
-    EXPECT_NEAR(result_matrix(3, 1),  0, kfsoleq::tolerance) << "Result Matrix's Values values doesn't match";
-    EXPECT_NEAR(result_matrix(3, 2), -4, kfsoleq::tolerance) << "Result Matrix's Values values doesn't match";
-    EXPECT_NEAR(result_matrix(3, 3),  0, kfsoleq::tolerance) << "Result Matrix's Values values doesn't match";
-    EXPECT_NEAR(result_matrix(3, 4),  2, kfsoleq::tolerance) << "Result Matrix's Values values doesn't match";
-    EXPECT_NEAR(result_matrix(4, 0),  0, kfsoleq::tolerance) << "Result Matrix's Values values doesn't match";
-    EXPECT_NEAR(result_matrix(4, 1),  0, kfsoleq::tolerance) << "Result Matrix's Values values doesn't match";
-    EXPECT_NEAR(result_matrix(4, 2),  0, kfsoleq::tolerance) << "Result Matrix's Values values doesn't match";
-    EXPECT_NEAR(result_matrix(4, 3),  0, kfsoleq::tolerance) << "Result Matrix's Values values doesn't match";
-    EXPECT_NEAR(result_matrix(4, 4),  0, kfsoleq::tolerance) << "Result Matrix's Values values doesn't match";
+    for (size_t i = 0; i < 5; ++i) {
+        for (size_t j = 0; j < 5; ++j) {
+            EXPECT_NEAR(result_matrix(i, j), result_data_2[i][j], kfsoleq::tolerance) << "Result Matrix's Values values doesn't match";
+        }
+    }
 }
 
 TEST(LinalgOperationsSideFunctions, GetMaxEigenValuePowerMethod) {

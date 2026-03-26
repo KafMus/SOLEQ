@@ -7,12 +7,10 @@
 TEST(DiagThreeInitialization, DefaultInitialization) {
     kfsoleq::DiagThree void_diagthree{};
     EXPECT_EQ(void_diagthree.getSize(), 0) << "DiagThree's Size doesn't match";
-    EXPECT_EQ(void_diagthree.getDiagonals()[0].size(), 0) << "DiagThree's Diagonals[0] size doesn't match";
-    EXPECT_EQ(void_diagthree.getDiagonals()[0].capacity(), 0) << "DiagThree's Diagonals[0] capacity doesn't match";
-    EXPECT_EQ(void_diagthree.getDiagonals()[1].size(), 0) << "DiagThree's Diagonals[1] size doesn't match";
-    EXPECT_EQ(void_diagthree.getDiagonals()[1].capacity(), 0) << "DiagThree's Diagonals[1] capacity doesn't match";
-    EXPECT_EQ(void_diagthree.getDiagonals()[2].size(), 0) << "DiagThree's Diagonals[2] size doesn't match";
-    EXPECT_EQ(void_diagthree.getDiagonals()[2].capacity(), 0) << "DiagThree's Diagonals[2] capacity doesn't match";
+    for (size_t i = 0; i < 3; ++i) {
+        EXPECT_EQ(void_diagthree.getDiagonals()[i].size(), 0) << "DiagThree's Diagonals[" << i << "] size doesn't match";
+        EXPECT_EQ(void_diagthree.getDiagonals()[i].capacity(), 0) << "DiagThree's Diagonals[" << i << "] capacity doesn't match";
+    }
     EXPECT_EQ(void_diagthree.getConstantTerms().size(), 0) << "DiagThree's ConstantTerms size doesn't match";
     EXPECT_EQ(void_diagthree.getConstantTerms().capacity(), 0) << "DiagThree's ConstantTerms capacity doesn't match";
     EXPECT_EQ(void_diagthree.getRoots().size(), 0) << "DiagThree's Roots size doesn't match";
@@ -46,12 +44,10 @@ TEST(DiagThreeInitialization, FullInitialization) {
         
         // Checking DiagThree
         EXPECT_EQ(my_diagthree.getSize(), size) << "DiagThree's Size doesn't match";
-        EXPECT_EQ(my_diagthree.getDiagonals()[0].size(), size) << "DiagThree's Diagonals[0] size doesn't match";
-        EXPECT_EQ(my_diagthree.getDiagonals()[0].capacity(), size) << "DiagThree's Diagonals[0] capacity doesn't match";
-        EXPECT_EQ(my_diagthree.getDiagonals()[1].size(), size) << "DiagThree's Diagonals[1] size doesn't match";
-        EXPECT_EQ(my_diagthree.getDiagonals()[1].capacity(), size) << "DiagThree's Diagonals[1] capacity doesn't match";
-        EXPECT_EQ(my_diagthree.getDiagonals()[2].size(), size) << "DiagThree's Diagonals[2] size doesn't match";
-        EXPECT_EQ(my_diagthree.getDiagonals()[2].capacity(), size) << "DiagThree's Diagonals[2] capacity doesn't match";
+        for (size_t i = 0; i < 3; ++i) {
+            EXPECT_EQ(my_diagthree.getDiagonals()[i].size(), size) << "DiagThree's Diagonals[" << i << "] size doesn't match";
+            EXPECT_EQ(my_diagthree.getDiagonals()[i].capacity(), size) << "DiagThree's Diagonals[" << i << "] capacity doesn't match";
+        }
         EXPECT_EQ(my_diagthree.getConstantTerms().size(), size) << "DiagThree's ConstantTerms size doesn't match";
         EXPECT_EQ(my_diagthree.getConstantTerms().capacity(), size) << "DiagThree's ConstantTerms capacity doesn't match";
         EXPECT_EQ(my_diagthree.getRoots().size(), size) << "DiagThree's Roots size doesn't match";
@@ -92,6 +88,7 @@ TEST(DiagThreeFunctions, Solver) {
     diagonals[1] =   { 3, 5, 7, 9, 11 };
     diagonals[2] =   { 2, 2, 2, 2, 0  };
     constant_terms = { 5, 5, 5, 5, 5  };
+    kfsoleq::soleq_float roots_data[5] = { 1.3148637, 0.5277045, 0.5233069, 0.4045734, 0.4177661 };
     
     my_diagthree = kfsoleq::DiagThree(size, diagonals, constant_terms);
     my_diagthree.solve();
@@ -99,11 +96,9 @@ TEST(DiagThreeFunctions, Solver) {
     // Checking DiagThree
     EXPECT_EQ(my_diagthree.getRoots().size(), size) << "DiagThree's Roots size doesn't match";
     EXPECT_EQ(my_diagthree.getRoots().capacity(), size) << "DiagThree's Roots capacity doesn't match";
-    EXPECT_NEAR(my_diagthree.getRoots()[0], 1.3148637, kfsoleq::tolerance) << "DiagThree's Roots values doesn't match";
-    EXPECT_NEAR(my_diagthree.getRoots()[1], 0.5277045, kfsoleq::tolerance) << "DiagThree's Roots values doesn't match";
-    EXPECT_NEAR(my_diagthree.getRoots()[2], 0.5233069, kfsoleq::tolerance) << "DiagThree's Roots values doesn't match";
-    EXPECT_NEAR(my_diagthree.getRoots()[3], 0.4045734, kfsoleq::tolerance) << "DiagThree's Roots values doesn't match";
-    EXPECT_NEAR(my_diagthree.getRoots()[4], 0.4177661, kfsoleq::tolerance) << "DiagThree's Roots values doesn't match";
+    for (size_t i = 0; i < 5; ++i) {
+        EXPECT_NEAR(my_diagthree.getRoots()[i], roots_data[i], kfsoleq::tolerance) << "DiagThree's Roots values doesn't match";
+    }
 }
 
 TEST(DiagThreeFunctions, CheckDiagonalDomination) {
