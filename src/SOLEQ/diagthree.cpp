@@ -98,8 +98,8 @@ void kfsoleq::DiagThree::solve() {
         // Back
         this->roots[this->size - 1] = (constant_terms[this->size - 1] - diagonals[0][this->size - 1] * coeffs[this->size - 2].second) /
                                       (diagonals[0][this->size - 1] * coeffs[this->size - 2].first + diagonals[1][this->size - 1]);
-        for (long long int i = (long long int)(this->size - 2); i >= 0; --i) {
-            this->roots[(size_t)i] = coeffs[(size_t)i].first * roots[(size_t)i + 1] + coeffs[(size_t)i].second;
+        for (size_t i = this->size - 1; i --> 0 ;) {
+            this->roots[i] = coeffs[i].first * roots[i + 1] + coeffs[i].second;
         }
 }
 bool kfsoleq::DiagThree::checkDiagonalDomination() const {

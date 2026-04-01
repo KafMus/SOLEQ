@@ -82,18 +82,18 @@ kfsoleq::Vector kfsoleq::getChebyshevPolynomialRoots(size_t degree) {
         cos_pi_n = std::cos(sin_pi_n);
         sin_pi_n = std::sin(sin_pi_n);
         
-        for (size_t i = 1; i < (size_t)((double)degree / 2); ++i) {
+        for (size_t i = 1; i < degree / 2; ++i) {
             roots[i] = (roots[i - 1] * cos_pi_n) - (init_sin * sin_pi_n);
             init_sin = (init_sin * cos_pi_n) + (roots[i - 1] * sin_pi_n);
         }
-        for (size_t i = (size_t)((double)degree / 2); i < degree; ++i) {
+        for (size_t i = degree / 2; i < degree; ++i) {
             roots[i] = -roots[degree - i - 1];
         }
         return roots;
 }
 kfsoleq::Vector kfsoleq::reorderChebyshevPolynomialRoots(const kfsoleq::Vector& roots) {
         kfsoleq::Vector result(roots.getSize());
-        for (size_t i = 0; i < (size_t)((double)roots.getSize() / 2); ++i) {
+        for (size_t i = 0; i < roots.getSize() / 2; ++i) {
             result[2 * i] = roots[i];
             result[2 * i + 1] = roots[roots.getSize() - i - 1];
         }
@@ -173,12 +173,12 @@ kfsoleq::Vector kfsoleq::solveUsingQRDecomposition(const kfsoleq::Matrix& given_
         
         constant_terms = Q_Matrix.getTransposed() * constant_terms;
         
-        for (long long int i = (long long int)R_Matrix.getSizeX() - 1; i >= 0; --i) {
-            roots[(size_t)i] = constant_terms[(size_t)i];
-            for (long long int j = (long long int)R_Matrix.getSizeX() - 1; j > i; --j) {
-                roots[(size_t)i] -= R_Matrix((size_t)i, (size_t)j) * roots[(size_t)j];
+        for (size_t i = R_Matrix.getSizeX(); i --> 0 ;) {
+            roots[i] = constant_terms[i];
+            for (size_t j = R_Matrix.getSizeX(); j --> i + 1 ;) {
+                roots[i] -= R_Matrix(i, j) * roots[j];
             }
-            roots[(size_t)i] /= R_Matrix((size_t)i, (size_t)i);
+            roots[i] /= R_Matrix(i, i);
         }
         return roots;
 }
@@ -200,12 +200,12 @@ kfsoleq::Vector kfsoleq::solveUsingQRDecomposition(const kfsoleq::Matrix& given_
         
         constant_terms = Q_Matrix.getTransposed() * constant_terms;
         
-        for (long long int i = (long long int)R_Matrix.getSizeX() - 1; i >= 0; --i) {
-            roots[(size_t)i] = constant_terms[(size_t)i];
-            for (long long int j = (long long int)R_Matrix.getSizeX() - 1; j > i; --j) {
-                roots[(size_t)i] -= R_Matrix((size_t)i, (size_t)j) * roots[(size_t)j];
+        for (size_t i = R_Matrix.getSizeX(); i --> 0 ;) {
+            roots[i] = constant_terms[i];
+            for (size_t j = R_Matrix.getSizeX(); j --> i + 1 ;) {
+                roots[i] -= R_Matrix(i, j) * roots[j];
             }
-            roots[(size_t)i] /= R_Matrix((size_t)i, (size_t)i);
+            roots[i] /= R_Matrix(i, i);
         }
         return roots;
 }
