@@ -23,18 +23,18 @@ if(MATRIX_BUILD AND CSR_MATRIX_BUILD AND VECTOR_BUILD AND LINALG_OPERATIONS_BUIL
             SOLEQ
     )
     message("Adding Solver Jacobi Benchmark Executable DONE!")
-    message("Adding Solver Seidel Benchmark Executable...")
-    add_executable(SolverSeidelBenchmark)
+    message("Adding Solver Gauss Seidel Benchmark Executable...")
+    add_executable(SolverGaussSeidelBenchmark)
 
-    target_sources(SolverSeidelBenchmark
+    target_sources(SolverGaussSeidelBenchmark
         PRIVATE
-            SolverSeidelBenchmark.cpp
+            SolverGaussSeidelBenchmark.cpp
     )
-    target_link_libraries(SolverSeidelBenchmark
+    target_link_libraries(SolverGaussSeidelBenchmark
         PRIVATE
             SOLEQ
     )
-    message("Adding Solver Seidel Benchmark Executable DONE!")
+    message("Adding Solver Gauss Seidel Benchmark Executable DONE!")
     message("Adding Solver Fixed Point Iteration Benchmark Executable...")
     add_executable(SolverFixedPointIterationBenchmark)
 

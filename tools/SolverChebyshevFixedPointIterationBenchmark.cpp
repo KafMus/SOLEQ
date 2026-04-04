@@ -74,10 +74,10 @@ int main(int argc, char* argv[]) {
     
     // Getting tau
     std::cout << "Getting tau...\n";
-    kfsoleq::Vector solver_tau = kfsoleq::getTauFromChebyshevPolynomialRoots(
-                                 kfsoleq::reorderChebyshevPolynomialRoots(kfsoleq::getChebyshevPolynomialRoots(solver_iters_block_size)),
-                                                                          matrix_min_eigen_value,
-                                                                          matrix_max_eigen_value);
+    kfsoleq::Vector solver_tau = kfsoleq::getTauFromChebyshevRoots(
+                                 kfsoleq::reorderChebyshevRoots(kfsoleq::getChebyshevRoots(solver_iters_block_size)),
+                                                                matrix_min_eigen_value,
+                                                                matrix_max_eigen_value);
     std::cout << "Getting tau DONE!\n";
     std::cout << "Tau:\n";
     solver_tau.print();
@@ -88,13 +88,13 @@ int main(int argc, char* argv[]) {
         std::cout << "Iterations loop for solver_tolerance:[" << solver_tolerance << "]...\n";
         saved_time = std::chrono::high_resolution_clock::now();
         for (size_t iter_num = 0; iter_num < iters_block_size; ++iter_num) {
-            roots = kfsoleq::solveUsingChebyshevFixedPointIterationMethod(my_csr_matrix,
-                                                                          constant_terms,
-                                                                          solver_tolerance,
-                                                                          solver_initial_roots,
-                                                                          solver_tau,
-                                                                          solver_max_iters,
-                                                                          &tmp_iters);
+            roots = kfsoleq::solverChebyshevFixedPointIteration(solver_initial_roots,
+                                                                my_csr_matrix,
+                                                                constant_terms,
+                                                                solver_tau,
+                                                                solver_tolerance,
+                                                                solver_max_iters,
+                                                                &tmp_iters);
             aver_iters += (long double)tmp_iters;
         }
         current_time = std::chrono::high_resolution_clock::now();

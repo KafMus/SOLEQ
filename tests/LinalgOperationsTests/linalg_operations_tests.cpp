@@ -245,8 +245,8 @@ TEST(LinalgOperationsSideFunctions, GetMaxEigenValuePowerMethod) {
         initial_vector[i] = 1;
     }
     
-    kfsoleq::soleq_float max_eigen_value = getMaxEigenValuePowerMethod(my_csr_matrix,
-                                                                       initial_vector,
+    kfsoleq::soleq_float max_eigen_value = getMaxEigenValuePowerMethod(initial_vector,
+                                                                       my_csr_matrix,
                                                                        iters_num);
     EXPECT_NEAR(max_eigen_value, 5.6996281, kfsoleq::tolerance) << "Max Eigen Value of CSR_Matrix doesn't match";
     
@@ -260,13 +260,13 @@ TEST(LinalgOperationsSideFunctions, GetMaxEigenValuePowerMethod) {
     my_lil = { lil_first_row, lil_second_row };
     my_csr_matrix = kfsoleq::CSR_Matrix(my_lil);
     
-    max_eigen_value = getMaxEigenValuePowerMethod(my_csr_matrix,
-                                                  initial_vector,
+    max_eigen_value = getMaxEigenValuePowerMethod(initial_vector,
+                                                  my_csr_matrix,
                                                   iters_num);
     EXPECT_NEAR(max_eigen_value, 25 + std::sqrt(226), kfsoleq::tolerance) << "Max Eigen Value of CSR_Matrix doesn't match";
 }
 
-TEST(LinalgOperationsSideFunctions, GetChebyshevPolynomialRoots) {
+TEST(LinalgOperationsSideFunctions, GetChebyshevRoots) {
     kfsoleq::soleq_float roots_data_1[2] = { 1.0f / std::sqrt(2), -1.0f / std::sqrt(2) };
     kfsoleq::soleq_float roots_data_2[5] = { std::sqrt(std::sqrt(5) + 5) / (2 * std::sqrt(2)),
                                              std::sqrt(5 - std::sqrt(5)) / (2 * std::sqrt(2)),
@@ -280,41 +280,41 @@ TEST(LinalgOperationsSideFunctions, GetChebyshevPolynomialRoots) {
                                             -1.0f / std::sqrt(2),
                                             -std::cos(std::numbers::pi_v<kfsoleq::soleq_float> / 12) };
     
-    kfsoleq::Vector roots = kfsoleq::getChebyshevPolynomialRoots(2);
+    kfsoleq::Vector roots = kfsoleq::getChebyshevRoots(2);
     for (size_t i = 0; i < 2; ++i) {
         EXPECT_NEAR(roots[i], roots_data_1[i], kfsoleq::tolerance) << "Chebyshev roots didn't match";
     }
-    roots = kfsoleq::getChebyshevPolynomialRoots(5);
+    roots = kfsoleq::getChebyshevRoots(5);
     for (size_t i = 0; i < 5; ++i) {
         EXPECT_NEAR(roots[i], roots_data_2[i], kfsoleq::tolerance) << "Chebyshev roots didn't match";
     }
-    roots = kfsoleq::getChebyshevPolynomialRoots(6);
+    roots = kfsoleq::getChebyshevRoots(6);
     for (size_t i = 0; i < 6; ++i) {
         EXPECT_NEAR(roots[i], roots_data_3[i], kfsoleq::tolerance) << "Chebyshev roots didn't match";
     }
 }
 
-TEST(LinalgOperationsSideFunctions, ReorderChebyshevPolynomialRoots) {
+TEST(LinalgOperationsSideFunctions, ReorderChebyshevRoots) {
     kfsoleq::soleq_float roots_data_1[2] = { 1.0f / std::sqrt(2), -1.0f / std::sqrt(2) };
     kfsoleq::soleq_float roots_data_2[4] = { std::sqrt((std::sqrt(2) + 1) / std::sqrt(8)),
                                             -std::sqrt((std::sqrt(2) + 1) / std::sqrt(8)),
                                              std::sqrt((std::sqrt(2) - 1) / std::sqrt(8)),
                                             -std::sqrt((std::sqrt(2) - 1) / std::sqrt(8)) };
-    kfsoleq::Vector roots = kfsoleq::reorderChebyshevPolynomialRoots(kfsoleq::getChebyshevPolynomialRoots(2));
+    kfsoleq::Vector roots = kfsoleq::reorderChebyshevRoots(kfsoleq::getChebyshevRoots(2));
     for (size_t i = 0; i < 2; ++i) {
         EXPECT_NEAR(roots[i], roots_data_1[i], kfsoleq::tolerance) << "Reordered Chebyshev roots didn't match";
     }
-    roots = kfsoleq::reorderChebyshevPolynomialRoots(kfsoleq::getChebyshevPolynomialRoots(4));
+    roots = kfsoleq::reorderChebyshevRoots(kfsoleq::getChebyshevRoots(4));
     for (size_t i = 0; i < 4; ++i) {
         EXPECT_NEAR(roots[i], roots_data_2[i], kfsoleq::tolerance) << "Reordered Chebyshev roots didn't match";
     }
 }
 
-TEST(LinalgOperationsSideFunctions, GetTauFromChebyshevPolynomialRoots) {
+TEST(LinalgOperationsSideFunctions, GetTauFromChebyshevRoots) {
     kfsoleq::soleq_float tau_data[4] = { 0.180463, 0.588985, 0.226471, 0.354163 };
     
-    kfsoleq::Vector roots = kfsoleq::reorderChebyshevPolynomialRoots(kfsoleq::getChebyshevPolynomialRoots(4));
-    kfsoleq::Vector tau = kfsoleq::getTauFromChebyshevPolynomialRoots(roots, 1.5395, 5.6996281);
+    kfsoleq::Vector roots = kfsoleq::reorderChebyshevRoots(kfsoleq::getChebyshevRoots(4));
+    kfsoleq::Vector tau = kfsoleq::getTauFromChebyshevRoots(roots, 1.5395, 5.6996281);
     for (size_t i = 0; i < 4; ++i) {
         EXPECT_NEAR(tau[i], tau_data[i], kfsoleq::tolerance) << "Tau from Reordered Chebyshev roots didn't match";
     }
@@ -420,7 +420,7 @@ TEST(LinalgOperations, GetQRDecompositionHouseholder) {
     }
 }
 
-TEST(LinalgOperationsSolvers, SolveUsingQRDecomposition) {
+TEST(LinalgOperationsSolvers, SolverQRDecomposition) {
     kfsoleq::Matrix my_matrix(3, 4);
     kfsoleq::soleq_float my_matrix_data_1[3][4] = { { 12, -51,   4, 1 },
                                                     {  6, 167, -68, 2 },
@@ -430,7 +430,7 @@ TEST(LinalgOperationsSolvers, SolveUsingQRDecomposition) {
             my_matrix(i, j) = my_matrix_data_1[i][j];
         }
     }
-    kfsoleq::Vector roots = kfsoleq::solveUsingQRDecomposition(my_matrix);
+    kfsoleq::Vector roots = kfsoleq::solverQRDecomposition(my_matrix);
     
     EXPECT_EQ(roots.getSize(), 3) << "Roots Size doesn't match";
     EXPECT_EQ(roots.getValues().size(), 3) << "Roots Values size doesn't match";
@@ -451,7 +451,7 @@ TEST(LinalgOperationsSolvers, SolveUsingQRDecomposition) {
         }
     }
     auto [Q_Matrix, R_Matrix] = getQRDecompositionHouseholder(cutted_my_matrix);
-    roots = kfsoleq::solveUsingQRDecomposition(my_matrix, Q_Matrix, R_Matrix);
+    roots = kfsoleq::solverQRDecomposition(my_matrix, Q_Matrix, R_Matrix);
     
     EXPECT_EQ(roots.getSize(), 3) << "Roots Size doesn't match";
     EXPECT_EQ(roots.getValues().size(), 3) << "Roots Values size doesn't match";
@@ -475,7 +475,7 @@ TEST(LinalgOperationsSolvers, SolveUsingQRDecomposition) {
             my_matrix(i, j) = my_matrix_data_2[i][j];
         }
     }
-    roots = kfsoleq::solveUsingQRDecomposition(my_matrix);
+    roots = kfsoleq::solverQRDecomposition(my_matrix);
     
     EXPECT_EQ(roots.getSize(), 4) << "Roots Size doesn't match";
     EXPECT_EQ(roots.getValues().size(), 4) << "Roots Values size doesn't match";
@@ -489,7 +489,7 @@ TEST(LinalgOperationsSolvers, SolveUsingQRDecomposition) {
     }
 }
 
-TEST(LinalgOperationsSolvers, SolveUsingJacobiMethod) {
+TEST(LinalgOperationsSolvers, SolverJacobi) {
     size_t iters_block_size = 16;
     size_t max_iters = 1000;
     kfsoleq::CSR_Matrix my_csr_matrix;
@@ -507,12 +507,12 @@ TEST(LinalgOperationsSolvers, SolveUsingJacobiMethod) {
     for (size_t i = 0; i < 3; ++i) {
         constant_terms[i] = const_terms_data_1[i];
     }
-    kfsoleq::Vector roots = kfsoleq::solveUsingJacobiMethod(my_csr_matrix,
-                                                            constant_terms,
-                                                            kfsoleq::tolerance,
-                                                            kfsoleq::Vector(3),
-                                                            iters_block_size,
-                                                            max_iters);
+    kfsoleq::Vector roots = kfsoleq::solverJacobi(kfsoleq::Vector(3),
+                                                  my_csr_matrix,
+                                                  constant_terms,
+                                                  kfsoleq::tolerance,
+                                                  iters_block_size,
+                                                  max_iters);
     
     
     EXPECT_EQ(roots.getSize(), 3) << "Roots Size doesn't match";
@@ -541,12 +541,12 @@ TEST(LinalgOperationsSolvers, SolveUsingJacobiMethod) {
     for (size_t i = 0; i < 2; ++i) {
         constant_terms[i] = const_terms_data_2[i];
     }
-    roots = kfsoleq::solveUsingJacobiMethod(my_csr_matrix,
-                                            constant_terms,
-                                            kfsoleq::tolerance,
-                                            kfsoleq::Vector(2),
-                                            iters_block_size,
-                                            max_iters);
+    roots = kfsoleq::solverJacobi(kfsoleq::Vector(2),
+                                  my_csr_matrix,
+                                  constant_terms,
+                                  kfsoleq::tolerance,
+                                  iters_block_size,
+                                  max_iters);
     
     
     EXPECT_EQ(roots.getSize(), 2) << "Roots Size doesn't match";
@@ -561,7 +561,7 @@ TEST(LinalgOperationsSolvers, SolveUsingJacobiMethod) {
     }
 }
 
-TEST(LinalgOperationsSolvers, SolveUsingFixedPointIterationMethod) {
+TEST(LinalgOperationsSolvers, SolverFixedPointIteration) {
     size_t iters_block_size = 16;
     size_t max_iters = 1000;
     kfsoleq::CSR_Matrix my_csr_matrix;
@@ -579,13 +579,13 @@ TEST(LinalgOperationsSolvers, SolveUsingFixedPointIterationMethod) {
     for (size_t i = 0; i < 3; ++i) {
         constant_terms[i] = const_terms_data_1[i];
     }
-    kfsoleq::Vector roots = kfsoleq::solveUsingFixedPointIterationMethod(my_csr_matrix,
-                                                                         constant_terms,
-                                                                         kfsoleq::tolerance,
-                                                                         kfsoleq::Vector(3),
-                                                                         0.2,
-                                                                         iters_block_size,
-                                                                         max_iters);
+    kfsoleq::Vector roots = kfsoleq::solverFixedPointIteration(kfsoleq::Vector(3),
+                                                               my_csr_matrix,
+                                                               constant_terms,
+                                                               0.2,
+                                                               kfsoleq::tolerance,
+                                                               iters_block_size,
+                                                               max_iters);
     
     
     EXPECT_EQ(roots.getSize(), 3) << "Roots Size doesn't match";
@@ -614,13 +614,13 @@ TEST(LinalgOperationsSolvers, SolveUsingFixedPointIterationMethod) {
     for (size_t i = 0; i < 2; ++i) {
         constant_terms[i] = const_terms_data_2[i];
     }
-    roots = kfsoleq::solveUsingFixedPointIterationMethod(my_csr_matrix,
-                                                         constant_terms,
-                                                         kfsoleq::tolerance,
-                                                         kfsoleq::Vector(2),
-                                                         0.153846153846,
-                                                         iters_block_size,
-                                                         max_iters);
+    roots = kfsoleq::solverFixedPointIteration(kfsoleq::Vector(2),
+                                               my_csr_matrix,
+                                               constant_terms,
+                                               0.153846153846,
+                                               kfsoleq::tolerance,
+                                               iters_block_size,
+                                               max_iters);
     
     
     EXPECT_EQ(roots.getSize(), 2) << "Roots Size doesn't match";
@@ -635,7 +635,7 @@ TEST(LinalgOperationsSolvers, SolveUsingFixedPointIterationMethod) {
     }
 }
 
-TEST(LinalgOperationsSolvers, SolveUsingGaussSeidelMethod) {
+TEST(LinalgOperationsSolvers, SolverGaussSeidel) {
     size_t iters_block_size = 16;
     size_t max_iters = 1000;
     kfsoleq::CSR_Matrix my_csr_matrix;
@@ -653,12 +653,12 @@ TEST(LinalgOperationsSolvers, SolveUsingGaussSeidelMethod) {
     for (size_t i = 0; i < 3; ++i) {
         constant_terms[i] = const_terms_data_1[i];
     }
-    kfsoleq::Vector roots = kfsoleq::solveUsingGaussSeidelMethod(my_csr_matrix,
-                                                                 constant_terms,
-                                                                 kfsoleq::tolerance,
-                                                                 kfsoleq::Vector(3),
-                                                                 iters_block_size,
-                                                                 max_iters);
+    kfsoleq::Vector roots = kfsoleq::solverGaussSeidel(kfsoleq::Vector(3),
+                                                       my_csr_matrix,
+                                                       constant_terms,
+                                                       kfsoleq::tolerance,
+                                                       iters_block_size,
+                                                       max_iters);
     
     
     EXPECT_EQ(roots.getSize(), 3) << "Roots Size doesn't match";
@@ -687,12 +687,12 @@ TEST(LinalgOperationsSolvers, SolveUsingGaussSeidelMethod) {
     for (size_t i = 0; i < 2; ++i) {
         constant_terms[i] = const_terms_data_2[i];
     }
-    roots = kfsoleq::solveUsingGaussSeidelMethod(my_csr_matrix,
-                                                 constant_terms,
-                                                 kfsoleq::tolerance,
-                                                 kfsoleq::Vector(2),
-                                                 iters_block_size,
-                                                 max_iters);
+    roots = kfsoleq::solverGaussSeidel(kfsoleq::Vector(2),
+                                       my_csr_matrix,
+                                       constant_terms,
+                                       kfsoleq::tolerance,
+                                       iters_block_size,
+                                       max_iters);
     
     
     EXPECT_EQ(roots.getSize(), 2) << "Roots Size doesn't match";
@@ -709,7 +709,7 @@ TEST(LinalgOperationsSolvers, SolveUsingGaussSeidelMethod) {
 
 
 
-TEST(LinalgOperationsSolvers, SolveUsingChebyshevFixedPointIterationMethod) {
+TEST(LinalgOperationsSolvers, SolverChebyshevFixedPointIteration) {
     size_t max_iters = 1000;
     kfsoleq::CSR_Matrix my_csr_matrix;
     kfsoleq::soleq_float my_matrix_data_1[3][3] = { { 5, 1, 0 },
@@ -728,15 +728,15 @@ TEST(LinalgOperationsSolvers, SolveUsingChebyshevFixedPointIterationMethod) {
     }
     kfsoleq::soleq_float min_eigen_value = 1.5395;
     kfsoleq::soleq_float max_eigen_value = 5.6996281;
-    kfsoleq::Vector tau = kfsoleq::getTauFromChebyshevPolynomialRoots(
-                          kfsoleq::reorderChebyshevPolynomialRoots(
-                          kfsoleq::getChebyshevPolynomialRoots(4)), min_eigen_value, max_eigen_value);
-    kfsoleq::Vector roots = kfsoleq::solveUsingChebyshevFixedPointIterationMethod(my_csr_matrix,
-                                                                                  constant_terms,
-                                                                                  kfsoleq::tolerance,
-                                                                                  kfsoleq::Vector(3),
-                                                                                  tau,
-                                                                                  max_iters);
+    kfsoleq::Vector tau = kfsoleq::getTauFromChebyshevRoots(
+                          kfsoleq::reorderChebyshevRoots(
+                          kfsoleq::getChebyshevRoots(4)), min_eigen_value, max_eigen_value);
+    kfsoleq::Vector roots = kfsoleq::solverChebyshevFixedPointIteration(kfsoleq::Vector(3),
+                                                                        my_csr_matrix,
+                                                                        constant_terms,
+                                                                        tau,
+                                                                        kfsoleq::tolerance,
+                                                                        max_iters);
     
     EXPECT_EQ(roots.getSize(), 3) << "Roots Size doesn't match";
     EXPECT_EQ(roots.getValues().size(), 3) << "Roots Values size doesn't match";
@@ -752,14 +752,14 @@ TEST(LinalgOperationsSolvers, SolveUsingChebyshevFixedPointIterationMethod) {
     
     
     roots = kfsoleq::Vector(42);
-    roots = kfsoleq::solveUsingChebyshevFixedPointIterationMethod(my_csr_matrix,
-                                                                  constant_terms,
-                                                                  kfsoleq::tolerance,
-                                                                  kfsoleq::Vector(3),
-                                                                  min_eigen_value,
-                                                                  max_eigen_value,
-                                                                  4,
-                                                                  max_iters);
+    roots = kfsoleq::solverChebyshevFixedPointIteration(kfsoleq::Vector(3),
+                                                        my_csr_matrix,
+                                                        constant_terms,
+                                                        min_eigen_value,
+                                                        max_eigen_value,
+                                                        kfsoleq::tolerance,
+                                                        4,
+                                                        max_iters);
     
     EXPECT_EQ(roots.getSize(), 3) << "Roots Size doesn't match";
     EXPECT_EQ(roots.getValues().size(), 3) << "Roots Values size doesn't match";

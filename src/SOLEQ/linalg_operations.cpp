@@ -60,8 +60,8 @@ kfsoleq::Matrix kfsoleq::operator * (const kfsoleq::Vector& left_vector, const k
         }
         return result;
 }
-kfsoleq::soleq_float kfsoleq::getMaxEigenValuePowerMethod(const kfsoleq::CSR_Matrix& given_csr_matrix,
-                                                          const kfsoleq::Vector initial_vector,
+kfsoleq::soleq_float kfsoleq::getMaxEigenValuePowerMethod(const kfsoleq::Vector initial_vector,
+                                                          const kfsoleq::CSR_Matrix& given_csr_matrix,
                                                           size_t iters_num) {
         kfsoleq::Vector eigen_vector = given_csr_matrix * initial_vector;
         eigen_vector /= eigen_vector.getEuclidNorm();
@@ -71,7 +71,7 @@ kfsoleq::soleq_float kfsoleq::getMaxEigenValuePowerMethod(const kfsoleq::CSR_Mat
         }
         return (eigen_vector * (given_csr_matrix * eigen_vector)) / (eigen_vector * eigen_vector);
 }
-kfsoleq::Vector kfsoleq::getChebyshevPolynomialRoots(size_t degree) {
+kfsoleq::Vector kfsoleq::getChebyshevRoots(size_t degree) {
         kfsoleq::Vector roots(degree);
         kfsoleq::soleq_float init_sin = std::numbers::pi_v<soleq_float> / (kfsoleq::soleq_float)(2 * degree);
         kfsoleq::soleq_float sin_pi_n = std::numbers::pi_v<soleq_float> / (kfsoleq::soleq_float)degree;
@@ -91,7 +91,7 @@ kfsoleq::Vector kfsoleq::getChebyshevPolynomialRoots(size_t degree) {
         }
         return roots;
 }
-kfsoleq::Vector kfsoleq::reorderChebyshevPolynomialRoots(const kfsoleq::Vector& roots) {
+kfsoleq::Vector kfsoleq::reorderChebyshevRoots(const kfsoleq::Vector& roots) {
         kfsoleq::Vector result(roots.getSize());
         for (size_t i = 0; i < roots.getSize() / 2; ++i) {
             result[2 * i] = roots[i];
@@ -99,9 +99,9 @@ kfsoleq::Vector kfsoleq::reorderChebyshevPolynomialRoots(const kfsoleq::Vector& 
         }
         return result;
 }
-kfsoleq::Vector kfsoleq::getTauFromChebyshevPolynomialRoots(const kfsoleq::Vector& roots,
-                                                            kfsoleq::soleq_float min_value,
-                                                            kfsoleq::soleq_float max_value) {
+kfsoleq::Vector kfsoleq::getTauFromChebyshevRoots(const kfsoleq::Vector& roots,
+                                                  kfsoleq::soleq_float min_value,
+                                                  kfsoleq::soleq_float max_value) {
         kfsoleq::Vector result(roots.getSize());
         for (size_t i = 0; i < roots.getSize(); ++i) {
             result[i] = 2 / (min_value + max_value + (max_value - min_value) * roots[i]);
@@ -155,7 +155,7 @@ std::pair<kfsoleq::Matrix, kfsoleq::Matrix> kfsoleq::getQRDecompositionHousehold
         /* return as std::pair<Q_Matrix, R_Matrix> */
         return std::make_pair(Q_Matrix, given_matrix);
 }
-kfsoleq::Vector kfsoleq::solveUsingQRDecomposition(const kfsoleq::Matrix& given_matrix) {
+kfsoleq::Vector kfsoleq::solverQRDecomposition(const kfsoleq::Matrix& given_matrix) {
         kfsoleq::Vector roots(given_matrix.getSizeY());
         kfsoleq::Matrix system_matrix(given_matrix.getSizeY(), given_matrix.getSizeX() - 1);
         kfsoleq::Vector constant_terms(given_matrix.getSizeY());
@@ -182,9 +182,9 @@ kfsoleq::Vector kfsoleq::solveUsingQRDecomposition(const kfsoleq::Matrix& given_
         }
         return roots;
 }
-kfsoleq::Vector kfsoleq::solveUsingQRDecomposition(const kfsoleq::Matrix& given_matrix,
-                                                   const kfsoleq::Matrix& Q_Matrix,
-                                                   const kfsoleq::Matrix& R_Matrix) {
+kfsoleq::Vector kfsoleq::solverQRDecomposition(const kfsoleq::Matrix& given_matrix,
+                                               const kfsoleq::Matrix& Q_Matrix,
+                                               const kfsoleq::Matrix& R_Matrix) {
         kfsoleq::Vector roots(given_matrix.getSizeY());
         kfsoleq::Matrix system_matrix(given_matrix.getSizeY(), given_matrix.getSizeX() - 1);
         kfsoleq::Vector constant_terms(given_matrix.getSizeY());
@@ -209,13 +209,13 @@ kfsoleq::Vector kfsoleq::solveUsingQRDecomposition(const kfsoleq::Matrix& given_
         }
         return roots;
 }
-kfsoleq::Vector kfsoleq::solveUsingJacobiMethod(const kfsoleq::CSR_Matrix& given_csr_matrix,
-                                                const kfsoleq::Vector& constant_terms,
-                                                kfsoleq::soleq_float needed_precision,
-                                                const kfsoleq::Vector& initial_root,
-                                                size_t iters_block_size,
-                                                size_t max_iters,
-                                                size_t* overall_iters_ptr) {
+kfsoleq::Vector kfsoleq::solverJacobi(const kfsoleq::Vector& initial_root,
+                                      const kfsoleq::CSR_Matrix& given_csr_matrix,
+                                      const kfsoleq::Vector& constant_terms,
+                                      kfsoleq::soleq_float needed_precision,
+                                      size_t iters_block_size,
+                                      size_t max_iters,
+                                      size_t* overall_iters_ptr) {
         const size_t size_y = given_csr_matrix.getRowIndexes().size() - 1;
         size_t begin_ind, end_ind, col_ind;
         kfsoleq::Vector roots_prev = initial_root;
@@ -251,14 +251,14 @@ kfsoleq::Vector kfsoleq::solveUsingJacobiMethod(const kfsoleq::CSR_Matrix& given
         }
         return roots;
 }
-kfsoleq::Vector kfsoleq::solveUsingFixedPointIterationMethod(const kfsoleq::CSR_Matrix& given_csr_matrix,
-                                                const kfsoleq::Vector& constant_terms,
-                                                kfsoleq::soleq_float needed_precision,
-                                                const kfsoleq::Vector& initial_root,
-                                                kfsoleq::soleq_float tau,
-                                                size_t iters_block_size,
-                                                size_t max_iters,
-                                                size_t* overall_iters_ptr) {
+kfsoleq::Vector kfsoleq::solverFixedPointIteration(const kfsoleq::Vector& initial_root,
+                                                   const kfsoleq::CSR_Matrix& given_csr_matrix,
+                                                   const kfsoleq::Vector& constant_terms,
+                                                   kfsoleq::soleq_float tau,
+                                                   kfsoleq::soleq_float needed_precision,
+                                                   size_t iters_block_size,
+                                                   size_t max_iters,
+                                                   size_t* overall_iters_ptr) {
         kfsoleq::Vector roots_prev = initial_root;
         kfsoleq::Vector roots(given_csr_matrix.getRowIndexes().size() - 1);
         
@@ -276,13 +276,13 @@ kfsoleq::Vector kfsoleq::solveUsingFixedPointIterationMethod(const kfsoleq::CSR_
         }
         return roots;
 }
-kfsoleq::Vector kfsoleq::solveUsingGaussSeidelMethod(const kfsoleq::CSR_Matrix& given_csr_matrix,
-                                                const kfsoleq::Vector& constant_terms,
-                                                kfsoleq::soleq_float needed_precision,
-                                                const kfsoleq::Vector& initial_root,
-                                                size_t iters_block_size,
-                                                size_t max_iters,
-                                                size_t* overall_iters_ptr) {
+kfsoleq::Vector kfsoleq::solverGaussSeidel(const kfsoleq::Vector& initial_root,
+                                           const kfsoleq::CSR_Matrix& given_csr_matrix,
+                                           const kfsoleq::Vector& constant_terms,
+                                           kfsoleq::soleq_float needed_precision,
+                                           size_t iters_block_size,
+                                           size_t max_iters,
+                                           size_t* overall_iters_ptr) {
         const size_t size_y = given_csr_matrix.getRowIndexes().size() - 1;
         size_t begin_ind, end_ind, col_ind;
         kfsoleq::Vector roots = initial_root;
@@ -316,13 +316,13 @@ kfsoleq::Vector kfsoleq::solveUsingGaussSeidelMethod(const kfsoleq::CSR_Matrix& 
         }
         return roots;
 }
-kfsoleq::Vector kfsoleq::solveUsingChebyshevFixedPointIterationMethod(const kfsoleq::CSR_Matrix& given_csr_matrix,
-                                                                      const kfsoleq::Vector& constant_terms,
-                                                                      kfsoleq::soleq_float needed_precision,
-                                                                      const kfsoleq::Vector& initial_root,
-                                                                      const kfsoleq::Vector& tau,
-                                                                      size_t max_iters,
-                                                                      size_t* overall_iters_ptr) {
+kfsoleq::Vector kfsoleq::solverChebyshevFixedPointIteration(const kfsoleq::Vector& initial_root,
+                                                            const kfsoleq::CSR_Matrix& given_csr_matrix,
+                                                            const kfsoleq::Vector& constant_terms,
+                                                            const kfsoleq::Vector& tau,
+                                                            kfsoleq::soleq_float needed_precision,
+                                                            size_t max_iters,
+                                                            size_t* overall_iters_ptr) {
         kfsoleq::Vector roots_prev = initial_root;
         kfsoleq::Vector roots(given_csr_matrix.getRowIndexes().size() - 1);
         
@@ -340,20 +340,20 @@ kfsoleq::Vector kfsoleq::solveUsingChebyshevFixedPointIterationMethod(const kfso
         }
         return roots;
 }
-kfsoleq::Vector kfsoleq::solveUsingChebyshevFixedPointIterationMethod(const kfsoleq::CSR_Matrix& given_csr_matrix,
-                                                                      const kfsoleq::Vector& constant_terms,
-                                                                      kfsoleq::soleq_float needed_precision,
-                                                                      const kfsoleq::Vector& initial_root,
-                                                                      kfsoleq::soleq_float min_eigen_value,
-                                                                      kfsoleq::soleq_float max_eigen_value,
-                                                                      size_t iters_block_size,
-                                                                      size_t max_iters,
-                                                                      size_t* overall_iters_ptr) {
+kfsoleq::Vector kfsoleq::solverChebyshevFixedPointIteration(const kfsoleq::Vector& initial_root,
+                                                            const kfsoleq::CSR_Matrix& given_csr_matrix,
+                                                            const kfsoleq::Vector& constant_terms,
+                                                            kfsoleq::soleq_float min_eigen_value,
+                                                            kfsoleq::soleq_float max_eigen_value,
+                                                            kfsoleq::soleq_float needed_precision,
+                                                            size_t iters_block_size,
+                                                            size_t max_iters,
+                                                            size_t* overall_iters_ptr) {
         kfsoleq::Vector roots_prev = initial_root;
         kfsoleq::Vector roots(given_csr_matrix.getRowIndexes().size() - 1);
-        kfsoleq::Vector tau = kfsoleq::getTauFromChebyshevPolynomialRoots(
-                              kfsoleq::reorderChebyshevPolynomialRoots(
-                              kfsoleq::getChebyshevPolynomialRoots(iters_block_size)), min_eigen_value, max_eigen_value);
+        kfsoleq::Vector tau = kfsoleq::getTauFromChebyshevRoots(
+                              kfsoleq::reorderChebyshevRoots(
+                              kfsoleq::getChebyshevRoots(iters_block_size)), min_eigen_value, max_eigen_value);
         
         size_t outer_ind = 0;
         while (((given_csr_matrix * roots) - constant_terms).getFirstNorm() > needed_precision && outer_ind < max_iters) {
