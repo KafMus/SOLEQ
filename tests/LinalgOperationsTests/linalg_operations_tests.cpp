@@ -507,10 +507,10 @@ TEST(LinalgOperationsSolvers, SolverJacobi) {
     for (size_t i = 0; i < 3; ++i) {
         constant_terms[i] = const_terms_data_1[i];
     }
-    kfsoleq::Vector roots = kfsoleq::solverJacobi(kfsoleq::Vector(3),
+    kfsoleq::Vector roots = kfsoleq::solverJacobi(kfsoleq::tolerance,
+                                                  kfsoleq::Vector(3),
                                                   my_csr_matrix,
                                                   constant_terms,
-                                                  kfsoleq::tolerance,
                                                   iters_block_size,
                                                   max_iters);
     
@@ -541,10 +541,10 @@ TEST(LinalgOperationsSolvers, SolverJacobi) {
     for (size_t i = 0; i < 2; ++i) {
         constant_terms[i] = const_terms_data_2[i];
     }
-    roots = kfsoleq::solverJacobi(kfsoleq::Vector(2),
+    roots = kfsoleq::solverJacobi(kfsoleq::tolerance,
+                                  kfsoleq::Vector(2),
                                   my_csr_matrix,
                                   constant_terms,
-                                  kfsoleq::tolerance,
                                   iters_block_size,
                                   max_iters);
     
@@ -579,11 +579,11 @@ TEST(LinalgOperationsSolvers, SolverFixedPointIteration) {
     for (size_t i = 0; i < 3; ++i) {
         constant_terms[i] = const_terms_data_1[i];
     }
-    kfsoleq::Vector roots = kfsoleq::solverFixedPointIteration(kfsoleq::Vector(3),
+    kfsoleq::Vector roots = kfsoleq::solverFixedPointIteration(kfsoleq::tolerance,
+                                                               kfsoleq::Vector(3),
                                                                my_csr_matrix,
                                                                constant_terms,
                                                                0.2,
-                                                               kfsoleq::tolerance,
                                                                iters_block_size,
                                                                max_iters);
     
@@ -614,11 +614,11 @@ TEST(LinalgOperationsSolvers, SolverFixedPointIteration) {
     for (size_t i = 0; i < 2; ++i) {
         constant_terms[i] = const_terms_data_2[i];
     }
-    roots = kfsoleq::solverFixedPointIteration(kfsoleq::Vector(2),
+    roots = kfsoleq::solverFixedPointIteration(kfsoleq::tolerance,
+                                               kfsoleq::Vector(2),
                                                my_csr_matrix,
                                                constant_terms,
                                                0.153846153846,
-                                               kfsoleq::tolerance,
                                                iters_block_size,
                                                max_iters);
     
@@ -653,10 +653,10 @@ TEST(LinalgOperationsSolvers, SolverGaussSeidel) {
     for (size_t i = 0; i < 3; ++i) {
         constant_terms[i] = const_terms_data_1[i];
     }
-    kfsoleq::Vector roots = kfsoleq::solverGaussSeidel(kfsoleq::Vector(3),
+    kfsoleq::Vector roots = kfsoleq::solverGaussSeidel(kfsoleq::tolerance,
+                                                       kfsoleq::Vector(3),
                                                        my_csr_matrix,
                                                        constant_terms,
-                                                       kfsoleq::tolerance,
                                                        iters_block_size,
                                                        max_iters);
     
@@ -687,10 +687,10 @@ TEST(LinalgOperationsSolvers, SolverGaussSeidel) {
     for (size_t i = 0; i < 2; ++i) {
         constant_terms[i] = const_terms_data_2[i];
     }
-    roots = kfsoleq::solverGaussSeidel(kfsoleq::Vector(2),
+    roots = kfsoleq::solverGaussSeidel(kfsoleq::tolerance,
+                                       kfsoleq::Vector(2),
                                        my_csr_matrix,
                                        constant_terms,
-                                       kfsoleq::tolerance,
                                        iters_block_size,
                                        max_iters);
     
@@ -731,11 +731,11 @@ TEST(LinalgOperationsSolvers, SolverChebyshevFixedPointIteration) {
     kfsoleq::Vector tau = kfsoleq::getTauFromChebyshevRoots(
                           kfsoleq::reorderChebyshevRoots(
                           kfsoleq::getChebyshevRoots(4)), min_eigen_value, max_eigen_value);
-    kfsoleq::Vector roots = kfsoleq::solverChebyshevFixedPointIteration(kfsoleq::Vector(3),
+    kfsoleq::Vector roots = kfsoleq::solverChebyshevFixedPointIteration(kfsoleq::tolerance,
+                                                                        kfsoleq::Vector(3),
                                                                         my_csr_matrix,
                                                                         constant_terms,
                                                                         tau,
-                                                                        kfsoleq::tolerance,
                                                                         max_iters);
     
     EXPECT_EQ(roots.getSize(), 3) << "Roots Size doesn't match";
@@ -752,12 +752,12 @@ TEST(LinalgOperationsSolvers, SolverChebyshevFixedPointIteration) {
     
     
     roots = kfsoleq::Vector(42);
-    roots = kfsoleq::solverChebyshevFixedPointIteration(kfsoleq::Vector(3),
+    roots = kfsoleq::solverChebyshevFixedPointIteration(kfsoleq::tolerance,
+                                                        kfsoleq::Vector(3),
                                                         my_csr_matrix,
                                                         constant_terms,
                                                         min_eigen_value,
                                                         max_eigen_value,
-                                                        kfsoleq::tolerance,
                                                         4,
                                                         max_iters);
     

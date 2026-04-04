@@ -76,11 +76,11 @@ int main(int argc, char* argv[]) {
         std::cout << "Iterations loop for solver_tolerance:[" << solver_tolerance << "]...\n";
         saved_time = std::chrono::high_resolution_clock::now();
         for (size_t iter_num = 0; iter_num < iters_block_size; ++iter_num) {
-            roots = kfsoleq::solverFixedPointIteration(solver_initial_roots,
+            roots = kfsoleq::solverFixedPointIteration(solver_tolerance,
+                                                       solver_initial_roots,
                                                        my_csr_matrix,
                                                        constant_terms,
                                                        0.00000002958136261312, // Optimal for 1000x1000 data Matrix 0
-                                                       solver_tolerance,
                                                        solver_iters_block_size,
                                                        solver_max_iters,
                                                        &tmp_iters);

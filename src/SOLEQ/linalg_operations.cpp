@@ -209,10 +209,10 @@ kfsoleq::Vector kfsoleq::solverQRDecomposition(const kfsoleq::Matrix& given_matr
         }
         return roots;
 }
-kfsoleq::Vector kfsoleq::solverJacobi(const kfsoleq::Vector& initial_root,
+kfsoleq::Vector kfsoleq::solverJacobi(kfsoleq::soleq_float needed_precision,
+                                      const kfsoleq::Vector& initial_root,
                                       const kfsoleq::CSR_Matrix& given_csr_matrix,
                                       const kfsoleq::Vector& constant_terms,
-                                      kfsoleq::soleq_float needed_precision,
                                       size_t iters_block_size,
                                       size_t max_iters,
                                       size_t* overall_iters_ptr) {
@@ -251,11 +251,11 @@ kfsoleq::Vector kfsoleq::solverJacobi(const kfsoleq::Vector& initial_root,
         }
         return roots;
 }
-kfsoleq::Vector kfsoleq::solverFixedPointIteration(const kfsoleq::Vector& initial_root,
+kfsoleq::Vector kfsoleq::solverFixedPointIteration(kfsoleq::soleq_float needed_precision,
+                                                   const kfsoleq::Vector& initial_root,
                                                    const kfsoleq::CSR_Matrix& given_csr_matrix,
                                                    const kfsoleq::Vector& constant_terms,
                                                    kfsoleq::soleq_float tau,
-                                                   kfsoleq::soleq_float needed_precision,
                                                    size_t iters_block_size,
                                                    size_t max_iters,
                                                    size_t* overall_iters_ptr) {
@@ -276,10 +276,10 @@ kfsoleq::Vector kfsoleq::solverFixedPointIteration(const kfsoleq::Vector& initia
         }
         return roots;
 }
-kfsoleq::Vector kfsoleq::solverGaussSeidel(const kfsoleq::Vector& initial_root,
+kfsoleq::Vector kfsoleq::solverGaussSeidel(kfsoleq::soleq_float needed_precision,
+                                           const kfsoleq::Vector& initial_root,
                                            const kfsoleq::CSR_Matrix& given_csr_matrix,
                                            const kfsoleq::Vector& constant_terms,
-                                           kfsoleq::soleq_float needed_precision,
                                            size_t iters_block_size,
                                            size_t max_iters,
                                            size_t* overall_iters_ptr) {
@@ -316,11 +316,11 @@ kfsoleq::Vector kfsoleq::solverGaussSeidel(const kfsoleq::Vector& initial_root,
         }
         return roots;
 }
-kfsoleq::Vector kfsoleq::solverChebyshevFixedPointIteration(const kfsoleq::Vector& initial_root,
+kfsoleq::Vector kfsoleq::solverChebyshevFixedPointIteration(kfsoleq::soleq_float needed_precision,
+                                                            const kfsoleq::Vector& initial_root,
                                                             const kfsoleq::CSR_Matrix& given_csr_matrix,
                                                             const kfsoleq::Vector& constant_terms,
                                                             const kfsoleq::Vector& tau,
-                                                            kfsoleq::soleq_float needed_precision,
                                                             size_t max_iters,
                                                             size_t* overall_iters_ptr) {
         kfsoleq::Vector roots_prev = initial_root;
@@ -340,12 +340,12 @@ kfsoleq::Vector kfsoleq::solverChebyshevFixedPointIteration(const kfsoleq::Vecto
         }
         return roots;
 }
-kfsoleq::Vector kfsoleq::solverChebyshevFixedPointIteration(const kfsoleq::Vector& initial_root,
+kfsoleq::Vector kfsoleq::solverChebyshevFixedPointIteration(kfsoleq::soleq_float needed_precision,
+                                                            const kfsoleq::Vector& initial_root,
                                                             const kfsoleq::CSR_Matrix& given_csr_matrix,
                                                             const kfsoleq::Vector& constant_terms,
                                                             kfsoleq::soleq_float min_eigen_value,
                                                             kfsoleq::soleq_float max_eigen_value,
-                                                            kfsoleq::soleq_float needed_precision,
                                                             size_t iters_block_size,
                                                             size_t max_iters,
                                                             size_t* overall_iters_ptr) {

@@ -88,11 +88,11 @@ int main(int argc, char* argv[]) {
         std::cout << "Iterations loop for solver_tolerance:[" << solver_tolerance << "]...\n";
         saved_time = std::chrono::high_resolution_clock::now();
         for (size_t iter_num = 0; iter_num < iters_block_size; ++iter_num) {
-            roots = kfsoleq::solverChebyshevFixedPointIteration(solver_initial_roots,
+            roots = kfsoleq::solverChebyshevFixedPointIteration(solver_tolerance,
+                                                                solver_initial_roots,
                                                                 my_csr_matrix,
                                                                 constant_terms,
                                                                 solver_tau,
-                                                                solver_tolerance,
                                                                 solver_max_iters,
                                                                 &tmp_iters);
             aver_iters += (long double)tmp_iters;
