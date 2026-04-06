@@ -1,0 +1,160 @@
+NEW ENTRY OF BENCHMARK DATA OF CHEBYSHEV ACCELERATOR, TARGET SOLVER: SOLVER GAUSS SEIDEL
+Matrix Size:	100	 | Solver Invokations Iters Block Size:	1000000	 | Solver Iters Block Size:	1
+Residual:	10	 | Aver Time (ms):	9.41717e-05	 | Aver Iters:	0
+Residual:	3.26735	 | Aver Time (ms):	0.000363489	 | Aver Iters:	1
+Residual:	3.26735	 | Aver Time (ms):	0.00036724	 | Aver Iters:	1
+Residual:	3.26735	 | Aver Time (ms):	0.00036342	 | Aver Iters:	1
+Residual:	3.26735	 | Aver Time (ms):	0.000365665	 | Aver Iters:	1
+Residual:	3.26735	 | Aver Time (ms):	0.000362592	 | Aver Iters:	1
+Residual:	0.723473	 | Aver Time (ms):	0.000668399	 | Aver Iters:	2
+Residual:	0.723473	 | Aver Time (ms):	0.000661993	 | Aver Iters:	2
+NEW ENTRY OF BENCHMARK DATA OF CHEBYSHEV ACCELERATOR, TARGET SOLVER: SOLVER GAUSS SEIDEL
+Matrix Size:	100	 | Solver Invokations Iters Block Size:	1000000	 | Solver Iters Block Size:	1
+Residual:	0.723473	 | Aver Time (ms):	0.000707615	 | Aver Iters:	2
+Residual:	0.723473	 | Aver Time (ms):	0.000666297	 | Aver Iters:	2
+Residual:	0.723473	 | Aver Time (ms):	0.000667041	 | Aver Iters:	2
+Residual:	0.145526	 | Aver Time (ms):	0.000948627	 | Aver Iters:	3
+Residual:	0.145526	 | Aver Time (ms):	0.000949058	 | Aver Iters:	3
+Residual:	0.145526	 | Aver Time (ms):	0.000946272	 | Aver Iters:	3
+Residual:	0.145526	 | Aver Time (ms):	0.000946835	 | Aver Iters:	3
+Residual:	0.0362398	 | Aver Time (ms):	0.00123004	 | Aver Iters:	4
+NEW ENTRY OF BENCHMARK DATA OF CHEBYSHEV ACCELERATOR, TARGET SOLVER: SOLVER GAUSS SEIDEL
+Matrix Size:	100	 | Solver Invokations Iters Block Size:	1000000	 | Solver Iters Block Size:	1
+Residual:	0.0362398	 | Aver Time (ms):	0.00125143	 | Aver Iters:	4
+Residual:	0.0362398	 | Aver Time (ms):	0.00126271	 | Aver Iters:	4
+Residual:	0.0362398	 | Aver Time (ms):	0.00126751	 | Aver Iters:	4
+Residual:	0.0362398	 | Aver Time (ms):	0.00126833	 | Aver Iters:	4
+Residual:	0.0362398	 | Aver Time (ms):	0.0012701	 | Aver Iters:	4
+Residual:	0.0362398	 | Aver Time (ms):	0.00127106	 | Aver Iters:	4
+Residual:	0.0115872	 | Aver Time (ms):	0.00156239	 | Aver Iters:	5
+Residual:	0.0115872	 | Aver Time (ms):	0.00156611	 | Aver Iters:	5.00001
+NEW ENTRY OF BENCHMARK DATA OF CHEBYSHEV ACCELERATOR, TARGET SOLVER: SOLVER GAUSS SEIDEL
+Matrix Size:	100	 | Solver Invokations Iters Block Size:	500000	 | Solver Iters Block Size:	1
+Residual:	0.00247879	 | Aver Time (ms):	0.00180171	 | Aver Iters:	6
+Residual:	0.00247879	 | Aver Time (ms):	0.0017894	 | Aver Iters:	6.00001
+Residual:	0.00247879	 | Aver Time (ms):	0.00178214	 | Aver Iters:	6.00001
+Residual:	0.00247879	 | Aver Time (ms):	0.00178051	 | Aver Iters:	6.00001
+Residual:	0.00247879	 | Aver Time (ms):	0.00178457	 | Aver Iters:	6.00001
+Residual:	0.00247879	 | Aver Time (ms):	0.00178419	 | Aver Iters:	6.00001
+Residual:	0.000729252	 | Aver Time (ms):	0.00206516	 | Aver Iters:	7.00001
+Residual:	0.000729252	 | Aver Time (ms):	0.00206518	 | Aver Iters:	7.00001
+NEW ENTRY OF BENCHMARK DATA OF CHEBYSHEV ACCELERATOR, TARGET SOLVER: SOLVER GAUSS SEIDEL
+Matrix Size:	100	 | Solver Invokations Iters Block Size:	500000	 | Solver Iters Block Size:	1
+Residual:	0.000729252	 | Aver Time (ms):	0.00208743	 | Aver Iters:	7
+Residual:	0.000729252	 | Aver Time (ms):	0.00212235	 | Aver Iters:	7.00001
+Residual:	0.000729252	 | Aver Time (ms):	0.0021097	 | Aver Iters:	7.00001
+Residual:	0.000167071	 | Aver Time (ms):	0.00239622	 | Aver Iters:	8.00001
+Residual:	0.000167071	 | Aver Time (ms):	0.00239937	 | Aver Iters:	8.00002
+Residual:	0.000167071	 | Aver Time (ms):	0.00240068	 | Aver Iters:	8.00002
+Residual:	0.000167071	 | Aver Time (ms):	0.00240305	 | Aver Iters:	8.00002
+Residual:	4.39499e-05	 | Aver Time (ms):	0.00270225	 | Aver Iters:	9.00002
+NEW ENTRY OF BENCHMARK DATA OF CHEBYSHEV ACCELERATOR, TARGET SOLVER: SOLVER GAUSS SEIDEL
+Matrix Size:	100	 | Solver Invokations Iters Block Size:	500000	 | Solver Iters Block Size:	1
+Residual:	4.39499e-05	 | Aver Time (ms):	0.0026785	 | Aver Iters:	9
+Residual:	4.39499e-05	 | Aver Time (ms):	0.00269462	 | Aver Iters:	9.00002
+Residual:	4.39499e-05	 | Aver Time (ms):	0.00269463	 | Aver Iters:	9.00002
+Residual:	4.39499e-05	 | Aver Time (ms):	0.00270091	 | Aver Iters:	9.00002
+Residual:	4.39499e-05	 | Aver Time (ms):	0.00271022	 | Aver Iters:	9.00002
+Residual:	1.00784e-05	 | Aver Time (ms):	0.00300152	 | Aver Iters:	10
+Residual:	1.00784e-05	 | Aver Time (ms):	0.00299851	 | Aver Iters:	10
+Residual:	1.00784e-05	 | Aver Time (ms):	0.00299888	 | Aver Iters:	10
+NEW ENTRY OF BENCHMARK DATA OF CHEBYSHEV ACCELERATOR, TARGET SOLVER: SOLVER GAUSS SEIDEL
+Matrix Size:	100	 | Solver Invokations Iters Block Size:	500000	 | Solver Iters Block Size:	1
+Residual:	2.66859e-06	 | Aver Time (ms):	0.00320541	 | Aver Iters:	11
+Residual:	2.66859e-06	 | Aver Time (ms):	0.00321859	 | Aver Iters:	11
+Residual:	2.66859e-06	 | Aver Time (ms):	0.00322175	 | Aver Iters:	11
+Residual:	2.66859e-06	 | Aver Time (ms):	0.00323103	 | Aver Iters:	11
+Residual:	2.66859e-06	 | Aver Time (ms):	0.00324136	 | Aver Iters:	11
+Residual:	2.66859e-06	 | Aver Time (ms):	0.00324384	 | Aver Iters:	11
+Residual:	5.77576e-07	 | Aver Time (ms):	0.00353386	 | Aver Iters:	12
+Residual:	5.77576e-07	 | Aver Time (ms):	0.00354558	 | Aver Iters:	12
+NEW ENTRY OF BENCHMARK DATA OF CHEBYSHEV ACCELERATOR, TARGET SOLVER: SOLVER GAUSS SEIDEL
+Matrix Size:	100	 | Solver Invokations Iters Block Size:	300000	 | Solver Iters Block Size:	1
+Residual:	5.77576e-07	 | Aver Time (ms):	0.00348638	 | Aver Iters:	12
+Residual:	5.77576e-07	 | Aver Time (ms):	0.00347682	 | Aver Iters:	12
+Residual:	5.77576e-07	 | Aver Time (ms):	0.00348228	 | Aver Iters:	12
+Residual:	5.77576e-07	 | Aver Time (ms):	0.00348595	 | Aver Iters:	12
+Residual:	1.61368e-07	 | Aver Time (ms):	0.00377207	 | Aver Iters:	13
+Residual:	1.61368e-07	 | Aver Time (ms):	0.00378937	 | Aver Iters:	13
+Residual:	1.61368e-07	 | Aver Time (ms):	0.00381272	 | Aver Iters:	13
+Residual:	3.52326e-08	 | Aver Time (ms):	0.0040654	 | Aver Iters:	14
+NEW ENTRY OF BENCHMARK DATA OF CHEBYSHEV ACCELERATOR, TARGET SOLVER: SOLVER GAUSS SEIDEL
+Matrix Size:	100	 | Solver Invokations Iters Block Size:	300000	 | Solver Iters Block Size:	1
+Residual:	3.52326e-08	 | Aver Time (ms):	0.00402881	 | Aver Iters:	14
+Residual:	3.52326e-08	 | Aver Time (ms):	0.00403199	 | Aver Iters:	14
+Residual:	3.52326e-08	 | Aver Time (ms):	0.00403035	 | Aver Iters:	14
+Residual:	3.52326e-08	 | Aver Time (ms):	0.00403784	 | Aver Iters:	14
+Residual:	3.52326e-08	 | Aver Time (ms):	0.00404046	 | Aver Iters:	14
+Residual:	3.52326e-08	 | Aver Time (ms):	0.00403811	 | Aver Iters:	14
+Residual:	9.90373e-09	 | Aver Time (ms):	0.00433456	 | Aver Iters:	15
+Residual:	9.90373e-09	 | Aver Time (ms):	0.00432372	 | Aver Iters:	15.0001
+NEW ENTRY OF BENCHMARK DATA OF CHEBYSHEV ACCELERATOR, TARGET SOLVER: SOLVER GAUSS SEIDEL
+Matrix Size:	100	 | Solver Invokations Iters Block Size:	100000	 | Solver Iters Block Size:	1
+Residual:	9.90373e-09	 | Aver Time (ms):	0.0043635	 | Aver Iters:	15
+Residual:	2.05175e-09	 | Aver Time (ms):	0.00463492	 | Aver Iters:	16.0002
+Residual:	2.05175e-09	 | Aver Time (ms):	0.004625	 | Aver Iters:	16.0002
+Residual:	2.05175e-09	 | Aver Time (ms):	0.00464152	 | Aver Iters:	16.0002
+Residual:	2.05175e-09	 | Aver Time (ms):	0.00463308	 | Aver Iters:	16.0002
+Residual:	2.05175e-09	 | Aver Time (ms):	0.00464924	 | Aver Iters:	16.0002
+Residual:	2.05175e-09	 | Aver Time (ms):	0.00463641	 | Aver Iters:	16.0002
+Residual:	5.76641e-10	 | Aver Time (ms):	0.00493197	 | Aver Iters:	17.0002
+NEW ENTRY OF BENCHMARK DATA OF CHEBYSHEV ACCELERATOR, TARGET SOLVER: SOLVER GAUSS SEIDEL
+Matrix Size:	100	 | Solver Invokations Iters Block Size:	100000	 | Solver Iters Block Size:	1
+Residual:	5.76641e-10	 | Aver Time (ms):	0.0053018	 | Aver Iters:	17
+Residual:	5.76641e-10	 | Aver Time (ms):	0.00527901	 | Aver Iters:	17.0002
+Residual:	5.76641e-10	 | Aver Time (ms):	0.00527467	 | Aver Iters:	17.0002
+Residual:	5.76641e-10	 | Aver Time (ms):	0.00528512	 | Aver Iters:	17.0002
+Residual:	1.23015e-10	 | Aver Time (ms):	0.00561157	 | Aver Iters:	18.0002
+Residual:	1.23015e-10	 | Aver Time (ms):	0.00560383	 | Aver Iters:	18.0002
+Residual:	1.23015e-10	 | Aver Time (ms):	0.00560536	 | Aver Iters:	18.0002
+Residual:	3.42696e-11	 | Aver Time (ms):	0.00591178	 | Aver Iters:	19.0002
+NEW ENTRY OF BENCHMARK DATA OF CHEBYSHEV ACCELERATOR, TARGET SOLVER: SOLVER GAUSS SEIDEL
+Matrix Size:	100	 | Solver Invokations Iters Block Size:	100000	 | Solver Iters Block Size:	1
+Residual:	3.42696e-11	 | Aver Time (ms):	0.00557354	 | Aver Iters:	19
+Residual:	3.42696e-11	 | Aver Time (ms):	0.00562042	 | Aver Iters:	19.0002
+Residual:	3.42696e-11	 | Aver Time (ms):	0.00563468	 | Aver Iters:	19.0002
+Residual:	3.42696e-11	 | Aver Time (ms):	0.0056357	 | Aver Iters:	19.0002
+Residual:	3.42696e-11	 | Aver Time (ms):	0.0056229	 | Aver Iters:	19.0002
+Residual:	3.42696e-11	 | Aver Time (ms):	0.00565027	 | Aver Iters:	19.0002
+Residual:	8.28404e-12	 | Aver Time (ms):	0.00591436	 | Aver Iters:	20.0002
+Residual:	8.28404e-12	 | Aver Time (ms):	0.00594598	 | Aver Iters:	20.0002
+NEW ENTRY OF BENCHMARK DATA OF CHEBYSHEV ACCELERATOR, TARGET SOLVER: SOLVER GAUSS SEIDEL
+Matrix Size:	100	 | Solver Invokations Iters Block Size:	100000	 | Solver Iters Block Size:	1
+Residual:	8.28404e-12	 | Aver Time (ms):	0.00575872	 | Aver Iters:	20
+Residual:	8.28404e-12	 | Aver Time (ms):	0.0057547	 | Aver Iters:	20.0002
+Residual:	1.99618e-12	 | Aver Time (ms):	0.0060778	 | Aver Iters:	21.0002
+Residual:	1.99618e-12	 | Aver Time (ms):	0.0060832	 | Aver Iters:	21.0002
+Residual:	1.99618e-12	 | Aver Time (ms):	0.00604599	 | Aver Iters:	21.0002
+Residual:	1.99618e-12	 | Aver Time (ms):	0.00609431	 | Aver Iters:	21.0002
+Residual:	1.99618e-12	 | Aver Time (ms):	0.0060676	 | Aver Iters:	21.0002
+Residual:	5.17142e-13	 | Aver Time (ms):	0.00640084	 | Aver Iters:	22.0002
+NEW ENTRY OF BENCHMARK DATA OF CHEBYSHEV ACCELERATOR, TARGET SOLVER: SOLVER GAUSS SEIDEL
+Matrix Size:	100	 | Solver Invokations Iters Block Size:	100000	 | Solver Iters Block Size:	1
+Residual:	5.17142e-13	 | Aver Time (ms):	0.00660494	 | Aver Iters:	22
+Residual:	5.17142e-13	 | Aver Time (ms):	0.00656069	 | Aver Iters:	22.0002
+Residual:	5.17142e-13	 | Aver Time (ms):	0.00655778	 | Aver Iters:	22.0002
+Residual:	5.17142e-13	 | Aver Time (ms):	0.00658567	 | Aver Iters:	22.0002
+Residual:	1.17018e-13	 | Aver Time (ms):	0.00685931	 | Aver Iters:	23.0002
+Residual:	1.17018e-13	 | Aver Time (ms):	0.0070216	 | Aver Iters:	23.0002
+Residual:	1.17018e-13	 | Aver Time (ms):	0.00687606	 | Aver Iters:	23.0002
+Residual:	3.25295e-14	 | Aver Time (ms):	0.00716436	 | Aver Iters:	24.0002
+NEW ENTRY OF BENCHMARK DATA OF CHEBYSHEV ACCELERATOR, TARGET SOLVER: SOLVER GAUSS SEIDEL
+Matrix Size:	100	 | Solver Invokations Iters Block Size:	100000	 | Solver Iters Block Size:	1
+Residual:	3.25295e-14	 | Aver Time (ms):	0.00704225	 | Aver Iters:	24
+Residual:	3.25295e-14	 | Aver Time (ms):	0.00698553	 | Aver Iters:	24.0002
+Residual:	3.25295e-14	 | Aver Time (ms):	0.00700729	 | Aver Iters:	24.0002
+Residual:	3.25295e-14	 | Aver Time (ms):	0.00704143	 | Aver Iters:	24.0002
+Residual:	3.25295e-14	 | Aver Time (ms):	0.00700329	 | Aver Iters:	24.0002
+Residual:	3.25295e-14	 | Aver Time (ms):	0.00702071	 | Aver Iters:	24.0002
+Residual:	7.43849e-15	 | Aver Time (ms):	0.00740972	 | Aver Iters:	25.0002
+Residual:	7.43849e-15	 | Aver Time (ms):	0.00727732	 | Aver Iters:	25.0003
+NEW ENTRY OF BENCHMARK DATA OF CHEBYSHEV ACCELERATOR, TARGET SOLVER: SOLVER GAUSS SEIDEL
+Matrix Size:	100	 | Solver Invokations Iters Block Size:	100000	 | Solver Iters Block Size:	1
+Residual:	7.43849e-15	 | Aver Time (ms):	0.00731871	 | Aver Iters:	25
+Residual:	7.43849e-15	 | Aver Time (ms):	0.0073372	 | Aver Iters:	25.0003
+Residual:	7.43849e-15	 | Aver Time (ms):	0.0073389	 | Aver Iters:	25.0003
+Residual:	2.22045e-15	 | Aver Time (ms):	0.00764382	 | Aver Iters:	26.0003
+Residual:	2.22045e-15	 | Aver Time (ms):	0.00765113	 | Aver Iters:	26.0003
+Residual:	2.22045e-15	 | Aver Time (ms):	0.00765542	 | Aver Iters:	26.0003
+Residual:	2.22045e-15	 | Aver Time (ms):	0.00766497	 | Aver Iters:	26.0003
+Residual:	6.66134e-16	 | Aver Time (ms):	0.00825688	 | Aver Iters:	28.0003

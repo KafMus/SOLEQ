@@ -320,6 +320,17 @@ TEST(LinalgOperationsSideFunctions, GetTauFromChebyshevRoots) {
     }
 }
 
+TEST(LinalgOperationsSideFunctions, GetNewChebyshevAccelerationParameter) {
+    kfsoleq::soleq_float spectral_radius = 1.1;
+    kfsoleq::soleq_float mu_0 = 1;
+    kfsoleq::soleq_float mu_1 = 1.0 / spectral_radius;
+    kfsoleq::soleq_float mu_2 = kfsoleq::getNewChebyshevAccelerationParameter(spectral_radius, mu_0, mu_1);
+    kfsoleq::soleq_float mu_3 = kfsoleq::getNewChebyshevAccelerationParameter(spectral_radius, mu_1, mu_2);
+    
+    EXPECT_NEAR(mu_2, 0.65289256, kfsoleq::tolerance) << "New Chebyshev Acceleration Parametr didn't match";
+    EXPECT_NEAR(mu_3, 0.27798648, kfsoleq::tolerance) << "New Chebyshev Acceleration Parametr didn't match";
+}
+
 TEST(LinalgOperations, GetQRDecompositionHouseholder) {
     kfsoleq::Matrix Q_Matrix, R_Matrix;
     kfsoleq::Matrix my_matrix(3, 3);
@@ -760,6 +771,103 @@ TEST(LinalgOperationsSolvers, SolverChebyshevFixedPointIteration) {
                                                         max_eigen_value,
                                                         4,
                                                         max_iters);
+    
+    EXPECT_EQ(roots.getSize(), 3) << "Roots Size doesn't match";
+    EXPECT_EQ(roots.getValues().size(), 3) << "Roots Values size doesn't match";
+    EXPECT_EQ(roots.getValues().capacity(), 3) << "Roots Values capacity doesn't match";
+    for (size_t i = 0; i < 3; ++i) {
+        tmp = 0;
+        for (size_t j = 0; j < 3; ++j) {
+            tmp += my_matrix_data_1[i][j] * roots[j];
+        }
+        EXPECT_NEAR(tmp, const_terms_data_1[i], kfsoleq::tolerance) << "Roots Values doesn't match";
+    }
+}
+
+TEST(LinalgOperationsAccelerators, AcceleratorChebyshev) {
+    size_t outer_iters_block_size = 8;
+    size_t outer_max_iters = 8192;
+    size_t iters_block_size = 1;
+    size_t max_iters = 1;
+    kfsoleq::CSR_Matrix my_csr_matrix;
+    kfsoleq::soleq_float my_matrix_data_1[3][3] = { { 5, 1,  0 },
+                                                    { 1, 4, -1 },
+                                                    { 0, -1,  2 } };
+    std::list<std::pair<size_t, kfsoleq::soleq_float>>  lil_first_row = { std::make_pair(0,  5), std::make_pair(1, 1) };
+    std::list<std::pair<size_t, kfsoleq::soleq_float>> lil_second_row = { std::make_pair(0,  1), std::make_pair(1, 4), std::make_pair(2, -1) };
+    std::list<std::pair<size_t, kfsoleq::soleq_float>>  lil_third_row = { std::make_pair(1, -1), std::make_pair(2, 2) };
+    std::list<std::list<std::pair<size_t, kfsoleq::soleq_float>>> my_lil = { lil_first_row, lil_second_row, lil_third_row };
+    my_csr_matrix = kfsoleq::CSR_Matrix(my_lil);
+    
+    kfsoleq::Vector constant_terms(3);
+    kfsoleq::soleq_float const_terms_data_1[3] = { 44, 4, 32 };
+    for (size_t i = 0; i < 3; ++i) {
+        constant_terms[i] = const_terms_data_1[i];
+    }
+    
+    
+    kfsoleq::soleq_float spectral_radius = 0.5;
+    kfsoleq::Vector roots = kfsoleq::acceleratorChebyshev(kfsoleq::tolerance,
+                                                          kfsoleq::Vector(3),
+                                                          my_csr_matrix,
+                                                          constant_terms,
+                                                          spectral_radius,
+                                                          outer_iters_block_size,
+                                                          outer_max_iters,
+                                                          nullptr,
+                                                          kfsoleq::solverJacobi,
+                                                          iters_block_size,
+                                                          max_iters);
+    
+    EXPECT_EQ(roots.getSize(), 3) << "Roots Size doesn't match";
+    EXPECT_EQ(roots.getValues().size(), 3) << "Roots Values size doesn't match";
+    EXPECT_EQ(roots.getValues().capacity(), 3) << "Roots Values capacity doesn't match";
+    kfsoleq::soleq_float tmp;
+    for (size_t i = 0; i < 3; ++i) {
+        tmp = 0;
+        for (size_t j = 0; j < 3; ++j) {
+            tmp += my_matrix_data_1[i][j] * roots[j];
+        }
+        EXPECT_NEAR(tmp, const_terms_data_1[i], kfsoleq::tolerance) << "Roots Values doesn't match";
+    }
+    
+    
+    roots = kfsoleq::acceleratorChebyshev(kfsoleq::tolerance,
+                                          kfsoleq::Vector(3),
+                                          my_csr_matrix,
+                                          constant_terms,
+                                          spectral_radius,
+                                          outer_iters_block_size,
+                                          outer_max_iters,
+                                          nullptr,
+                                          kfsoleq::solverGaussSeidel,
+                                          iters_block_size,
+                                          max_iters);
+    
+    EXPECT_EQ(roots.getSize(), 3) << "Roots Size doesn't match";
+    EXPECT_EQ(roots.getValues().size(), 3) << "Roots Values size doesn't match";
+    EXPECT_EQ(roots.getValues().capacity(), 3) << "Roots Values capacity doesn't match";
+    for (size_t i = 0; i < 3; ++i) {
+        tmp = 0;
+        for (size_t j = 0; j < 3; ++j) {
+            tmp += my_matrix_data_1[i][j] * roots[j];
+        }
+        EXPECT_NEAR(tmp, const_terms_data_1[i], kfsoleq::tolerance) << "Roots Values doesn't match";
+    }
+    
+    
+    roots = kfsoleq::acceleratorChebyshev(kfsoleq::tolerance,
+                                          kfsoleq::Vector(3),
+                                          my_csr_matrix,
+                                          constant_terms,
+                                          spectral_radius,
+                                          outer_iters_block_size,
+                                          outer_max_iters,
+                                          nullptr,
+                                          kfsoleq::solverFixedPointIteration,
+                                          0.27627629286944701919,
+                                          iters_block_size,
+                                          max_iters);
     
     EXPECT_EQ(roots.getSize(), 3) << "Roots Size doesn't match";
     EXPECT_EQ(roots.getValues().size(), 3) << "Roots Values size doesn't match";

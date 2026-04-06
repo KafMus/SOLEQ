@@ -108,6 +108,11 @@ kfsoleq::Vector kfsoleq::getTauFromChebyshevRoots(const kfsoleq::Vector& roots,
         }
         return result;
 }
+kfsoleq::soleq_float kfsoleq::getNewChebyshevAccelerationParameter(kfsoleq::soleq_float spectral_radius,
+                                                          kfsoleq::soleq_float prev_mu,
+                                                          kfsoleq::soleq_float curr_mu) {
+        return (2.0 / spectral_radius) * curr_mu - prev_mu;
+}
 std::pair<kfsoleq::Matrix, kfsoleq::Matrix> kfsoleq::getQRDecompositionHouseholder(kfsoleq::Matrix given_matrix) {
         kfsoleq::Vector v;
         kfsoleq::Vector x_result;
@@ -224,7 +229,7 @@ kfsoleq::Vector kfsoleq::solverJacobi(kfsoleq::soleq_float needed_precision,
         kfsoleq::soleq_float diagonal_element = 0;
         
         size_t outer_ind = 0;
-        while (((given_csr_matrix * roots) - constant_terms).getFirstNorm() > needed_precision && outer_ind < max_iters) {
+        while (outer_ind < max_iters && ((given_csr_matrix * roots) - constant_terms).getFirstNorm() > needed_precision) {
             for (size_t iter_num = 0; iter_num < iters_block_size; ++iter_num) {
                 for (size_t row_ind = 0; row_ind < size_y; ++row_ind) {
                     mult_LUx = 0;
@@ -263,7 +268,7 @@ kfsoleq::Vector kfsoleq::solverFixedPointIteration(kfsoleq::soleq_float needed_p
         kfsoleq::Vector roots(given_csr_matrix.getRowIndexes().size() - 1);
         
         size_t outer_ind = 0;
-        while (((given_csr_matrix * roots) - constant_terms).getFirstNorm() > needed_precision && outer_ind < max_iters) {
+        while (outer_ind < max_iters && ((given_csr_matrix * roots) - constant_terms).getFirstNorm() > needed_precision) {
             for (size_t iter_num = 0; iter_num < iters_block_size; ++iter_num) {
                 roots = roots_prev - (given_csr_matrix * roots_prev - constant_terms) * tau;
                 roots_prev = roots;
@@ -290,7 +295,7 @@ kfsoleq::Vector kfsoleq::solverGaussSeidel(kfsoleq::soleq_float needed_precision
         kfsoleq::soleq_float diagonal_element = 0;
         
         size_t outer_ind = 0;
-        while (((given_csr_matrix * roots) - constant_terms).getFirstNorm() > needed_precision && outer_ind < max_iters) {
+        while (outer_ind < max_iters && ((given_csr_matrix * roots) - constant_terms).getFirstNorm() > needed_precision) {
             for (size_t iter_num = 0; iter_num < iters_block_size; ++iter_num) {
                 for (size_t row_ind = 0; row_ind < size_y; ++row_ind) {
                     mult_LUx = 0;
@@ -327,7 +332,7 @@ kfsoleq::Vector kfsoleq::solverChebyshevFixedPointIteration(kfsoleq::soleq_float
         kfsoleq::Vector roots(given_csr_matrix.getRowIndexes().size() - 1);
         
         size_t outer_ind = 0;
-        while (((given_csr_matrix * roots) - constant_terms).getFirstNorm() > needed_precision && outer_ind < max_iters) {
+        while (outer_ind < max_iters && ((given_csr_matrix * roots) - constant_terms).getFirstNorm() > needed_precision) {
             for (size_t iter_num = 0; iter_num < tau.getSize(); ++iter_num) {
                 roots = roots_prev - (given_csr_matrix * roots_prev - constant_terms) * tau[iter_num];
                 roots_prev = roots;
@@ -356,7 +361,7 @@ kfsoleq::Vector kfsoleq::solverChebyshevFixedPointIteration(kfsoleq::soleq_float
                               kfsoleq::getChebyshevRoots(iters_block_size)), min_eigen_value, max_eigen_value);
         
         size_t outer_ind = 0;
-        while (((given_csr_matrix * roots) - constant_terms).getFirstNorm() > needed_precision && outer_ind < max_iters) {
+        while (outer_ind < max_iters && ((given_csr_matrix * roots) - constant_terms).getFirstNorm() > needed_precision) {
             for (size_t iter_num = 0; iter_num < iters_block_size; ++iter_num) {
                 roots = roots_prev - (given_csr_matrix * roots_prev - constant_terms) * tau[iter_num];
                 roots_prev = roots;
