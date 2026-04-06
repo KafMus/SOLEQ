@@ -45,9 +45,9 @@ int main(int argc, char* argv[]) {
     kfsoleq::Vector roots;
     kfsoleq::Vector residual;
     kfsoleq::Vector solver_initial_roots = kfsoleq::Vector(my_csr_matrix.getRowIndexes().size() - 1);
-    size_t iters_block_size = 20;
-    size_t solver_iters_block_size = 1024;
-    size_t solver_max_iters = 16777216;
+    size_t iters_block_size = 100000;
+    size_t solver_iters_block_size = 1;
+    size_t solver_max_iters = 8192;
     long double aver_time;
     long double aver_iters = 0;
     size_t tmp_iters;
@@ -63,9 +63,9 @@ int main(int argc, char* argv[]) {
     
     // Main iterations loops
     kfsoleq::soleq_float solver_tolerance;
-    kfsoleq::soleq_float max_solver_tolerance = 0.000000001;
-    kfsoleq::soleq_float min_solver_tolerance = 0.00000000001;
-    kfsoleq::soleq_float solver_tolerance_step = 0.00000000012625;
+    kfsoleq::soleq_float max_solver_tolerance  = 0.0000000001;
+    kfsoleq::soleq_float min_solver_tolerance  = 0.000000000001;
+    kfsoleq::soleq_float solver_tolerance_step = 0.000000000012625;
     std::cout << "Iterations loops with max_solver_tolerance:[" << max_solver_tolerance
               << "], min_solver_tolerance:[" << min_solver_tolerance
               << "], solver_tolerance_step:[" << solver_tolerance_step << "]...\n";

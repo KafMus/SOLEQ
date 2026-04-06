@@ -65,8 +65,8 @@ int main(int argc, char* argv[]) {
     
     // Main iterations loops
     kfsoleq::soleq_float solver_tolerance;
-    kfsoleq::soleq_float max_solver_tolerance = 0.00000001;
-    kfsoleq::soleq_float min_solver_tolerance = 0.0000000001;
+    kfsoleq::soleq_float max_solver_tolerance  = 0.00000001;
+    kfsoleq::soleq_float min_solver_tolerance  = 0.0000000001;
     kfsoleq::soleq_float solver_tolerance_step = 0.0000000012625;
     std::cout << "Iterations loops with max_solver_tolerance:[" << max_solver_tolerance
               << "], min_solver_tolerance:[" << min_solver_tolerance
