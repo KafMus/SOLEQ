@@ -25,14 +25,14 @@ message("Adding Source files DONE!")
 
 # Adding tests
 if (WITH_TESTS)
-    message("Adding tests files...")
+    message("Adding tests...")
     add_subdirectory(tests)
-    message("Adding tests files DONE!")
+    message("Adding tests DONE!")
 endif()
 
 # Adding tools
 if (WITH_TOOLS)
-    message("Adding tools files...")
+    message("Adding tools...")
     add_subdirectory(tools)
-    message("Adding tools files DONE!")
+    message("Adding tools DONE!")
 endif()
