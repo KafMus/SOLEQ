@@ -2,6 +2,10 @@ cmake_minimum_required(VERSION 4.2.3)
 
 project(kfsoleq)
 
+# Mandatory options
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED On)
+
 # Options
 option(DIAGTHREE_BUILD "Build DiagThree" ON)
 option(MATRIX_BUILD "Build Matrix" ON)
