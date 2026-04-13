@@ -36,7 +36,7 @@ void solverJacobiStep(Vector& roots,
                       const Vector& constant_terms,
                       size_t given_csr_matrix_size_y);
 Vector solverJacobi(soleq_float needed_precision,
-                    const Vector& initial_root,
+                    const Vector& initial_roots,
                     const CSR_Matrix& given_csr_matrix,
                     const Vector& constant_terms,
                     size_t iters_block_size,
@@ -58,21 +58,21 @@ Vector solverGaussSeidelStep(Vector& roots,
                            const Vector& constant_terms,
                            size_t given_csr_matrix_size_y);
 Vector solverGaussSeidel(soleq_float needed_precision,
-                         const Vector& initial_root,
+                         const Vector& initial_roots,
                          const CSR_Matrix& given_csr_matrix,
                          const Vector& constant_terms,
                          size_t iters_block_size,
                          size_t max_iters,
                          size_t* overall_iters_ptr = nullptr);
 Vector solverChebyshevFixedPointIteration(soleq_float needed_precision,
-                                          const Vector& initial_root,
+                                          const Vector& initial_roots,
                                           const CSR_Matrix& given_csr_matrix,
                                           const Vector& constant_terms,
                                           const Vector& tau,
                                           size_t max_iters,
                                           size_t* overall_iters_ptr = nullptr);
 Vector solverChebyshevFixedPointIteration(soleq_float needed_precision,
-                                          const Vector& initial_root,
+                                          const Vector& initial_roots,
                                           const CSR_Matrix& given_csr_matrix,
                                           const Vector& constant_terms,
                                           soleq_float min_eigen_value,
@@ -82,7 +82,7 @@ Vector solverChebyshevFixedPointIteration(soleq_float needed_precision,
                                           size_t* overall_iters_ptr = nullptr);
 template <bool SolverStepRequiresPreviousRoots, typename SolverStepFunc, typename... Args>
 Vector acceleratorChebyshev(soleq_float needed_precision,
-                            const Vector& initial_root,
+                            const Vector& initial_roots,
                             const CSR_Matrix& given_csr_matrix,
                             const Vector& constant_terms,
                             soleq_float spectral_radius,
@@ -91,9 +91,9 @@ Vector acceleratorChebyshev(soleq_float needed_precision,
                             size_t* overall_iters_ptr,
                             SolverStepFunc solver_step_func,
                             Args... solver_step_arguments) {
-        Vector roots = initial_root;
+        Vector roots = initial_roots;
         if constexpr (SolverStepRequiresPreviousRoots) {
-            solver_step_func(roots, initial_root, given_csr_matrix, constant_terms, solver_step_arguments...);
+            solver_step_func(roots, initial_roots, given_csr_matrix, constant_terms, solver_step_arguments...);
         }
         else {
             solver_step_func(roots, given_csr_matrix, constant_terms, solver_step_arguments...);
@@ -106,7 +106,7 @@ Vector acceleratorChebyshev(soleq_float needed_precision,
         size_t outer_ind = 2;
         
         if constexpr (SolverStepRequiresPreviousRoots) {
-            Vector roots_prev = initial_root;
+            Vector roots_prev = initial_roots;
             Vector tmp_roots; // I don't want this, but I need to choose lesser of two evils
             
             while (outer_ind < max_iters && ((given_csr_matrix * roots) - constant_terms).getFirstNorm() > needed_precision) {
@@ -124,7 +124,7 @@ Vector acceleratorChebyshev(soleq_float needed_precision,
             }
         }        
         else {
-            Vector roots_prev = initial_root;
+            Vector roots_prev = initial_roots;
             
             while (outer_ind < max_iters && ((given_csr_matrix * roots) - constant_terms).getFirstNorm() > needed_precision) {
                 for (size_t iter_num = 0; iter_num < iters_block_size; ++iter_num) {

@@ -44,7 +44,6 @@ int main(int argc, char* argv[]) {
     // Declaration of main stuff
     kfsoleq::Vector roots;
     kfsoleq::Vector residual;
-    kfsoleq::Vector solver_initial_roots = kfsoleq::Vector(my_csr_matrix.getRowIndexes().size() - 1);
     size_t iters_block_size = 10;
     size_t solver_iters_block_size = 1;
     size_t solver_max_iters = 8192 * 16 * 4;

@@ -240,14 +240,14 @@ void kfsoleq::solverJacobiStep(kfsoleq::Vector& roots,
         }
 }
 kfsoleq::Vector kfsoleq::solverJacobi(kfsoleq::soleq_float needed_precision,
-                                      const kfsoleq::Vector& initial_root,
+                                      const kfsoleq::Vector& initial_roots,
                                       const kfsoleq::CSR_Matrix& given_csr_matrix,
                                       const kfsoleq::Vector& constant_terms,
                                       size_t iters_block_size,
                                       size_t max_iters,
                                       size_t* overall_iters_ptr) {
         const size_t size_y = given_csr_matrix.getRowIndexes().size() - 1;
-        kfsoleq::Vector roots_prev = initial_root;
+        kfsoleq::Vector roots_prev = initial_roots;
         kfsoleq::Vector roots(size_y);
         
         size_t outer_ind = 0;
@@ -319,14 +319,14 @@ kfsoleq::Vector kfsoleq::solverGaussSeidelStep(kfsoleq::Vector& roots,
         return roots;
 }
 kfsoleq::Vector kfsoleq::solverGaussSeidel(kfsoleq::soleq_float needed_precision,
-                                           const kfsoleq::Vector& initial_root,
+                                           const kfsoleq::Vector& initial_roots,
                                            const kfsoleq::CSR_Matrix& given_csr_matrix,
                                            const kfsoleq::Vector& constant_terms,
                                            size_t iters_block_size,
                                            size_t max_iters,
                                            size_t* overall_iters_ptr) {
         const size_t size_y = given_csr_matrix.getRowIndexes().size() - 1;
-        kfsoleq::Vector roots = initial_root;
+        kfsoleq::Vector roots = initial_roots;
         
         size_t outer_ind = 0;
         while (outer_ind < max_iters && ((given_csr_matrix * roots) - constant_terms).getFirstNorm() > needed_precision) {
@@ -342,13 +342,13 @@ kfsoleq::Vector kfsoleq::solverGaussSeidel(kfsoleq::soleq_float needed_precision
         return roots;
 }
 kfsoleq::Vector kfsoleq::solverChebyshevFixedPointIteration(kfsoleq::soleq_float needed_precision,
-                                                            const kfsoleq::Vector& initial_root,
+                                                            const kfsoleq::Vector& initial_roots,
                                                             const kfsoleq::CSR_Matrix& given_csr_matrix,
                                                             const kfsoleq::Vector& constant_terms,
                                                             const kfsoleq::Vector& tau,
                                                             size_t max_iters,
                                                             size_t* overall_iters_ptr) {
-        kfsoleq::Vector roots_prev = initial_root;
+        kfsoleq::Vector roots_prev = initial_roots;
         kfsoleq::Vector roots(given_csr_matrix.getRowIndexes().size() - 1);
         
         size_t outer_ind = 0;
@@ -366,7 +366,7 @@ kfsoleq::Vector kfsoleq::solverChebyshevFixedPointIteration(kfsoleq::soleq_float
         return roots;
 }
 kfsoleq::Vector kfsoleq::solverChebyshevFixedPointIteration(kfsoleq::soleq_float needed_precision,
-                                                            const kfsoleq::Vector& initial_root,
+                                                            const kfsoleq::Vector& initial_roots,
                                                             const kfsoleq::CSR_Matrix& given_csr_matrix,
                                                             const kfsoleq::Vector& constant_terms,
                                                             kfsoleq::soleq_float min_eigen_value,
@@ -374,7 +374,7 @@ kfsoleq::Vector kfsoleq::solverChebyshevFixedPointIteration(kfsoleq::soleq_float
                                                             size_t iters_block_size,
                                                             size_t max_iters,
                                                             size_t* overall_iters_ptr) {
-        kfsoleq::Vector roots_prev = initial_root;
+        kfsoleq::Vector roots_prev = initial_roots;
         kfsoleq::Vector roots(given_csr_matrix.getRowIndexes().size() - 1);
         kfsoleq::Vector tau = kfsoleq::getTauFromChebyshevRoots(
                               kfsoleq::reorderChebyshevRoots(
