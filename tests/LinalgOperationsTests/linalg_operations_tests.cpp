@@ -5,7 +5,7 @@
 #include <SOLEQ/vector.hpp>
 
 
-TEST(LinalgOperations, MatrixVectorMultiplication) {
+TEST(LinalgOperationsOperators, MatrixVectorMultiplication) {
     size_t size_y[4] = { 0, 3, 3, 1 };
     size_t size_x[4] = { 0, 3, 5, 3 };
     kfsoleq::Matrix my_matrix;
@@ -105,7 +105,7 @@ TEST(LinalgOperations, MatrixVectorMultiplication) {
     }
 }
 
-TEST(LinalgOperations, CSRMatrixVectorMultiplication) {
+TEST(LinalgOperationsOperators, CSRMatrixVectorMultiplication) {
     kfsoleq::CSR_Matrix my_matrix{};
     kfsoleq::Vector my_vector{};
     kfsoleq::Vector result;
@@ -331,7 +331,7 @@ TEST(LinalgOperationsSideFunctions, GetNewChebyshevAccelerationParameter) {
     EXPECT_NEAR(mu_3, 0.27798648, kfsoleq::tolerance) << "New Chebyshev Acceleration Parametr didn't match";
 }
 
-TEST(LinalgOperations, GetQRDecompositionHouseholder) {
+TEST(LinalgOperationsSideFunctions, GetQRDecompositionHouseholder) {
     kfsoleq::Matrix Q_Matrix, R_Matrix;
     kfsoleq::Matrix my_matrix(3, 3);
     kfsoleq::soleq_float my_matrix_data_1[3][3] = { { 12, -51,   4 },
