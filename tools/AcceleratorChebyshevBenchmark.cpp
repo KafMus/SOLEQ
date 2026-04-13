@@ -14,8 +14,8 @@
 #define SOLVER_JACOBI 1
 #define SOLVER_GAUSS_SEIDEL 2
 #define SOLVER_FIXED_POINT_ITERATION 3
-#define TARGET_SOLVER_IND 1
-#define TARGET_SOLVER kfsoleq::solverJacobi
+#define TARGET_SOLVER_IND 2
+#define TARGET_SOLVER_STEP_FUNC kfsoleq::solverGaussSeidelStep
 int main(int argc, char* argv[]) {
     
     // Checking input
@@ -60,14 +60,12 @@ int main(int argc, char* argv[]) {
     kfsoleq::Vector residual;
     kfsoleq::Vector solver_initial_roots = kfsoleq::Vector(my_csr_matrix.getRowIndexes().size() - 1);
 #if TARGET_SOLVER_IND == SOLVER_FIXED_POINT_ITERATION
-    kfsoleq::soleq_float tau = 0.03089872756815349668; // Optimal for SparseMatrix1
+    kfsoleq::soleq_float tau = 0.00000002958136261312, // Optimal for 1000x1000 SparseMatrix0
 #endif
-    kfsoleq::soleq_float spectral_radius = 0.163963;
-    size_t iters_block_size = 100000;
+    kfsoleq::soleq_float spectral_radius = 0.99731555247661932777;
+    size_t iters_block_size = 50;
     size_t accelerator_iters_block_size = 1;
-    size_t accelerator_max_iters = 8192;
-    size_t solver_iters_block_size = 1;
-    size_t solver_max_iters = 1;
+    size_t accelerator_max_iters = 8192 * 16;
     long double aver_time;
     long double aver_iters = 0;
     size_t tmp_iters = 1;
@@ -76,16 +74,16 @@ int main(int argc, char* argv[]) {
     
     // Writing main parametrs of benchmark
     datafile << "Matrix Size:\t" << constant_terms.getSize() * constant_terms.getSize()
-             << "\t | Solver Invokations Iters Block Size:\t" << iters_block_size
-             << "\t | Solver Iters Block Size:\t" << solver_iters_block_size
+             << "\t | Accelerator Invokations Iters Block Size:\t" << iters_block_size
+             << "\t | Accelerator Iters Block Size:\t" << accelerator_iters_block_size
              << std::endl;
     
     
     // Main iterations loops
     kfsoleq::soleq_float solver_tolerance;
-    kfsoleq::soleq_float max_solver_tolerance  = 0.0000000001;
-    kfsoleq::soleq_float min_solver_tolerance  = 0.000000000001;
-    kfsoleq::soleq_float solver_tolerance_step = 0.000000000012625;
+    kfsoleq::soleq_float max_solver_tolerance  = 0.000000001;
+    kfsoleq::soleq_float min_solver_tolerance  = 0.00000000001;
+    kfsoleq::soleq_float solver_tolerance_step = 0.00000000012625;
     std::cout << "Iterations loops with max_solver_tolerance:[" << max_solver_tolerance
               << "], min_solver_tolerance:[" << min_solver_tolerance
               << "], solver_tolerance_step:[" << solver_tolerance_step << "]...\n";
@@ -96,20 +94,25 @@ int main(int argc, char* argv[]) {
         std::cout << "Iterations loop for solver_tolerance:[" << solver_tolerance << "]...\n";
         saved_time = std::chrono::high_resolution_clock::now();
         for (size_t iter_num = 0; iter_num < iters_block_size; ++iter_num) {
-            roots = kfsoleq::acceleratorChebyshev(solver_tolerance,
-                                                  solver_initial_roots,
-                                                  my_csr_matrix,
-                                                  constant_terms,
-                                                  spectral_radius,
-                                                  accelerator_iters_block_size,
-                                                  accelerator_max_iters,
-                                                  &tmp_iters,
-                                                  TARGET_SOLVER,
-#if TARGET_SOLVER_IND == SOLVER_FIXED_POINT_ITERATION
-                                                  tau,
+#if TARGET_SOLVER_IND == SOLVER_JACOBI
+            roots = kfsoleq::acceleratorChebyshev<true>(solver_tolerance,
+#else
+            roots = kfsoleq::acceleratorChebyshev<false>(solver_tolerance,
 #endif
-                                                  solver_iters_block_size,
-                                                  solver_max_iters);
+                                                         solver_initial_roots,
+                                                         my_csr_matrix,
+                                                         constant_terms,
+                                                         spectral_radius,
+                                                         accelerator_iters_block_size,
+                                                         accelerator_max_iters,
+                                                         &tmp_iters,
+                                                         TARGET_SOLVER_STEP_FUNC,
+#if TARGET_SOLVER_IND == SOLVER_FIXED_POINT_ITERATION
+                                                         tau
+#else
+                                                         my_csr_matrix.getRowIndexes().size() - 1
+#endif
+                                                         );
             aver_iters += (long double)tmp_iters;
         }
         current_time = std::chrono::high_resolution_clock::now();

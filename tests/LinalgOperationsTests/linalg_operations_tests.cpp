@@ -591,7 +591,6 @@ TEST(LinalgOperationsSolvers, SolverFixedPointIteration) {
         constant_terms[i] = const_terms_data_1[i];
     }
     kfsoleq::Vector roots = kfsoleq::solverFixedPointIteration(kfsoleq::tolerance,
-                                                               kfsoleq::Vector(3),
                                                                my_csr_matrix,
                                                                constant_terms,
                                                                0.2,
@@ -626,7 +625,6 @@ TEST(LinalgOperationsSolvers, SolverFixedPointIteration) {
         constant_terms[i] = const_terms_data_2[i];
     }
     roots = kfsoleq::solverFixedPointIteration(kfsoleq::tolerance,
-                                               kfsoleq::Vector(2),
                                                my_csr_matrix,
                                                constant_terms,
                                                0.153846153846,
@@ -787,8 +785,6 @@ TEST(LinalgOperationsSolvers, SolverChebyshevFixedPointIteration) {
 TEST(LinalgOperationsAccelerators, AcceleratorChebyshev) {
     size_t outer_iters_block_size = 8;
     size_t outer_max_iters = 8192;
-    size_t iters_block_size = 1;
-    size_t max_iters = 1;
     kfsoleq::CSR_Matrix my_csr_matrix;
     kfsoleq::soleq_float my_matrix_data_1[3][3] = { { 5, 1,  0 },
                                                     { 1, 4, -1 },
@@ -807,17 +803,16 @@ TEST(LinalgOperationsAccelerators, AcceleratorChebyshev) {
     
     
     kfsoleq::soleq_float spectral_radius = 0.5;
-    kfsoleq::Vector roots = kfsoleq::acceleratorChebyshev(kfsoleq::tolerance,
-                                                          kfsoleq::Vector(3),
-                                                          my_csr_matrix,
-                                                          constant_terms,
-                                                          spectral_radius,
-                                                          outer_iters_block_size,
-                                                          outer_max_iters,
-                                                          nullptr,
-                                                          kfsoleq::solverJacobi,
-                                                          iters_block_size,
-                                                          max_iters);
+    kfsoleq::Vector roots = kfsoleq::acceleratorChebyshev<true>(kfsoleq::tolerance,
+                                                                kfsoleq::Vector(3),
+                                                                my_csr_matrix,
+                                                                constant_terms,
+                                                                spectral_radius,
+                                                                outer_iters_block_size,
+                                                                outer_max_iters,
+                                                                nullptr,
+                                                                kfsoleq::solverJacobiStep,
+                                                                constant_terms.getSize());
     
     EXPECT_EQ(roots.getSize(), 3) << "Roots Size doesn't match";
     EXPECT_EQ(roots.getValues().size(), 3) << "Roots Values size doesn't match";
@@ -832,17 +827,16 @@ TEST(LinalgOperationsAccelerators, AcceleratorChebyshev) {
     }
     
     
-    roots = kfsoleq::acceleratorChebyshev(kfsoleq::tolerance,
-                                          kfsoleq::Vector(3),
-                                          my_csr_matrix,
-                                          constant_terms,
-                                          spectral_radius,
-                                          outer_iters_block_size,
-                                          outer_max_iters,
-                                          nullptr,
-                                          kfsoleq::solverGaussSeidel,
-                                          iters_block_size,
-                                          max_iters);
+    roots = kfsoleq::acceleratorChebyshev<false>(kfsoleq::tolerance,
+                                                 kfsoleq::Vector(3),
+                                                 my_csr_matrix,
+                                                 constant_terms,
+                                                 spectral_radius,
+                                                 outer_iters_block_size,
+                                                 outer_max_iters,
+                                                 nullptr,
+                                                 kfsoleq::solverGaussSeidelStep,
+                                                 constant_terms.getSize());
     
     EXPECT_EQ(roots.getSize(), 3) << "Roots Size doesn't match";
     EXPECT_EQ(roots.getValues().size(), 3) << "Roots Values size doesn't match";
@@ -856,18 +850,16 @@ TEST(LinalgOperationsAccelerators, AcceleratorChebyshev) {
     }
     
     
-    roots = kfsoleq::acceleratorChebyshev(kfsoleq::tolerance,
-                                          kfsoleq::Vector(3),
-                                          my_csr_matrix,
-                                          constant_terms,
-                                          spectral_radius,
-                                          outer_iters_block_size,
-                                          outer_max_iters,
-                                          nullptr,
-                                          kfsoleq::solverFixedPointIteration,
-                                          0.27627629286944701919,
-                                          iters_block_size,
-                                          max_iters);
+    roots = kfsoleq::acceleratorChebyshev<false>(kfsoleq::tolerance,
+                                                 kfsoleq::Vector(3),
+                                                 my_csr_matrix,
+                                                 constant_terms,
+                                                 spectral_radius,
+                                                 outer_iters_block_size,
+                                                 outer_max_iters,
+                                                 nullptr,
+                                                 kfsoleq::solverFixedPointIterationStep,
+                                                 0.27627629286944701919);
     
     EXPECT_EQ(roots.getSize(), 3) << "Roots Size doesn't match";
     EXPECT_EQ(roots.getValues().size(), 3) << "Roots Values size doesn't match";
