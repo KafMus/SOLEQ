@@ -83,4 +83,16 @@ if(MATRIX_BUILD AND CSR_MATRIX_BUILD AND VECTOR_BUILD AND LINALG_OPERATIONS_BUIL
             SOLEQ
     )
     message("Adding Accelerator Chebyshev Benchmark Executable DONE!")
+    message("Adding Seeker For Relaxation Factor Executable...")
+    add_executable(SeekerForRelaxationFactor)
+
+    target_sources(SeekerForRelaxationFactor
+        PRIVATE
+            SeekerForRelaxationFactor.cpp
+    )
+    target_link_libraries(SeekerForRelaxationFactor
+        PRIVATE
+            SOLEQ
+    )
+    message("Adding Seeker For Relaxation Factor Executable DONE!")
 endif()

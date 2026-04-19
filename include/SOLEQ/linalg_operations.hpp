@@ -14,6 +14,8 @@ Vector operator * (const Matrix& left_matrix, const Vector& right_vector);
 Matrix operator * (const Vector& left_vector, const Matrix& right_matrix);
 Vector operator * (const CSR_Matrix& left_csr_matrix, const Vector& right_vector);
 Matrix operator * (const Vector& left_vector, const CSR_Matrix& right_csr_matrix);
+CSR_Matrix getCSRMatrixFromMatrix(const Matrix& given_matrix,
+                                  soleq_float given_tolerance);
 soleq_float getMaxEigenValuePowerMethod(const Vector initial_vector,
                                         const CSR_Matrix& given_csr_matrix,
                                         size_t iters_num);
@@ -44,9 +46,9 @@ Vector solverJacobi(soleq_float needed_precision,
                     size_t max_iters,
                     size_t* overall_iters_ptr = nullptr);
 Vector solverFixedPointIterationStep(Vector& roots,
-                                   const CSR_Matrix& given_csr_matrix,
-                                   const Vector& constant_terms,
-                                   soleq_float tau);
+                                     const CSR_Matrix& given_csr_matrix,
+                                     const Vector& constant_terms,
+                                     soleq_float tau);
 Vector solverFixedPointIteration(soleq_float needed_precision,
                                  const CSR_Matrix& given_csr_matrix,
                                  const Vector& constant_terms,
@@ -55,9 +57,9 @@ Vector solverFixedPointIteration(soleq_float needed_precision,
                                  size_t max_iters,
                                  size_t* overall_iters_ptr = nullptr);
 Vector solverGaussSeidelStep(Vector& roots,
-                           const CSR_Matrix& given_csr_matrix,
-                           const Vector& constant_terms,
-                           size_t given_csr_matrix_size_y);
+                             const CSR_Matrix& given_csr_matrix,
+                             const Vector& constant_terms,
+                             size_t given_csr_matrix_size_y);
 Vector solverGaussSeidel(soleq_float needed_precision,
                          const Vector& initial_roots,
                          const CSR_Matrix& given_csr_matrix,

@@ -60,6 +60,23 @@ kfsoleq::Matrix kfsoleq::operator * (const kfsoleq::Vector& left_vector, const k
         }
         return result;
 }
+kfsoleq::CSR_Matrix kfsoleq::getCSRMatrixFromMatrix(const kfsoleq::Matrix& given_matrix,
+                                                    kfsoleq::soleq_float given_tolerance) {
+        std::list<std::pair<size_t, kfsoleq::soleq_float>>  lil_tmp_row;
+        std::list<std::list<std::pair<size_t, kfsoleq::soleq_float>>> result_lil;
+        
+        for (size_t i = 0; i < given_matrix.getSizeY(); ++i) {
+            for (size_t j = 0; j < given_matrix.getSizeX(); ++j) {
+                if (given_matrix(i, j) > given_tolerance || given_matrix(i, j) < -given_tolerance) {
+                    lil_tmp_row.push_back(std::make_pair(j, given_matrix(i, j)));
+                }
+            }
+            result_lil.push_back(lil_tmp_row);
+            lil_tmp_row.clear();
+        }
+        kfsoleq::CSR_Matrix result(result_lil);
+        return result;
+}
 kfsoleq::soleq_float kfsoleq::getMaxEigenValuePowerMethod(const kfsoleq::Vector initial_vector,
                                                           const kfsoleq::CSR_Matrix& given_csr_matrix,
                                                           size_t iters_num) {
@@ -109,8 +126,8 @@ kfsoleq::Vector kfsoleq::getTauFromChebyshevRoots(const kfsoleq::Vector& roots,
         return result;
 }
 kfsoleq::soleq_float kfsoleq::getNewChebyshevAccelerationParameter(kfsoleq::soleq_float spectral_radius,
-                                                          kfsoleq::soleq_float prev_mu,
-                                                          kfsoleq::soleq_float curr_mu) {
+                                                                   kfsoleq::soleq_float prev_mu,
+                                                                   kfsoleq::soleq_float curr_mu) {
         return (2.0 / spectral_radius) * curr_mu - prev_mu;
 }
 std::pair<kfsoleq::Matrix, kfsoleq::Matrix> kfsoleq::getQRDecompositionHouseholder(kfsoleq::Matrix given_matrix) {
@@ -315,9 +332,9 @@ kfsoleq::Vector kfsoleq::solverJacobi(kfsoleq::soleq_float needed_precision,
         return roots;
 }
 kfsoleq::Vector kfsoleq::solverFixedPointIterationStep(kfsoleq::Vector& roots,
-                                            const kfsoleq::CSR_Matrix& given_csr_matrix,
-                                            const kfsoleq::Vector& constant_terms,
-                                            kfsoleq::soleq_float tau) {
+                                                       const kfsoleq::CSR_Matrix& given_csr_matrix,
+                                                       const kfsoleq::Vector& constant_terms,
+                                                       kfsoleq::soleq_float tau) {
         roots = roots - (given_csr_matrix * roots - constant_terms) * tau;
         return roots;
 }
@@ -344,9 +361,9 @@ kfsoleq::Vector kfsoleq::solverFixedPointIteration(kfsoleq::soleq_float needed_p
         return roots;
 }
 kfsoleq::Vector kfsoleq::solverGaussSeidelStep(kfsoleq::Vector& roots,
-                                    const kfsoleq::CSR_Matrix& given_csr_matrix,
-                                    const kfsoleq::Vector& constant_terms,
-                                    size_t given_csr_matrix_size_y) {
+                                               const kfsoleq::CSR_Matrix& given_csr_matrix,
+                                               const kfsoleq::Vector& constant_terms,
+                                               size_t given_csr_matrix_size_y) {
         size_t begin_ind, end_ind, col_ind;
         kfsoleq::soleq_float mult_LUx;
         kfsoleq::soleq_float diagonal_element = 0;

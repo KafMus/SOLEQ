@@ -210,17 +210,45 @@ TEST(LinalgOperationsOperators, CSRMatrixVectorMultiplication) {
                                                  {  6, 0,  8, 0, -4 },
                                                  { -3, 0, -4, 0,  2 },
                                                  {  0, 0,  0, 0,  0 } };
-    
     result_matrix = my_vector * my_matrix;
+    
     EXPECT_EQ(result_matrix.getSizeY(), 5) << "Result Matrix's Size Y doesn't match";
     EXPECT_EQ(result_matrix.getSizeX(), 5) << "Result Matrix's Size X doesn't match";
     EXPECT_EQ(result_matrix.getValues().size(), 25) << "Result Matrix's Values size doesn't match";
     EXPECT_EQ(result_matrix.getValues().capacity(), 25) << "Result Matrix's Values capacity doesn't match";
-    
     for (size_t i = 0; i < 5; ++i) {
         for (size_t j = 0; j < 5; ++j) {
             EXPECT_NEAR(result_matrix(i, j), result_data_2[i][j], kfsoleq::tolerance) << "Result Matrix's Values values doesn't match";
         }
+    }
+}
+
+TEST(LinalgOperationsSideFunctions, GetCSRMatrixFromMatrix) {
+    kfsoleq::Matrix my_matrix(5, 4);
+    kfsoleq::soleq_float my_matrix_data[5][4] = { { 1, 2, 3, 4 },
+                                                  { 5, 0, 0, 0 },
+                                                  { 0, 0, 0, 0 },
+                                                  { 0, 0, 0, 6 },
+                                                  { 0, 7, 8, 9 } };
+    kfsoleq::soleq_float result_val_data[9] = { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+    size_t result_col_data[9] = { 0, 1, 2, 3, 0, 3, 1, 2, 3 };
+    size_t result_row_data[6] = { 0, 4, 5, 5, 6, 9 };
+    
+    for (size_t i = 0; i < 5; ++i) {
+        for (size_t j = 0; j < 4; ++j) {
+            my_matrix(i, j) = my_matrix_data[i][j];
+        }
+    }
+    
+    kfsoleq::CSR_Matrix result = kfsoleq::getCSRMatrixFromMatrix(my_matrix, 0);
+    result.print();
+    
+    for (size_t i = 0; i < 9; ++i) {
+        EXPECT_NEAR(result.getValues()[i], result_val_data[i], kfsoleq::tolerance) << "CSR_Matrix's Values values doesn't match";
+        EXPECT_EQ(result.getColumnIndexes()[i], result_col_data[i]) << "CSR_Matrix's Column Indexes' values doesn't match";
+    }
+    for (size_t i = 0; i < 6; ++i) {
+        EXPECT_EQ(result.getRowIndexes()[i], result_row_data[i]) << "CSR_Matrix's Row Indexes' values doesn't match";
     }
 }
 
