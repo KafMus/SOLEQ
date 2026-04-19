@@ -160,6 +160,56 @@ std::pair<kfsoleq::Matrix, kfsoleq::Matrix> kfsoleq::getQRDecompositionHousehold
         /* return as std::pair<Q_Matrix, R_Matrix> */
         return std::make_pair(Q_Matrix, given_matrix);
 }
+kfsoleq::CSR_Matrix kfsoleq::generatorPoissonEquationMatrix(size_t size_y, size_t size_x) {
+        std::list<std::list<std::pair<size_t, kfsoleq::soleq_float>>> result_lil;
+        std::list<std::pair<size_t, kfsoleq::soleq_float>> lil_curr_row;
+        
+        
+        size_t ind_curr = 0;
+        for (size_t i = 0; i < size_y; ++i) {
+            for (size_t j = 0; j < size_x; ++j) {
+                if (i > 1) {
+                    ind_curr += size_x * (i - 1);
+                }
+                if (i > 0) {
+                    ind_curr += j;
+                    lil_curr_row.push_back(std::make_pair(ind_curr, -1));
+                    ind_curr++;
+                    ind_curr += (size_x - j - 1);
+                }
+                
+                if (j > 1) {
+                    ind_curr += (j - 1);
+                }
+                if (j > 0) {
+                    lil_curr_row.push_back(std::make_pair(ind_curr, -1));
+                    ind_curr++;
+                }
+                lil_curr_row.push_back(std::make_pair(ind_curr, 4));
+                ind_curr++;
+                if (j + 1 < size_x) {
+                    lil_curr_row.push_back(std::make_pair(ind_curr, -1));
+                    ind_curr++;
+                }
+                if (j + 2 < size_x) {
+                    ind_curr += (size_x - j - 2);
+                }
+                
+                if (i + 1 < size_y) {
+                    ind_curr += j;
+                    lil_curr_row.push_back(std::make_pair(ind_curr, -1));
+                    ind_curr++;
+                    ind_curr += (size_x - j - 1);
+                }
+                
+                result_lil.push_back(lil_curr_row);
+                lil_curr_row.clear();
+                ind_curr = 0;
+            }
+        }
+        
+        return CSR_Matrix(result_lil);
+}
 kfsoleq::Vector kfsoleq::solverQRDecomposition(const kfsoleq::Matrix& given_matrix) {
         kfsoleq::Vector roots(given_matrix.getSizeY());
         kfsoleq::Matrix system_matrix(given_matrix.getSizeY(), given_matrix.getSizeX() - 1);
@@ -313,7 +363,7 @@ kfsoleq::Vector kfsoleq::solverGaussSeidelStep(kfsoleq::Vector& roots,
                 }
                 mult_LUx += given_csr_matrix.getValues()[val_ind] * roots[col_ind];
             }
-
+            
             roots[row_ind] = (constant_terms[row_ind] - mult_LUx) / diagonal_element;
         }
         return roots;
@@ -332,6 +382,57 @@ kfsoleq::Vector kfsoleq::solverGaussSeidel(kfsoleq::soleq_float needed_precision
         while (outer_ind < max_iters && ((given_csr_matrix * roots) - constant_terms).getFirstNorm() > needed_precision) {
             for (size_t iter_num = 0; iter_num < iters_block_size; ++iter_num) {
                 kfsoleq::solverGaussSeidelStep(roots, given_csr_matrix, constant_terms, size_y);
+            }
+            outer_ind += iters_block_size;
+        }
+        
+        if (overall_iters_ptr) {
+            (*overall_iters_ptr) = outer_ind;
+        }
+        return roots;
+}
+kfsoleq::Vector kfsoleq::solverSuccessiveOverRelaxationStep(kfsoleq::Vector& roots,
+                                                            const kfsoleq::CSR_Matrix& given_csr_matrix,
+                                                            const kfsoleq::Vector& constant_terms,
+                                                            size_t given_csr_matrix_size_y,
+                                                            kfsoleq::soleq_float relaxation_factor) {
+        size_t begin_ind, end_ind, col_ind;
+        kfsoleq::soleq_float mult_LUx;
+        kfsoleq::soleq_float diagonal_element = 0;
+        
+        for (size_t row_ind = 0; row_ind < given_csr_matrix_size_y; ++row_ind) {
+            mult_LUx = 0;
+            begin_ind = given_csr_matrix.getRowIndexes()[row_ind];
+            end_ind   = given_csr_matrix.getRowIndexes()[row_ind + 1];
+            for (size_t val_ind = begin_ind; val_ind < end_ind; ++val_ind) {
+                col_ind = given_csr_matrix.getColumnIndexes()[val_ind];
+                if (row_ind == col_ind) {
+                    diagonal_element = given_csr_matrix.getValues()[val_ind];
+                    continue;
+                }
+                mult_LUx += given_csr_matrix.getValues()[val_ind] * roots[col_ind];
+            }
+            
+            roots[row_ind] = relaxation_factor * (constant_terms[row_ind] - mult_LUx) / diagonal_element +
+                             (1 - relaxation_factor) * roots[row_ind];
+        }
+        return roots;
+}
+kfsoleq::Vector kfsoleq::solverSuccessiveOverRelaxation(kfsoleq::soleq_float needed_precision,
+                                                        const kfsoleq::Vector& initial_roots,
+                                                        const kfsoleq::CSR_Matrix& given_csr_matrix,
+                                                        const kfsoleq::Vector& constant_terms,
+                                                        kfsoleq::soleq_float relaxation_factor,
+                                                        size_t iters_block_size,
+                                                        size_t max_iters,
+                                                        size_t* overall_iters_ptr) {
+        const size_t size_y = given_csr_matrix.getRowIndexes().size() - 1;
+        kfsoleq::Vector roots = initial_roots;
+        
+        size_t outer_ind = 0;
+        while (outer_ind < max_iters && ((given_csr_matrix * roots) - constant_terms).getFirstNorm() > needed_precision) {
+            for (size_t iter_num = 0; iter_num < iters_block_size; ++iter_num) {
+                kfsoleq::solverSuccessiveOverRelaxationStep(roots, given_csr_matrix, constant_terms, size_y, relaxation_factor);
             }
             outer_ind += iters_block_size;
         }

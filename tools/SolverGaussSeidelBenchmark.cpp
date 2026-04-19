@@ -33,7 +33,7 @@ int main(int argc, char* argv[]) {
     datafile << "NEW ENTRY OF BENCHMARK DATA OF GAUSS SEIDEL SOLVER" << std::endl;
     
     // Getting CSR_Matrix from data and filling constant_terms
-    auto my_lil = getDataFromRealCoordinateSymmetricMatrix<kfsoleq::soleq_float>(argv[1]);
+    auto my_lil = getLilFromRealCoordinateSymmetricMatrix<kfsoleq::soleq_float>(argv[1]);
     kfsoleq::CSR_Matrix my_csr_matrix(my_lil);
     
     kfsoleq::Vector constant_terms(my_csr_matrix.getRowIndexes().size() - 1);

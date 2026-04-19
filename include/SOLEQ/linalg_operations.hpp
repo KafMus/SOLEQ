@@ -26,6 +26,7 @@ soleq_float getNewChebyshevAccelerationParameter(soleq_float spectral_radius,
                                                  soleq_float prev_mu,
                                                  soleq_float curr_mu);
 std::pair<Matrix, Matrix> getQRDecompositionHouseholder(Matrix given_matrix);
+CSR_Matrix generatorPoissonEquationMatrix(size_t size_y, size_t size_x);
 Vector solverQRDecomposition(const Matrix& given_matrix);
 Vector solverQRDecomposition(const Matrix& given_matrix,
                              const Matrix& Q_Matrix,
@@ -64,6 +65,19 @@ Vector solverGaussSeidel(soleq_float needed_precision,
                          size_t iters_block_size,
                          size_t max_iters,
                          size_t* overall_iters_ptr = nullptr);
+Vector solverSuccessiveOverRelaxationStep(Vector& roots,
+                                          const CSR_Matrix& given_csr_matrix,
+                                          const Vector& constant_terms,
+                                          size_t given_csr_matrix_size_y,
+                                          soleq_float relaxation_factor);
+Vector solverSuccessiveOverRelaxation(soleq_float needed_precision,
+                                      const Vector& initial_roots,
+                                      const CSR_Matrix& given_csr_matrix,
+                                      const Vector& constant_terms,
+                                      soleq_float relaxation_factor,
+                                      size_t iters_block_size,
+                                      size_t max_iters,
+                                      size_t* overall_iters_ptr = nullptr);
 Vector solverChebyshevFixedPointIteration(soleq_float needed_precision,
                                           const Vector& initial_roots,
                                           const CSR_Matrix& given_csr_matrix,

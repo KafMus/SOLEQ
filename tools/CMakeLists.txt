@@ -35,6 +35,18 @@ if(MATRIX_BUILD AND CSR_MATRIX_BUILD AND VECTOR_BUILD AND LINALG_OPERATIONS_BUIL
             SOLEQ
     )
     message("Adding Solver Gauss Seidel Benchmark Executable DONE!")
+    message("Adding Solver Successive Over Relaxation Benchmark Executable...")
+    add_executable(SolverSuccessiveOverRelaxationBenchmark)
+
+    target_sources(SolverSuccessiveOverRelaxationBenchmark
+        PRIVATE
+            SolverSuccessiveOverRelaxationBenchmark.cpp
+    )
+    target_link_libraries(SolverSuccessiveOverRelaxationBenchmark
+        PRIVATE
+            SOLEQ
+    )
+    message("Adding Solver Successive Over Relaxation Benchmark Executable DONE!")
     message("Adding Solver Fixed Point Iteration Benchmark Executable...")
     add_executable(SolverFixedPointIterationBenchmark)
 

@@ -431,6 +431,67 @@ TEST(LinalgOperationsSideFunctions, GetQRDecompositionHouseholder) {
     }
 }
 
+TEST(LinalgOperationsGenerators, GeneratorPoissonEquationMatrix) {
+    size_t size_y = 3;
+    size_t size_x = 3;
+    kfsoleq::soleq_float result_val_data_1[33] = {  4, -1, -1,
+                                                   -1,  4, -1, -1,
+                                                   -1,  4, -1,
+                                                   -1,  4, -1, -1,
+                                                   -1, -1,  4, -1, -1,
+                                                   -1, -1,  4, -1,
+                                                   -1,  4, -1,
+                                                   -1, -1,  4, -1,
+                                                   -1, -1,  4 };
+    size_t result_col_data_1[33] = { 0, 1, 3,
+                                     0, 1, 2, 4,
+                                     1, 2, 5,
+                                     0, 3, 4, 6,
+                                     1, 3, 4, 5, 7,
+                                     2, 4, 5, 8,
+                                     3, 6, 7,
+                                     4, 6, 7, 8,
+                                     5, 7, 8 };
+    size_t result_row_data_1[10] = { 0, 3, 7, 10, 14, 19, 23, 26, 30, 33 };
+    
+    kfsoleq::CSR_Matrix result = kfsoleq::generatorPoissonEquationMatrix(size_y, size_x);
+    
+    for (size_t i = 0; i < 33; ++i) {
+        EXPECT_NEAR(result.getValues()[i], result_val_data_1[i], kfsoleq::tolerance) << "Poisson Equation CSR_Matrix's Values values doesn't match";
+        EXPECT_EQ(result.getColumnIndexes()[i], result_col_data_1[i]) << "Poisson Equation CSR_Matrix's Column Indexes' values doesn't match";
+    }
+    for (size_t i = 0; i < 10; ++i) {
+        EXPECT_EQ(result.getRowIndexes()[i], result_row_data_1[i]) << "Poisson Equation CSR_Matrix's Row Indexes' values doesn't match";
+    }
+    
+    
+    size_y = 3;
+    size_x = 2;
+    kfsoleq::soleq_float result_val_data_2[20] = {  4, -1, -1,
+                                                   -1,  4, -1,
+                                                   -1,  4, -1, -1,
+                                                   -1, -1,  4, -1,
+                                                   -1,  4, -1,
+                                                   -1, -1,  4 };
+    size_t result_col_data_2[20] = { 0, 1, 2,
+                                     0, 1, 3,
+                                     0, 2, 3, 4,
+                                     1, 2, 3, 5,
+                                     2, 4, 5,
+                                     3, 4, 5 };
+    size_t result_row_data_2[7]  = { 0, 3, 6, 10, 14, 17, 20 };
+    
+    result = kfsoleq::generatorPoissonEquationMatrix(size_y, size_x);
+    
+    for (size_t i = 0; i < 20; ++i) {
+        EXPECT_NEAR(result.getValues()[i], result_val_data_2[i], kfsoleq::tolerance) << "Poisson Equation CSR_Matrix's Values values doesn't match";
+        EXPECT_EQ(result.getColumnIndexes()[i], result_col_data_2[i]) << "Poisson Equation CSR_Matrix's Column Indexes' values doesn't match";
+    }
+    for (size_t i = 0; i < 7; ++i) {
+        EXPECT_EQ(result.getRowIndexes()[i], result_row_data_2[i]) << "Poisson Equation CSR_Matrix's Row Indexes' values doesn't match";
+    }
+}
+
 TEST(LinalgOperationsSolvers, SolverQRDecomposition) {
     kfsoleq::Matrix my_matrix(3, 4);
     kfsoleq::soleq_float my_matrix_data_1[3][4] = { { 12, -51,   4, 1 },
@@ -716,7 +777,81 @@ TEST(LinalgOperationsSolvers, SolverGaussSeidel) {
     }
 }
 
-
+TEST(LinalgOperationsSolvers, SolverSuccessiveOverRelaxation) {
+    size_t iters_block_size = 16;
+    size_t max_iters = 1000;
+    kfsoleq::soleq_float relaxation_factor_1 = 1.02234044238634747812;
+    kfsoleq::CSR_Matrix my_csr_matrix;
+    kfsoleq::soleq_float my_matrix_data_1[3][3] = { { 5, 1,  0 },
+                                                    { 0, 4, -1 },
+                                                    { 1, 0,  2 } };
+    std::list<std::pair<size_t, kfsoleq::soleq_float>>  lil_first_row = { std::make_pair(0, 5), std::make_pair(1,  1) };
+    std::list<std::pair<size_t, kfsoleq::soleq_float>> lil_second_row = { std::make_pair(1, 4), std::make_pair(2, -1) };
+    std::list<std::pair<size_t, kfsoleq::soleq_float>>  lil_third_row = { std::make_pair(0, 1), std::make_pair(2,  2) };
+    std::list<std::list<std::pair<size_t, kfsoleq::soleq_float>>> my_lil = { lil_first_row, lil_second_row, lil_third_row };
+    my_csr_matrix = kfsoleq::CSR_Matrix(my_lil);
+    
+    kfsoleq::Vector constant_terms(3);
+    kfsoleq::soleq_float const_terms_data_1[3] = { 44, 4, 32 };
+    for (size_t i = 0; i < 3; ++i) {
+        constant_terms[i] = const_terms_data_1[i];
+    }
+    kfsoleq::Vector roots = kfsoleq::solverSuccessiveOverRelaxation(kfsoleq::tolerance,
+                                                                    kfsoleq::Vector(3),
+                                                                    my_csr_matrix,
+                                                                    constant_terms,
+                                                                    relaxation_factor_1,
+                                                                    iters_block_size,
+                                                                    max_iters);
+    
+    
+    EXPECT_EQ(roots.getSize(), 3) << "Roots Size doesn't match";
+    EXPECT_EQ(roots.getValues().size(), 3) << "Roots Values size doesn't match";
+    EXPECT_EQ(roots.getValues().capacity(), 3) << "Roots Values capacity doesn't match";
+    kfsoleq::soleq_float tmp;
+    for (size_t i = 0; i < 3; ++i) {
+        tmp = 0;
+        for (size_t j = 0; j < 3; ++j) {
+            tmp += my_matrix_data_1[i][j] * roots[j];
+        }
+        EXPECT_NEAR(tmp, const_terms_data_1[i], kfsoleq::tolerance) << "Roots Values doesn't match";
+    }
+    
+    
+    
+    kfsoleq::soleq_float relaxation_factor_2 = 1.07738371066743548994;
+    kfsoleq::soleq_float my_matrix_data_2[2][2] = { { 10, 4 },
+                                                    {  2, 3 } };
+    lil_first_row  = { std::make_pair(0, 10), std::make_pair(1, 4) };
+    lil_second_row = { std::make_pair(0, 2),  std::make_pair(1, 3) };
+    my_lil = { lil_first_row, lil_second_row };
+    my_csr_matrix = kfsoleq::CSR_Matrix(my_lil);
+    
+    constant_terms = kfsoleq::Vector(2);
+    kfsoleq::soleq_float const_terms_data_2[2] = { 2, 10 };
+    for (size_t i = 0; i < 2; ++i) {
+        constant_terms[i] = const_terms_data_2[i];
+    }
+    roots = kfsoleq::solverSuccessiveOverRelaxation(kfsoleq::tolerance,
+                                                    kfsoleq::Vector(2),
+                                                    my_csr_matrix,
+                                                    constant_terms,
+                                                    relaxation_factor_2,
+                                                    iters_block_size,
+                                                    max_iters);
+    
+    
+    EXPECT_EQ(roots.getSize(), 2) << "Roots Size doesn't match";
+    EXPECT_EQ(roots.getValues().size(), 2) << "Roots Values size doesn't match";
+    EXPECT_EQ(roots.getValues().capacity(), 2) << "Roots Values capacity doesn't match";
+    for (size_t i = 0; i < 2; ++i) {
+        tmp = 0;
+        for (size_t j = 0; j < 2; ++j) {
+            tmp += my_matrix_data_2[i][j] * roots[j];
+        }
+        EXPECT_NEAR(tmp, const_terms_data_2[i], kfsoleq::tolerance) << "Roots Values doesn't match";
+    }
+}
 
 TEST(LinalgOperationsSolvers, SolverChebyshevFixedPointIteration) {
     size_t max_iters = 1000;
