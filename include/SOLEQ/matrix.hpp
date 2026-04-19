@@ -33,9 +33,13 @@ public:
         soleq_float& operator () (size_t y, size_t x) {
             return this->values[(y * size_x) + x];
         }
+        Matrix& operator += (const Matrix& right_matrix);
+        Matrix& operator -= (const Matrix& right_matrix);
         Matrix& operator *= (const Matrix& right_matrix);
 };
 
+Matrix operator + (Matrix left_matrix, const Matrix& right_matrix);
+Matrix operator - (Matrix left_matrix, const Matrix& right_matrix);
 Matrix operator * (const Matrix& left_matrix, const Matrix& right_matrix);
 
 

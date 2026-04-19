@@ -107,6 +107,72 @@ TEST(MatrixOperators, AccessOperator) {
     }
 }
 
+TEST(MatrixOperators, MatrixSum) {
+    kfsoleq::Matrix  left_matrix(3, 3);
+    kfsoleq::Matrix right_matrix(3, 3);
+    
+    
+    kfsoleq::soleq_float  left_data[3][3] =  { { 1, 1, 1 },
+                                               { 1, 0, 1 },
+                                               { 1, 1, 1 } };
+    kfsoleq::soleq_float right_data[3][3] =  { { 3, 4, 5 },
+                                               { 4, 5, 6 },
+                                               { 5, 6, 7 } };
+    kfsoleq::soleq_float result_data[3][3] = { { 4, 5, 6 },
+                                               { 5, 5, 7 },
+                                               { 6, 7, 8 } };
+    for (size_t i = 0; i < 3; ++i) {
+        for (size_t j = 0; j < 3; ++j) {
+            left_matrix(i, j)   = left_data[i][j];
+            right_matrix(i, j)  = right_data[i][j];
+        }
+    }
+    kfsoleq::Matrix result_matrix = left_matrix + right_matrix;
+    
+    EXPECT_EQ(result_matrix.getSizeY(), 3) << "Matrix's Y size doesn't match";
+    EXPECT_EQ(result_matrix.getSizeX(), 3) << "Matrix's X size doesn't match";
+    EXPECT_EQ(result_matrix.getValues().size(), 9) << "Matrix's Values size doesn't match";
+    EXPECT_EQ(result_matrix.getValues().capacity(), 9) << "Matrix's Values capacity doesn't match";
+    for (size_t i = 0; i < 3; ++i) {
+        for (size_t j = 0; j < 3; ++j) {
+            EXPECT_NEAR(result_matrix(i, j), result_data[i][j], kfsoleq::tolerance) << "Matrix's values doesn't match";
+        }
+    }
+}
+
+TEST(MatrixOperators, MatrixSubtraction) {
+    kfsoleq::Matrix  left_matrix(3, 3);
+    kfsoleq::Matrix right_matrix(3, 3);
+    
+    
+    kfsoleq::soleq_float  left_data[3][3] =  { { 3, 4, 5 },
+                                               { 4, 5, 6 },
+                                               { 5, 6, 7 } };
+    kfsoleq::soleq_float right_data[3][3] =  { { 1, 1, 1 },
+                                               { 1, 0, 1 },
+                                               { 1, 1, 1 } };
+    kfsoleq::soleq_float result_data[3][3] = { { 2, 3, 4 },
+                                               { 3, 5, 5 },
+                                               { 4, 5, 6 } };
+    for (size_t i = 0; i < 3; ++i) {
+        for (size_t j = 0; j < 3; ++j) {
+            left_matrix(i, j)   = left_data[i][j];
+            right_matrix(i, j)  = right_data[i][j];
+        }
+    }
+    kfsoleq::Matrix result_matrix = left_matrix - right_matrix;
+    
+    EXPECT_EQ(result_matrix.getSizeY(), 3) << "Matrix's Y size doesn't match";
+    EXPECT_EQ(result_matrix.getSizeX(), 3) << "Matrix's X size doesn't match";
+    EXPECT_EQ(result_matrix.getValues().size(), 9) << "Matrix's Values size doesn't match";
+    EXPECT_EQ(result_matrix.getValues().capacity(), 9) << "Matrix's Values capacity doesn't match";
+    for (size_t i = 0; i < 3; ++i) {
+        for (size_t j = 0; j < 3; ++j) {
+            EXPECT_NEAR(result_matrix(i, j), result_data[i][j], kfsoleq::tolerance) << "Matrix's values doesn't match";
+        }
+    }
+}
+
 TEST(MatrixOperators, ToMatrixMultiplicationOperator) {
     kfsoleq::Matrix  left_matrix(3, 3);
     kfsoleq::Matrix right_matrix(3, 3);
@@ -121,7 +187,6 @@ TEST(MatrixOperators, ToMatrixMultiplicationOperator) {
     kfsoleq::soleq_float result_data[3][3] = { { 12, 15, 18 },
                                                {  8, 10, 12 },
                                                { 12, 15, 18 } };
-    
     for (size_t i = 0; i < 3; ++i) {
         for (size_t j = 0; j < 3; ++j) {
             left_matrix(i, j)   = left_data[i][j];
@@ -129,6 +194,11 @@ TEST(MatrixOperators, ToMatrixMultiplicationOperator) {
         }
     }
     kfsoleq::Matrix result_matrix = left_matrix * right_matrix;
+    
+    EXPECT_EQ(result_matrix.getSizeY(), 3) << "Matrix's Y size doesn't match";
+    EXPECT_EQ(result_matrix.getSizeX(), 3) << "Matrix's X size doesn't match";
+    EXPECT_EQ(result_matrix.getValues().size(), 9) << "Matrix's Values size doesn't match";
+    EXPECT_EQ(result_matrix.getValues().capacity(), 9) << "Matrix's Values capacity doesn't match";
     for (size_t i = 0; i < 3; ++i) {
         for (size_t j = 0; j < 3; ++j) {
             EXPECT_NEAR(result_matrix(i, j), result_data[i][j], kfsoleq::tolerance) << "Matrix's values doesn't match";
