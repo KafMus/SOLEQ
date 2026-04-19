@@ -71,6 +71,18 @@ if(MATRIX_BUILD AND CSR_MATRIX_BUILD AND VECTOR_BUILD AND LINALG_OPERATIONS_BUIL
             SOLEQ
     )
     message("Adding Solver Chebyshev Fixed Point Iteration Benchmark Executable DONE!")
+    message("Adding Solver Steepest Gradient Descent Benchmark Executable...")
+    add_executable(SolverSteepestGradientDescentBenchmark)
+
+    target_sources(SolverSteepestGradientDescentBenchmark
+        PRIVATE
+            SolverSteepestGradientDescentBenchmark.cpp
+    )
+    target_link_libraries(SolverSteepestGradientDescentBenchmark
+        PRIVATE
+            SOLEQ
+    )
+    message("Adding Solver Steepest Gradient Descent Benchmark Executable DONE!")
     message("Adding Accelerator Chebyshev Benchmark Executable...")
     add_executable(AcceleratorChebyshevBenchmark)
 

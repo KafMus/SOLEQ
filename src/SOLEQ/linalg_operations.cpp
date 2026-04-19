@@ -512,6 +512,40 @@ kfsoleq::Vector kfsoleq::solverChebyshevFixedPointIteration(kfsoleq::soleq_float
         }
         return roots;
 }
+kfsoleq::Vector kfsoleq::solverSteepestGradientDescentStep(kfsoleq::Vector& roots,
+                                                           const kfsoleq::CSR_Matrix& given_csr_matrix,
+                                                           const kfsoleq::Vector& constant_terms,
+                                                           kfsoleq::Vector& residual,
+                                                           kfsoleq::soleq_float& alpha) {
+        roots -= residual * alpha;
+        residual = given_csr_matrix * roots - constant_terms;
+        alpha = ((residual * residual) / (residual * (given_csr_matrix * residual)));
+        return roots;
+}
+kfsoleq::Vector kfsoleq::solverSteepestGradientDescent(kfsoleq::soleq_float needed_precision,
+                                                       const kfsoleq::Vector& initial_roots,
+                                                       const kfsoleq::CSR_Matrix& given_csr_matrix,
+                                                       const kfsoleq::Vector& constant_terms,
+                                                       size_t iters_block_size,
+                                                       size_t max_iters,
+                                                       size_t* overall_iters_ptr) {
+        kfsoleq::Vector roots = initial_roots;
+        kfsoleq::Vector residual = ((given_csr_matrix * roots) - constant_terms);
+        kfsoleq::soleq_float alpha = (residual * residual) / (residual * (given_csr_matrix * residual));
+        
+        size_t outer_ind = 0;
+        while (outer_ind < max_iters && residual.getFirstNorm() > needed_precision) {
+            for (size_t iter_num = 0; iter_num < iters_block_size; ++iter_num) {
+                kfsoleq::solverSteepestGradientDescentStep(roots, given_csr_matrix, constant_terms, residual, alpha);
+            }
+            outer_ind += iters_block_size;
+        }
+        
+        if (overall_iters_ptr) {
+            (*overall_iters_ptr) = outer_ind;
+        }
+        return roots;
+}
 
 
 
