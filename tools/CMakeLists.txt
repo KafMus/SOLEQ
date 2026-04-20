@@ -83,6 +83,18 @@ if(MATRIX_BUILD AND CSR_MATRIX_BUILD AND VECTOR_BUILD AND LINALG_OPERATIONS_BUIL
             SOLEQ
     )
     message("Adding Solver Steepest Gradient Descent Benchmark Executable DONE!")
+    message("Adding Solver Conjugate Gradient Benchmark Executable...")
+    add_executable(SolverConjugateGradientBenchmark)
+
+    target_sources(SolverConjugateGradientBenchmark
+        PRIVATE
+            SolverConjugateGradientBenchmark.cpp
+    )
+    target_link_libraries(SolverConjugateGradientBenchmark
+        PRIVATE
+            SOLEQ
+    )
+    message("Adding Solver Conjugate Gradient Benchmark Executable DONE!")
     message("Adding Accelerator Chebyshev Benchmark Executable...")
     add_executable(AcceleratorChebyshevBenchmark)
 

@@ -108,6 +108,20 @@ Vector solverSteepestGradientDescent(soleq_float needed_precision,
                                      size_t iters_block_size,
                                      size_t max_iters,
                                      size_t* overall_iters_ptr = nullptr);
+Vector solverConjugateGradientStep(Vector& roots,
+                                   const CSR_Matrix& given_csr_matrix,
+                                   const Vector& constant_terms,
+                                   Vector& residual,
+                                   Vector& delta,
+                                   soleq_float& residual_square,
+                                   soleq_float& alpha);
+Vector solverConjugateGradient(soleq_float needed_precision,
+                               const Vector& initial_roots,
+                               const CSR_Matrix& given_csr_matrix,
+                               const Vector& constant_terms,
+                               size_t iters_block_size,
+                               size_t max_iters,
+                               size_t* overall_iters_ptr = nullptr);
 template <bool SolverStepRequiresPreviousRoots, typename SolverStepFunc, typename... Args>
 Vector acceleratorChebyshev(soleq_float needed_precision,
                             const Vector& initial_roots,

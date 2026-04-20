@@ -546,6 +546,59 @@ kfsoleq::Vector kfsoleq::solverSteepestGradientDescent(kfsoleq::soleq_float need
         }
         return roots;
 }
+kfsoleq::Vector kfsoleq::solverConjugateGradientStep(kfsoleq::Vector& roots,
+                                                     const kfsoleq::CSR_Matrix& given_csr_matrix,
+                                                     const kfsoleq::Vector& constant_terms,
+                                                     kfsoleq::Vector& residual,
+                                                     kfsoleq::Vector& delta,
+                                                     kfsoleq::soleq_float& residual_square,
+                                                     kfsoleq::soleq_float& alpha) {
+        roots -= (alpha * delta);
+        
+        kfsoleq::soleq_float beta = residual_square;
+        
+        residual = ((given_csr_matrix * roots) - constant_terms);
+        residual_square = residual * residual;
+        
+        beta = residual_square / beta;
+        
+        delta = residual + (beta * delta);
+        alpha = residual_square / (delta * (given_csr_matrix * delta));
+        
+        return roots;
+}
+kfsoleq::Vector kfsoleq::solverConjugateGradient(kfsoleq::soleq_float needed_precision,
+                                                 const kfsoleq::Vector& initial_roots,
+                                                 const kfsoleq::CSR_Matrix& given_csr_matrix,
+                                                 const kfsoleq::Vector& constant_terms,
+                                                 size_t iters_block_size,
+                                                 size_t max_iters,
+                                                 size_t* overall_iters_ptr) {
+        kfsoleq::Vector roots = initial_roots;
+        kfsoleq::Vector residual = ((given_csr_matrix * roots) - constant_terms);
+        kfsoleq::Vector delta = residual;
+        kfsoleq::soleq_float residual_square = residual * residual;
+        kfsoleq::soleq_float alpha = residual_square / (delta * (given_csr_matrix * delta));
+        
+        size_t outer_ind = 0;
+        while (outer_ind < max_iters && ((given_csr_matrix * roots) - constant_terms).getFirstNorm() > needed_precision) {
+            for (size_t iter_num = 0; iter_num < iters_block_size; ++iter_num) {
+                kfsoleq::solverConjugateGradientStep(roots,
+                                                     given_csr_matrix,
+                                                     constant_terms,
+                                                     residual,
+                                                     delta,
+                                                     residual_square,
+                                                     alpha);
+            }
+            outer_ind += iters_block_size;
+        }
+        
+        if (overall_iters_ptr) {
+            (*overall_iters_ptr) = outer_ind;
+        }
+        return roots;
+}
 
 
 
