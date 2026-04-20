@@ -77,6 +77,22 @@ kfsoleq::CSR_Matrix kfsoleq::getCSRMatrixFromMatrix(const kfsoleq::Matrix& given
         kfsoleq::CSR_Matrix result(result_lil);
         return result;
 }
+kfsoleq::Matrix kfsoleq::getMatrixFromCSRMatrix(const kfsoleq::CSR_Matrix& given_csr_matrix,
+                                                size_t size_x) {
+        size_t size_y = (given_csr_matrix.getRowIndexes().size() - 1);
+        size_t begin_ind, end_ind, col_ind;
+        kfsoleq::Matrix result(size_y, size_x);
+        
+        for (size_t row_ind = 0; row_ind < size_y; ++row_ind) {
+            begin_ind = given_csr_matrix.getRowIndexes()[row_ind];
+            end_ind   = given_csr_matrix.getRowIndexes()[row_ind + 1];
+            for (size_t val_ind = begin_ind; val_ind < end_ind; ++val_ind) {
+                col_ind = given_csr_matrix.getColumnIndexes()[val_ind];
+                result(row_ind, col_ind) = given_csr_matrix.getValues()[val_ind];
+            }
+        }
+        return result;
+}
 kfsoleq::soleq_float kfsoleq::getMaxEigenValuePowerMethod(const kfsoleq::Vector initial_vector,
                                                           const kfsoleq::CSR_Matrix& given_csr_matrix,
                                                           size_t iters_num) {

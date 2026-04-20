@@ -16,6 +16,8 @@ Vector operator * (const CSR_Matrix& left_csr_matrix, const Vector& right_vector
 Matrix operator * (const Vector& left_vector, const CSR_Matrix& right_csr_matrix);
 CSR_Matrix getCSRMatrixFromMatrix(const Matrix& given_matrix,
                                   soleq_float given_tolerance);
+Matrix getMatrixFromCSRMatrix(const CSR_Matrix& given_csr_matrix,
+                              size_t size_x);
 soleq_float getMaxEigenValuePowerMethod(const Vector initial_vector,
                                         const CSR_Matrix& given_csr_matrix,
                                         size_t iters_num);

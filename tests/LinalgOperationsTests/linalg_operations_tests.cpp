@@ -252,6 +252,43 @@ TEST(LinalgOperationsSideFunctions, GetCSRMatrixFromMatrix) {
     }
 }
 
+TEST(LinalgOperationsSideFunctions, GetMatrixFromCSRMatrix) {
+    kfsoleq::soleq_float result_val_data[5][4] = { { 1, 2, 3, 4 },
+                                                   { 5, 0, 0, 0 },
+                                                   { 0, 0, 0, 0 },
+                                                   { 0, 0, 0, 6 },
+                                                   { 0, 7, 8, 9 } };
+    std::list<std::pair<size_t, kfsoleq::soleq_float>>  lil_first_row  = { std::make_pair(0, 1),
+                                                                           std::make_pair(1, 2),
+                                                                           std::make_pair(2, 3),
+                                                                           std::make_pair(3, 4) };
+    std::list<std::pair<size_t, kfsoleq::soleq_float>>  lil_second_row = { std::make_pair(0, 5) };
+    std::list<std::pair<size_t, kfsoleq::soleq_float>>  lil_third_row  = { /* -------------- */ };
+    std::list<std::pair<size_t, kfsoleq::soleq_float>>  lil_fourth_row = { std::make_pair(3, 6) };
+    std::list<std::pair<size_t, kfsoleq::soleq_float>>  lil_fifth_row  = { std::make_pair(1, 7),
+                                                                           std::make_pair(2, 8),
+                                                                           std::make_pair(3, 9) };
+    std::list<std::list<std::pair<size_t, kfsoleq::soleq_float>>> my_lil = { lil_first_row,
+                                                                             lil_second_row,
+                                                                             lil_third_row,
+                                                                             lil_fourth_row,
+                                                                             lil_fifth_row  };
+    kfsoleq::CSR_Matrix my_csr_matrix = kfsoleq::CSR_Matrix(my_lil);
+    
+    kfsoleq::Matrix result = kfsoleq::getMatrixFromCSRMatrix(my_csr_matrix, 4);
+    result.print();
+    
+    EXPECT_EQ(result.getSizeY(), 5) << "Result Matrix's Size Y doesn't match";
+    EXPECT_EQ(result.getSizeX(), 4) << "Result Matrix's Size X doesn't match";
+    EXPECT_EQ(result.getValues().size(), 20) << "Result Matrix's Values size doesn't match";
+    EXPECT_EQ(result.getValues().capacity(), 20) << "Result Matrix's Values capacity doesn't match";
+    for (size_t i = 0; i < 5; ++i) {
+        for (size_t j = 0; j < 4; ++j) {
+            EXPECT_NEAR(result(i, j), result_val_data[i][j], kfsoleq::tolerance) << "Result Matrix's Values values doesn't match";
+        }
+    }
+}
+
 TEST(LinalgOperationsSideFunctions, GetMaxEigenValuePowerMethod) {
     size_t iters_num = 100;
     kfsoleq::CSR_Matrix my_csr_matrix;
