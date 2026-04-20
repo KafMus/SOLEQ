@@ -94,10 +94,6 @@ int main(int argc, char* argv[]) {
             my_lil = std::list<std::list<std::pair<size_t, kfsoleq::soleq_float>>>{};
             std::cout << "Creating CSR_Matrix DONE!\n";
             
-            // PRINTING
-            //my_matrix.print();
-            //my_csr_matrix.print();
-           
             // Calculation of actual density that we've got
             actual_density[i * SIZES_NUM + dens_ind] = (double)(my_csr_matrix.getRowIndexes().back()) / (double)(size_y[i] * size_x[i]);
             
