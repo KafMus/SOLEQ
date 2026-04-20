@@ -29,10 +29,10 @@ Vector getTauFromChebyshevRoots(const Vector& roots,
 soleq_float getNewChebyshevAccelerationParameter(soleq_float spectral_radius,
                                                  soleq_float prev_mu,
                                                  soleq_float curr_mu);
-std::pair<Matrix, Matrix> getQRDecompositionHouseholder(Matrix given_matrix);
+std::pair<Matrix, Matrix> getQRFactorizationHouseholder(Matrix given_matrix);
 CSR_Matrix generatorPoissonEquationMatrix(size_t size_y, size_t size_x);
-Vector solverQRDecomposition(const Matrix& given_matrix);
-Vector solverQRDecomposition(const Matrix& given_matrix,
+Vector solverQRFactorization(const Matrix& given_matrix);
+Vector solverQRFactorization(const Matrix& given_matrix,
                              const Matrix& Q_Matrix,
                              const Matrix& R_Matrix);
 void solverJacobiStep(Vector& roots,

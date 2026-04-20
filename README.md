@@ -2,7 +2,7 @@
 This "library" tries to solve SOLEQs.
 
 ## Build
-To configure I recommend to use presets:
+It is recommended to use presets for configuration:
 
 ```bash
 cmake --preset=[preset-name]

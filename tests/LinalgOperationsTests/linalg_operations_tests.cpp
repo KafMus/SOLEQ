@@ -396,7 +396,7 @@ TEST(LinalgOperationsSideFunctions, GetNewChebyshevAccelerationParameter) {
     EXPECT_NEAR(mu_3, 0.27798648, kfsoleq::tolerance) << "New Chebyshev Acceleration Parametr didn't match";
 }
 
-TEST(LinalgOperationsSideFunctions, GetQRDecompositionHouseholder) {
+TEST(LinalgOperationsSideFunctions, GetQRFactorizationHouseholder) {
     kfsoleq::Matrix Q_Matrix, R_Matrix;
     kfsoleq::Matrix my_matrix(3, 3);
     kfsoleq::soleq_float my_matrix_data_1[3][3] = { { 12, -51,   4 },
@@ -407,7 +407,7 @@ TEST(LinalgOperationsSideFunctions, GetQRDecompositionHouseholder) {
             my_matrix(i, j) = my_matrix_data_1[i][j];
         }
     }
-    std::pair<kfsoleq::Matrix, kfsoleq::Matrix> result = kfsoleq::getQRDecompositionHouseholder(my_matrix);
+    std::pair<kfsoleq::Matrix, kfsoleq::Matrix> result = kfsoleq::getQRFactorizationHouseholder(my_matrix);
     Q_Matrix = result.first;
     R_Matrix = result.second;
     
@@ -457,7 +457,7 @@ TEST(LinalgOperationsSideFunctions, GetQRDecompositionHouseholder) {
             my_matrix(i, j) = my_matrix_data_2[i][j];
         }
     }
-    result = kfsoleq::getQRDecompositionHouseholder(my_matrix);
+    result = kfsoleq::getQRFactorizationHouseholder(my_matrix);
     Q_Matrix = result.first;
     R_Matrix = result.second;
     
@@ -557,7 +557,7 @@ TEST(LinalgOperationsGenerators, GeneratorPoissonEquationMatrix) {
     }
 }
 
-TEST(LinalgOperationsSolvers, SolverQRDecomposition) {
+TEST(LinalgOperationsSolvers, SolverQRFactorization) {
     kfsoleq::Matrix my_matrix(3, 4);
     kfsoleq::soleq_float my_matrix_data_1[3][4] = { { 12, -51,   4, 1 },
                                                     {  6, 167, -68, 2 },
@@ -567,7 +567,7 @@ TEST(LinalgOperationsSolvers, SolverQRDecomposition) {
             my_matrix(i, j) = my_matrix_data_1[i][j];
         }
     }
-    kfsoleq::Vector roots = kfsoleq::solverQRDecomposition(my_matrix);
+    kfsoleq::Vector roots = kfsoleq::solverQRFactorization(my_matrix);
     
     EXPECT_EQ(roots.getSize(), 3) << "Roots Size doesn't match";
     EXPECT_EQ(roots.getValues().size(), 3) << "Roots Values size doesn't match";
@@ -587,8 +587,8 @@ TEST(LinalgOperationsSolvers, SolverQRDecomposition) {
             cutted_my_matrix(i, j) = my_matrix_data_1[i][j];
         }
     }
-    auto [Q_Matrix, R_Matrix] = getQRDecompositionHouseholder(cutted_my_matrix);
-    roots = kfsoleq::solverQRDecomposition(my_matrix, Q_Matrix, R_Matrix);
+    auto [Q_Matrix, R_Matrix] = getQRFactorizationHouseholder(cutted_my_matrix);
+    roots = kfsoleq::solverQRFactorization(my_matrix, Q_Matrix, R_Matrix);
     
     EXPECT_EQ(roots.getSize(), 3) << "Roots Size doesn't match";
     EXPECT_EQ(roots.getValues().size(), 3) << "Roots Values size doesn't match";
@@ -612,7 +612,7 @@ TEST(LinalgOperationsSolvers, SolverQRDecomposition) {
             my_matrix(i, j) = my_matrix_data_2[i][j];
         }
     }
-    roots = kfsoleq::solverQRDecomposition(my_matrix);
+    roots = kfsoleq::solverQRFactorization(my_matrix);
     
     EXPECT_EQ(roots.getSize(), 4) << "Roots Size doesn't match";
     EXPECT_EQ(roots.getValues().size(), 4) << "Roots Values size doesn't match";

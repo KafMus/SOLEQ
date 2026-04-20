@@ -146,7 +146,7 @@ kfsoleq::soleq_float kfsoleq::getNewChebyshevAccelerationParameter(kfsoleq::sole
                                                                    kfsoleq::soleq_float curr_mu) {
         return (2.0 / spectral_radius) * curr_mu - prev_mu;
 }
-std::pair<kfsoleq::Matrix, kfsoleq::Matrix> kfsoleq::getQRDecompositionHouseholder(kfsoleq::Matrix given_matrix) {
+std::pair<kfsoleq::Matrix, kfsoleq::Matrix> kfsoleq::getQRFactorizationHouseholder(kfsoleq::Matrix given_matrix) {
         kfsoleq::Vector v;
         kfsoleq::Vector x_result;
         kfsoleq::soleq_float dot_product;
@@ -243,7 +243,7 @@ kfsoleq::CSR_Matrix kfsoleq::generatorPoissonEquationMatrix(size_t size_y, size_
         
         return CSR_Matrix(result_lil);
 }
-kfsoleq::Vector kfsoleq::solverQRDecomposition(const kfsoleq::Matrix& given_matrix) {
+kfsoleq::Vector kfsoleq::solverQRFactorization(const kfsoleq::Matrix& given_matrix) {
         kfsoleq::Vector roots(given_matrix.getSizeY());
         kfsoleq::Matrix system_matrix(given_matrix.getSizeY(), given_matrix.getSizeX() - 1);
         kfsoleq::Vector constant_terms(given_matrix.getSizeY());
@@ -257,7 +257,7 @@ kfsoleq::Vector kfsoleq::solverQRDecomposition(const kfsoleq::Matrix& given_matr
             constant_terms[i] = given_matrix(i, given_matrix.getSizeX() - 1);
         }
         
-        auto [Q_Matrix, R_Matrix] = kfsoleq::getQRDecompositionHouseholder(system_matrix);
+        auto [Q_Matrix, R_Matrix] = kfsoleq::getQRFactorizationHouseholder(system_matrix);
         
         constant_terms = Q_Matrix.getTransposed() * constant_terms;
         
@@ -270,7 +270,7 @@ kfsoleq::Vector kfsoleq::solverQRDecomposition(const kfsoleq::Matrix& given_matr
         }
         return roots;
 }
-kfsoleq::Vector kfsoleq::solverQRDecomposition(const kfsoleq::Matrix& given_matrix,
+kfsoleq::Vector kfsoleq::solverQRFactorization(const kfsoleq::Matrix& given_matrix,
                                                const kfsoleq::Matrix& Q_Matrix,
                                                const kfsoleq::Matrix& R_Matrix) {
         kfsoleq::Vector roots(given_matrix.getSizeY());
