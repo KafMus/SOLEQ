@@ -1,100 +1,100 @@
 NEW ENTRY OF BENCHMARK DATA OF CONJUGATE GRADIENT SOLVER
 Matrix Size:	160000	 | Solver Invokations Iters Block Size:	5000	 | Solver Iters Block Size:	1
-Residual:	0.907029	 | Aver Time (ms):	0.00605246	 | Aver Iters:	0
-Residual:	0.907029	 | Aver Time (ms):	0.00529001	 | Aver Iters:	0
-Residual:	0.907029	 | Aver Time (ms):	0.00505915	 | Aver Iters:	0
-Residual:	0.907029	 | Aver Time (ms):	0.00516535	 | Aver Iters:	0
-Residual:	0.907029	 | Aver Time (ms):	0.00500572	 | Aver Iters:	0
-Residual:	0.907029	 | Aver Time (ms):	0.00522494	 | Aver Iters:	0
-Residual:	0.907029	 | Aver Time (ms):	0.0050812	 | Aver Iters:	0
-Residual:	0.907029	 | Aver Time (ms):	0.00520225	 | Aver Iters:	0
+Residual:	4	 | Aver Time (ms):	0.00782997	 | Aver Iters:	0
+Residual:	4	 | Aver Time (ms):	0.00510671	 | Aver Iters:	0
+Residual:	4	 | Aver Time (ms):	0.00510986	 | Aver Iters:	0
+Residual:	4	 | Aver Time (ms):	0.00519363	 | Aver Iters:	0
+Residual:	4	 | Aver Time (ms):	0.00506383	 | Aver Iters:	0
+Residual:	2.91334	 | Aver Time (ms):	0.0455624	 | Aver Iters:	7
+Residual:	2.01156	 | Aver Time (ms):	0.056318	 | Aver Iters:	9.0014
+Residual:	1.14992	 | Aver Time (ms):	0.0681767	 | Aver Iters:	11.0018
 NEW ENTRY OF BENCHMARK DATA OF CONJUGATE GRADIENT SOLVER
 Matrix Size:	160000	 | Solver Invokations Iters Block Size:	5000	 | Solver Iters Block Size:	1
-Residual:	0.907029	 | Aver Time (ms):	0.006176	 | Aver Iters:	0
-Residual:	0.861456	 | Aver Time (ms):	0.039222	 | Aver Iters:	6
-Residual:	0.660621	 | Aver Time (ms):	0.0456434	 | Aver Iters:	7.0012
-Residual:	0.595917	 | Aver Time (ms):	0.0512329	 | Aver Iters:	8.0014
-Residual:	0.456136	 | Aver Time (ms):	0.05695	 | Aver Iters:	9.0016
-Residual:	0.260754	 | Aver Time (ms):	0.0700126	 | Aver Iters:	11.0018
-Residual:	0.17349	 | Aver Time (ms):	0.0749149	 | Aver Iters:	12.0022
-Residual:	0.089901	 | Aver Time (ms):	0.0813939	 | Aver Iters:	13.0024
+Residual:	0.765092	 | Aver Time (ms):	0.0715042	 | Aver Iters:	12
+Residual:	0.765092	 | Aver Time (ms):	0.0717499	 | Aver Iters:	12.0024
+Residual:	0.396463	 | Aver Time (ms):	0.0776881	 | Aver Iters:	13.0024
+Residual:	0.396463	 | Aver Time (ms):	0.076859	 | Aver Iters:	13.0026
+Residual:	0.396463	 | Aver Time (ms):	0.077577	 | Aver Iters:	13.0026
+Residual:	0.205042	 | Aver Time (ms):	0.0847105	 | Aver Iters:	14.0026
+Residual:	0.205042	 | Aver Time (ms):	0.0832987	 | Aver Iters:	14.0028
+Residual:	0.0679888	 | Aver Time (ms):	0.102755	 | Aver Iters:	17.0028
 NEW ENTRY OF BENCHMARK DATA OF CONJUGATE GRADIENT SOLVER
 Matrix Size:	160000	 | Solver Invokations Iters Block Size:	5000	 | Solver Iters Block Size:	1
-Residual:	0.089901	 | Aver Time (ms):	0.079204	 | Aver Iters:	13
-Residual:	0.0464949	 | Aver Time (ms):	0.0849216	 | Aver Iters:	14.0026
-Residual:	0.0464949	 | Aver Time (ms):	0.0856326	 | Aver Iters:	14.0028
-Residual:	0.0464949	 | Aver Time (ms):	0.0848865	 | Aver Iters:	14.0028
-Residual:	0.0464949	 | Aver Time (ms):	0.0860328	 | Aver Iters:	14.0028
-Residual:	0.0319557	 | Aver Time (ms):	0.0923793	 | Aver Iters:	15.0028
-Residual:	0.015417	 | Aver Time (ms):	0.103463	 | Aver Iters:	17.003
-Residual:	0.0104804	 | Aver Time (ms):	0.110088	 | Aver Iters:	18.0034
+Residual:	0.0679888	 | Aver Time (ms):	0.101176	 | Aver Iters:	17
+Residual:	0.0679888	 | Aver Time (ms):	0.0997827	 | Aver Iters:	17.0034
+Residual:	0.0679888	 | Aver Time (ms):	0.100940	 | Aver Iters:	17.0034
+Residual:	0.0462185	 | Aver Time (ms):	0.105545	 | Aver Iters:	18.0034
+Residual:	0.0462185	 | Aver Time (ms):	0.106871	 | Aver Iters:	18.0036
+Residual:	0.0313193	 | Aver Time (ms):	0.113337	 | Aver Iters:	19.0036
+Residual:	0.0174372	 | Aver Time (ms):	0.117893	 | Aver Iters:	20.0038
+Residual:	0.00658772	 | Aver Time (ms):	0.130793	 | Aver Iters:	22.004
 NEW ENTRY OF BENCHMARK DATA OF CONJUGATE GRADIENT SOLVER
 Matrix Size:	160000	 | Solver Invokations Iters Block Size:	5000	 | Solver Iters Block Size:	1
-Residual:	0.00710189	 | Aver Time (ms):	0.112722	 | Aver Iters:	19
-Residual:	0.00710189	 | Aver Time (ms):	0.113612	 | Aver Iters:	19.0038
-Residual:	0.00710189	 | Aver Time (ms):	0.115098	 | Aver Iters:	19.0038
-Residual:	0.00395401	 | Aver Time (ms):	0.11967	 | Aver Iters:	20.0038
-Residual:	0.00395401	 | Aver Time (ms):	0.121218	 | Aver Iters:	20.004
-Residual:	0.00286528	 | Aver Time (ms):	0.129341	 | Aver Iters:	21.004
-Residual:	0.00149381	 | Aver Time (ms):	0.132025	 | Aver Iters:	22.0042
-Residual:	0.000761138	 | Aver Time (ms):	0.138926	 | Aver Iters:	23.0044
+Residual:	0.00658772	 | Aver Time (ms):	0.129338	 | Aver Iters:	22
+Residual:	0.00658772	 | Aver Time (ms):	0.127763	 | Aver Iters:	22.0044
+Residual:	0.00658772	 | Aver Time (ms):	0.129325	 | Aver Iters:	22.0044
+Residual:	0.00335662	 | Aver Time (ms):	0.133463	 | Aver Iters:	23.0044
+Residual:	0.00335662	 | Aver Time (ms):	0.135321	 | Aver Iters:	23.0046
+Residual:	0.00335662	 | Aver Time (ms):	0.136711	 | Aver Iters:	23.0046
+Residual:	0.00188474	 | Aver Time (ms):	0.141811	 | Aver Iters:	24.0046
+Residual:	0.000713781	 | Aver Time (ms):	0.148578	 | Aver Iters:	25.0048
 NEW ENTRY OF BENCHMARK DATA OF CONJUGATE GRADIENT SOLVER
 Matrix Size:	160000	 | Solver Invokations Iters Block Size:	5000	 | Solver Iters Block Size:	1
-Residual:	0.000761138	 | Aver Time (ms):	0.137161	 | Aver Iters:	23
-Residual:	0.000761138	 | Aver Time (ms):	0.138361	 | Aver Iters:	23.0046
-Residual:	0.00042738	 | Aver Time (ms):	0.14655	 | Aver Iters:	24.0046
-Residual:	0.00042738	 | Aver Time (ms):	0.144508	 | Aver Iters:	24.0048
-Residual:	0.00042738	 | Aver Time (ms):	0.146423	 | Aver Iters:	24.0048
-Residual:	0.000161855	 | Aver Time (ms):	0.15407	 | Aver Iters:	25.0048
-Residual:	0.000161855	 | Aver Time (ms):	0.152244	 | Aver Iters:	25.005
-Residual:	7.4173e-05	 | Aver Time (ms):	0.159937	 | Aver Iters:	26.005
+Residual:	0.000713781	 | Aver Time (ms):	0.145459	 | Aver Iters:	25
+Residual:	0.000713781	 | Aver Time (ms):	0.144029	 | Aver Iters:	25.005
+Residual:	0.000713781	 | Aver Time (ms):	0.146334	 | Aver Iters:	25.005
+Residual:	0.000327103	 | Aver Time (ms):	0.149679	 | Aver Iters:	26.005
+Residual:	0.000327103	 | Aver Time (ms):	0.151987	 | Aver Iters:	26.0052
+Residual:	0.000327103	 | Aver Time (ms):	0.153303	 | Aver Iters:	26.0052
+Residual:	9.51528e-05	 | Aver Time (ms):	0.157547	 | Aver Iters:	27.0052
+Residual:	9.51528e-05	 | Aver Time (ms):	0.158928	 | Aver Iters:	27.0054
 NEW ENTRY OF BENCHMARK DATA OF CONJUGATE GRADIENT SOLVER
 Matrix Size:	160000	 | Solver Invokations Iters Block Size:	5000	 | Solver Iters Block Size:	1
-Residual:	7.4173e-05	 | Aver Time (ms):	0.155578	 | Aver Iters:	26
-Residual:	7.4173e-05	 | Aver Time (ms):	0.155016	 | Aver Iters:	26.0052
-Residual:	7.4173e-05	 | Aver Time (ms):	0.157293	 | Aver Iters:	26.0052
-Residual:	2.15766e-05	 | Aver Time (ms):	0.16325	 | Aver Iters:	27.0052
-Residual:	2.15766e-05	 | Aver Time (ms):	0.16316	 | Aver Iters:	27.0054
-Residual:	2.15766e-05	 | Aver Time (ms):	0.164638	 | Aver Iters:	27.0054
-Residual:	2.15766e-05	 | Aver Time (ms):	0.163307	 | Aver Iters:	27.0054
-Residual:	7.93423e-06	 | Aver Time (ms):	0.171448	 | Aver Iters:	28.0054
+Residual:	9.51528e-05	 | Aver Time (ms):	0.158375	 | Aver Iters:	27
+Residual:	3.499e-05	 | Aver Time (ms):	0.162676	 | Aver Iters:	28.0054
+Residual:	3.499e-05	 | Aver Time (ms):	0.164531	 | Aver Iters:	28.0056
+Residual:	3.499e-05	 | Aver Time (ms):	0.162749	 | Aver Iters:	28.0056
+Residual:	3.499e-05	 | Aver Time (ms):	0.164306	 | Aver Iters:	28.0056
+Residual:	3.499e-05	 | Aver Time (ms):	0.166430	 | Aver Iters:	28.0056
+Residual:	1.50584e-05	 | Aver Time (ms):	0.173849	 | Aver Iters:	29.0056
+Residual:	9.18679e-06	 | Aver Time (ms):	0.178159	 | Aver Iters:	30.0058
 NEW ENTRY OF BENCHMARK DATA OF CONJUGATE GRADIENT SOLVER
 Matrix Size:	160000	 | Solver Invokations Iters Block Size:	5000	 | Solver Iters Block Size:	1
-Residual:	7.93423e-06	 | Aver Time (ms):	0.166619	 | Aver Iters:	28
-Residual:	7.93423e-06	 | Aver Time (ms):	0.16773	 | Aver Iters:	28.0056
-Residual:	3.4146e-06	 | Aver Time (ms):	0.175751	 | Aver Iters:	29.0056
-Residual:	3.4146e-06	 | Aver Time (ms):	0.174313	 | Aver Iters:	29.0058
-Residual:	3.4146e-06	 | Aver Time (ms):	0.176232	 | Aver Iters:	29.0058
-Residual:	3.4146e-06	 | Aver Time (ms):	0.17845	 | Aver Iters:	29.0058
-Residual:	2.08317e-06	 | Aver Time (ms):	0.182451	 | Aver Iters:	30.0058
-Residual:	8.28438e-07	 | Aver Time (ms):	0.190486	 | Aver Iters:	31.006
+Residual:	9.18679e-06	 | Aver Time (ms):	0.178563	 | Aver Iters:	30
+Residual:	3.65341e-06	 | Aver Time (ms):	0.179892	 | Aver Iters:	31.006
+Residual:	3.65341e-06	 | Aver Time (ms):	0.181647	 | Aver Iters:	31.0062
+Residual:	3.65341e-06	 | Aver Time (ms):	0.179491	 | Aver Iters:	31.0062
+Residual:	3.65341e-06	 | Aver Time (ms):	0.181789	 | Aver Iters:	31.0062
+Residual:	3.65341e-06	 | Aver Time (ms):	0.183749	 | Aver Iters:	31.0062
+Residual:	1.49401e-06	 | Aver Time (ms):	0.187601	 | Aver Iters:	32.0062
+Residual:	5.36561e-07	 | Aver Time (ms):	0.195406	 | Aver Iters:	33.0064
 NEW ENTRY OF BENCHMARK DATA OF CONJUGATE GRADIENT SOLVER
 Matrix Size:	160000	 | Solver Invokations Iters Block Size:	5000	 | Solver Iters Block Size:	1
-Residual:	8.28438e-07	 | Aver Time (ms):	0.183306	 | Aver Iters:	31
-Residual:	8.28438e-07	 | Aver Time (ms):	0.184555	 | Aver Iters:	31.0062
-Residual:	3.38778e-07	 | Aver Time (ms):	0.193087	 | Aver Iters:	32.0062
-Residual:	3.38778e-07	 | Aver Time (ms):	0.191022	 | Aver Iters:	32.0064
-Residual:	3.38778e-07	 | Aver Time (ms):	0.194062	 | Aver Iters:	32.0064
-Residual:	3.38778e-07	 | Aver Time (ms):	0.211172	 | Aver Iters:	32.0064
-Residual:	1.21669e-07	 | Aver Time (ms):	0.230232	 | Aver Iters:	33.0064
-Residual:	4.37605e-08	 | Aver Time (ms):	0.239645	 | Aver Iters:	34.0066
+Residual:	5.36561e-07	 | Aver Time (ms):	0.192206	 | Aver Iters:	33
+Residual:	5.36561e-07	 | Aver Time (ms):	0.190652	 | Aver Iters:	33.0066
+Residual:	5.36561e-07	 | Aver Time (ms):	0.193152	 | Aver Iters:	33.0066
+Residual:	5.36561e-07	 | Aver Time (ms):	0.191117	 | Aver Iters:	33.0066
+Residual:	1.92984e-07	 | Aver Time (ms):	0.199315	 | Aver Iters:	34.0066
+Residual:	1.92984e-07	 | Aver Time (ms):	0.201764	 | Aver Iters:	34.0068
+Residual:	1.92984e-07	 | Aver Time (ms):	0.206204	 | Aver Iters:	34.0068
+Residual:	7.81858e-08	 | Aver Time (ms):	0.241712	 | Aver Iters:	35.0068
 NEW ENTRY OF BENCHMARK DATA OF CONJUGATE GRADIENT SOLVER
 Matrix Size:	160000	 | Solver Invokations Iters Block Size:	5000	 | Solver Iters Block Size:	1
-Residual:	4.37605e-08	 | Aver Time (ms):	0.200757	 | Aver Iters:	34
-Residual:	4.37605e-08	 | Aver Time (ms):	0.201162	 | Aver Iters:	34.0068
-Residual:	4.37605e-08	 | Aver Time (ms):	0.204749	 | Aver Iters:	34.0068
-Residual:	4.37605e-08	 | Aver Time (ms):	0.202151	 | Aver Iters:	34.0068
-Residual:	4.37605e-08	 | Aver Time (ms):	0.204742	 | Aver Iters:	34.0068
-Residual:	1.77292e-08	 | Aver Time (ms):	0.21468	 | Aver Iters:	35.0068
-Residual:	1.77292e-08	 | Aver Time (ms):	0.241686	 | Aver Iters:	35.007
-Residual:	5.74805e-09	 | Aver Time (ms):	0.255633	 | Aver Iters:	36.007
+Residual:	7.81858e-08	 | Aver Time (ms):	0.200772	 | Aver Iters:	35
+Residual:	7.81858e-08	 | Aver Time (ms):	0.201315	 | Aver Iters:	35.007
+Residual:	2.53489e-08	 | Aver Time (ms):	0.210031	 | Aver Iters:	36.007
+Residual:	2.53489e-08	 | Aver Time (ms):	0.208399	 | Aver Iters:	36.0072
+Residual:	2.53489e-08	 | Aver Time (ms):	0.210717	 | Aver Iters:	36.0072
+Residual:	2.53489e-08	 | Aver Time (ms):	0.213399	 | Aver Iters:	36.0072
+Residual:	6.88485e-09	 | Aver Time (ms):	0.216589	 | Aver Iters:	37.0072
+Residual:	6.88485e-09	 | Aver Time (ms):	0.219247	 | Aver Iters:	37.0074
 NEW ENTRY OF BENCHMARK DATA OF CONJUGATE GRADIENT SOLVER
 Matrix Size:	160000	 | Solver Invokations Iters Block Size:	5000	 | Solver Iters Block Size:	1
-Residual:	5.74805e-09	 | Aver Time (ms):	0.211069	 | Aver Iters:	36
-Residual:	5.74805e-09	 | Aver Time (ms):	0.212515	 | Aver Iters:	36.0072
-Residual:	5.74805e-09	 | Aver Time (ms):	0.217926	 | Aver Iters:	36.0072
-Residual:	5.74805e-09	 | Aver Time (ms):	0.213213	 | Aver Iters:	36.0072
-Residual:	1.56119e-09	 | Aver Time (ms):	0.240122	 | Aver Iters:	37.0072
-Residual:	1.56119e-09	 | Aver Time (ms):	0.257258	 | Aver Iters:	37.0074
-Residual:	1.56119e-09	 | Aver Time (ms):	0.254382	 | Aver Iters:	37.0074
-Residual:	4.10217e-10	 | Aver Time (ms):	0.261568	 | Aver Iters:	38.0074
+Residual:	6.88485e-09	 | Aver Time (ms):	0.210934	 | Aver Iters:	37
+Residual:	6.88485e-09	 | Aver Time (ms):	0.212223	 | Aver Iters:	37.0074
+Residual:	6.88485e-09	 | Aver Time (ms):	0.214743	 | Aver Iters:	37.0074
+Residual:	1.80907e-09	 | Aver Time (ms):	0.218567	 | Aver Iters:	38.0074
+Residual:	1.80907e-09	 | Aver Time (ms):	0.221335	 | Aver Iters:	38.0076
+Residual:	1.80907e-09	 | Aver Time (ms):	0.224033	 | Aver Iters:	38.0076
+Residual:	1.80907e-09	 | Aver Time (ms):	0.223047	 | Aver Iters:	38.0076
+Residual:	3.62497e-10	 | Aver Time (ms):	0.261389	 | Aver Iters:	39.0076

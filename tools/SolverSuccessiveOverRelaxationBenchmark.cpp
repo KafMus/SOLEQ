@@ -33,22 +33,28 @@ int main(int argc, char* argv[]) {
     datafile << "NEW ENTRY OF BENCHMARK DATA OF SUCCESSIVE OVER RELAXATION SOLVER" << std::endl;
     
     // Getting CSR_Matrix from data and filling constant_terms
-    auto my_lil = getLilFromRealCoordinateSymmetricMatrix<kfsoleq::soleq_float>(argv[1]);
-    kfsoleq::CSR_Matrix my_csr_matrix(my_lil);
+    // auto my_lil = getLilFromRealCoordinateSymmetricMatrix<kfsoleq::soleq_float>(argv[1]);
+    // kfsoleq::CSR_Matrix my_csr_matrix(my_lil);
+    size_t poisson_inner_grid_size = 20;
+    kfsoleq::soleq_float h = 0.1;
+    kfsoleq::CSR_Matrix my_csr_matrix = kfsoleq::generatorPoissonEquationMatrix(poisson_inner_grid_size,
+                                                                                poisson_inner_grid_size);
     
     kfsoleq::Vector constant_terms(my_csr_matrix.getRowIndexes().size() - 1);
     for (size_t i = 0; i < constant_terms.getSize(); ++i) {
-        constant_terms[i] = 1;
+        // constant_terms[i] = 1;
+        constant_terms[i] = -std::pow(h, 2) * 1;
     }
     
     // Declaration of main stuff
     kfsoleq::Vector roots;
     kfsoleq::Vector residual;
     kfsoleq::Vector solver_initial_roots = kfsoleq::Vector(my_csr_matrix.getRowIndexes().size() - 1);
-    kfsoleq::soleq_float relaxation_factor = 1.9618181795466909100866814696928486227989196777344;
-    size_t iters_block_size = 50;
+    // kfsoleq::soleq_float relaxation_factor = 1.9618181795466909100866814696928486227989196777344; // Optimal for SparseMatrix0
+    kfsoleq::soleq_float relaxation_factor = 1.7405800107385851482888483587885275483131408691406; // Optimal for Poisson20x20
+    size_t iters_block_size = 5000;
     size_t solver_iters_block_size = 1;
-    size_t solver_max_iters = 8192 * 16;
+    size_t solver_max_iters = 8192 * 16 * 4;
     long double aver_time;
     long double aver_iters = 0;
     size_t tmp_iters;
@@ -64,9 +70,9 @@ int main(int argc, char* argv[]) {
     
     // Main iterations loops
     kfsoleq::soleq_float solver_tolerance;
-    kfsoleq::soleq_float max_solver_tolerance  = 0.000000001;
-    kfsoleq::soleq_float min_solver_tolerance  = 0.00000000001;
-    kfsoleq::soleq_float solver_tolerance_step = 0.00000000012625;
+    kfsoleq::soleq_float max_solver_tolerance  = 0.00000001;
+    kfsoleq::soleq_float min_solver_tolerance  = 0.0000000001;
+    kfsoleq::soleq_float solver_tolerance_step = 0.0000000012625;
     std::cout << "Iterations loops with max_solver_tolerance:[" << max_solver_tolerance
               << "], min_solver_tolerance:[" << min_solver_tolerance
               << "], solver_tolerance_step:[" << solver_tolerance_step << "]...\n";

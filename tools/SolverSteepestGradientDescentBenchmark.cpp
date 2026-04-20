@@ -33,19 +33,24 @@ int main(int argc, char* argv[]) {
     datafile << "NEW ENTRY OF BENCHMARK DATA OF STEEPEST GRADIENT DESCENT SOLVER" << std::endl;
     
     // Getting CSR_Matrix from data and filling constant_terms
-    auto my_lil = getLilFromRealCoordinateSymmetricMatrix<kfsoleq::soleq_float>(argv[1]);
-    kfsoleq::CSR_Matrix my_csr_matrix(my_lil);
+    // auto my_lil = getLilFromRealCoordinateSymmetricMatrix<kfsoleq::soleq_float>(argv[1]);
+    // kfsoleq::CSR_Matrix my_csr_matrix(my_lil);
+    size_t poisson_inner_grid_size = 20;
+    kfsoleq::soleq_float h = 0.1;
+    kfsoleq::CSR_Matrix my_csr_matrix = kfsoleq::generatorPoissonEquationMatrix(poisson_inner_grid_size,
+                                                                                poisson_inner_grid_size);
     
     kfsoleq::Vector constant_terms(my_csr_matrix.getRowIndexes().size() - 1);
     for (size_t i = 0; i < constant_terms.getSize(); ++i) {
-        constant_terms[i] = 1;
+        // constant_terms[i] = 1;
+        constant_terms[i] = -std::pow(h, 2) * 1;
     }
     
     // Declaration of main stuff
     kfsoleq::Vector roots;
     kfsoleq::Vector residual;
     kfsoleq::Vector solver_initial_roots = kfsoleq::Vector(my_csr_matrix.getRowIndexes().size() - 1);
-    size_t iters_block_size = 5;
+    size_t iters_block_size = 5000;
     size_t solver_iters_block_size = 1;
     size_t solver_max_iters = 8192 * 16 * 4;
     long double aver_time;

@@ -24,23 +24,33 @@ int main(int argc, char* argv[]) {
     }
     
     // Getting CSR_Matrix from data and filling constant_terms
-    auto my_matrix = getMatrixFromRealCoordinateSymmetricMatrix<kfsoleq::soleq_float>(argv[1]);
+    // auto my_matrix = getMatrixFromRealCoordinateSymmetricMatrix<kfsoleq::soleq_float>(argv[1]);
+    size_t poisson_inner_grid_size = 20;
+    kfsoleq::CSR_Matrix my_csr_matrix = kfsoleq::generatorPoissonEquationMatrix(poisson_inner_grid_size,
+                                                                                poisson_inner_grid_size);
+    kfsoleq::Matrix my_matrix = kfsoleq::getMatrixFromCSRMatrix(my_csr_matrix,
+                                                                my_csr_matrix.getRowIndexes().size() - 1);
+    argv[1] = nullptr; // Imitate argv[1] usage if we examine Poisson Equation Matrix
+    
     size_t iters_to_seek_max_eigen_value = 65536;
     kfsoleq::soleq_float max_eigen_value;
     kfsoleq::soleq_float relaxation_factor;
     kfsoleq::soleq_float spectral_radius;
     
+    
     kfsoleq::Matrix identity_matrix(my_matrix.getSizeY(), my_matrix.getSizeX());
     for (size_t i = 0; i < my_matrix.getSizeY(); ++i) {
         identity_matrix(i, i) = 1;
     }
+    
     kfsoleq::Matrix inverted_diagonal_matrix(my_matrix.getSizeY(), my_matrix.getSizeX());
     for (size_t i = 0; i < my_matrix.getSizeY(); ++i) {
         inverted_diagonal_matrix(i, i) = (1.0 / my_matrix(i, i));
     }
+    
     kfsoleq::Matrix examined_matrix = identity_matrix - (inverted_diagonal_matrix * my_matrix);
-    examined_matrix.print();
     kfsoleq::CSR_Matrix examined_csr_matrix = kfsoleq::getCSRMatrixFromMatrix(examined_matrix, 0);
+    
     kfsoleq::Vector initial_vector(my_matrix.getSizeY());
     for (size_t i = 0; i < my_matrix.getSizeY(); ++i) {
         initial_vector[i] = 1;
