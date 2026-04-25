@@ -2,6 +2,7 @@
 #define VECTOR_CPP_UUID_0000
 
 #include <SOLEQ/vector.hpp>
+#include <SOLEQ/DEFINES.hpp>
 #include <cmath>
 #include <iostream>
 #include <vector>

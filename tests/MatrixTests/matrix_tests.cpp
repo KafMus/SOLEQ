@@ -1,6 +1,8 @@
 #include <gtest/gtest.h>
 #include <SOLEQ/matrix.hpp>
+#include <SOLEQ/DEFINES.hpp>
 #include <vector>
+
 
 TEST(MatrixInitialization, DefaultInitialization) {
     kfsoleq::Matrix void_matrix{};

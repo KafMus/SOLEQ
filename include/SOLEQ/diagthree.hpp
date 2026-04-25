@@ -3,6 +3,8 @@
 
 #include <SOLEQ/DEFINES.hpp>
 #include <array>
+#include <cmath>
+#include <iostream>
 #include <vector>
 
 

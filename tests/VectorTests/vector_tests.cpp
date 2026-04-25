@@ -4,6 +4,7 @@
 #include <cmath>
 #include <vector>
 
+
 TEST(VectorInitialization, DefaultInitialization) {
     kfsoleq::Vector void_vector{};
     EXPECT_EQ(void_vector.getSize(), 0) << "Vector's Size doesn't match";

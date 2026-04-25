@@ -72,17 +72,73 @@ if (VECTOR_BUILD)
     gtest_discover_tests(VectorTests)
     message("Adding Vector Test files DONE!")
 endif()
-if (LINALG_OPERATIONS_BUILD)
-    message("Adding Linalg Operations Test files...")
+if (OPERATORS_BUILD)
+    message("Adding Operators Test files...")
     add_executable(
-        LinalgOperationsTests
-        LinalgOperationsTests/linalg_operations_tests.cpp
+        OperatorsTests
+        OperatorsTests/operators_tests.cpp
     )
     target_link_libraries(
-        LinalgOperationsTests
+        OperatorsTests
         GTest::gtest_main
         SOLEQ
     )
-    gtest_discover_tests(LinalgOperationsTests)
-    message("Adding Linalg Operations Test files DONE!")
+    gtest_discover_tests(OperatorsTests)
+    message("Adding Operators Test files DONE!")
+endif()
+if (UTILITIES_BUILD)
+    message("Adding Utilities Test files...")
+    add_executable(
+        UtilitiesTests
+        UtilitiesTests/utilities_tests.cpp
+    )
+    target_link_libraries(
+        UtilitiesTests
+        GTest::gtest_main
+        SOLEQ
+    )
+    gtest_discover_tests(UtilitiesTests)
+    message("Adding Utilities Test files DONE!")
+endif()
+if (GENERATORS_BUILD)
+    message("Adding Generators Test files...")
+    add_executable(
+        GeneratorsTests
+        GeneratorsTests/generators_tests.cpp
+    )
+    target_link_libraries(
+        GeneratorsTests
+        GTest::gtest_main
+        SOLEQ
+    )
+    gtest_discover_tests(GeneratorsTests)
+    message("Adding Generators Test files DONE!")
+endif()
+if (SOLVERS_BUILD)
+    message("Adding Solvers Test files...")
+    add_executable(
+        SolversTests
+        SolversTests/solvers_tests.cpp
+    )
+    target_link_libraries(
+        SolversTests
+        GTest::gtest_main
+        SOLEQ
+    )
+    gtest_discover_tests(SolversTests)
+    message("Adding Solvers Test files DONE!")
+endif()
+if (ACCELERATORS_BUILD)
+    message("Adding Accelerators Test files...")
+    add_executable(
+        AcceleratorsTests
+        AcceleratorsTests/accelerators_tests.cpp
+    )
+    target_link_libraries(
+        AcceleratorsTests
+        GTest::gtest_main
+        SOLEQ
+    )
+    gtest_discover_tests(AcceleratorsTests)
+    message("Adding Accelerators Test files DONE!")
 endif()

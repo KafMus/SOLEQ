@@ -4,6 +4,7 @@
 #include <array>
 #include <vector>
 
+
 TEST(DiagThreeInitialization, DefaultInitialization) {
     kfsoleq::DiagThree void_diagthree{};
     EXPECT_EQ(void_diagthree.getSize(), 0) << "DiagThree's Size doesn't match";

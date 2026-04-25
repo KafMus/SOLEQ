@@ -1,6 +1,8 @@
 #include <gtest/gtest.h>
 #include <SOLEQ/upper_triangular_matrix.hpp>
+#include <SOLEQ/DEFINES.hpp>
 #include <vector>
+
 
 TEST(UpperTriangularMatrixInitialization, DefaultInitialization) {
     kfsoleq::UpperTriangularMatrix void_up_matrix{};

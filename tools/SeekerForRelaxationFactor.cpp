@@ -2,7 +2,8 @@
 #include <SOLEQ/matrix.hpp>
 #include <SOLEQ/csr_matrix.hpp>
 #include <SOLEQ/vector.hpp>
-#include <SOLEQ/linalg_operations.hpp>
+#include <SOLEQ/utilities.hpp>
+#include <SOLEQ/generators.hpp>
 #include <chrono>
 #include <cmath>
 #include <list>

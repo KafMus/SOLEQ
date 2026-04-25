@@ -2,6 +2,7 @@
 #define CSR_MATRIX_HPP_UUID_0000
 
 #include <SOLEQ/DEFINES.hpp>
+#include <iostream>
 #include <list>
 #include <utility>
 #include <vector>

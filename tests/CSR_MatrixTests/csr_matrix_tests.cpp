@@ -1,7 +1,9 @@
 #include <gtest/gtest.h>
 #include <SOLEQ/csr_matrix.hpp>
+#include <SOLEQ/DEFINES.hpp>
 #include <list>
 #include <utility>
+
 
 TEST(CSRMatrixInitialization, DefaultInitialization) {
     kfsoleq::CSR_Matrix void_matrix{};
