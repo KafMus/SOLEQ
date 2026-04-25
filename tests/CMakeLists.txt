@@ -44,6 +44,20 @@ if (CSR_MATRIX_BUILD)
     gtest_discover_tests(CSR_MatrixTests)
     message("Adding CSR_Matrix Test files DONE!")
 endif()
+if (UPPER_TRIANGULAR_MATRIX_BUILD)
+    message("Adding UpperTriangularMatrix Test files...")
+    add_executable(
+        UpperTriangularMatrixTests
+        UpperTriangularMatrixTests/upper_triangular_matrix_tests.cpp
+    )
+    target_link_libraries(
+        UpperTriangularMatrixTests
+        GTest::gtest_main
+        SOLEQ
+    )
+    gtest_discover_tests(UpperTriangularMatrixTests)
+    message("Adding UpperTriangularMatrix Test files DONE!")
+endif()
 if (VECTOR_BUILD)
     message("Adding Vector Test files...")
     add_executable(

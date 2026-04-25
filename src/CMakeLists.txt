@@ -40,6 +40,20 @@ if (CSR_MATRIX_BUILD)
     )
     message("Adding CSR_Matrix Source files DONE!")
 endif()
+if (UPPER_TRIANGULAR_MATRIX_BUILD)
+    message("Adding UpperTriangularMatrix Source files...")
+    target_sources(SOLEQ
+        PRIVATE
+            ${PROJECT_SOURCE_DIR}/src/SOLEQ/upper_triangular_matrix.cpp
+        PUBLIC
+            FILE_SET HEADERS
+            BASE_DIRS
+                ${PROJECT_SOURCE_DIR}/include
+            FILES
+                ${PROJECT_SOURCE_DIR}/include/SOLEQ/upper_triangular_matrix.hpp
+    )
+    message("Adding UpperTriangularMatrix Source files DONE!")
+endif()
 if (VECTOR_BUILD)
     message("Adding Vector Source files...")
     target_sources(SOLEQ
