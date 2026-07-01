@@ -76,6 +76,54 @@ TEST(Utilities, GetMatrixFromCSRMatrix) {
     }
 }
 
+TEST(Utilities, GetMatrixRow) {
+    kfsoleq::Matrix my_matrix(5, 4);
+    kfsoleq::soleq_float my_matrix_data[5][4] = { { 1, 2, 3, 4 },
+                                                  { 5, 0, 0, 0 },
+                                                  { 0, 0, 0, 0 },
+                                                  { 0, 0, 0, 6 },
+                                                  { 0, 7, 8, 9 } };
+    kfsoleq::soleq_float result_data[4] = { 0, 0, 0, 6 };
+    
+    for (size_t i = 0; i < 5; ++i) {
+        for (size_t j = 0; j < 4; ++j) {
+            my_matrix(i, j) = my_matrix_data[i][j];
+        }
+    }
+    
+    kfsoleq::Vector result = kfsoleq::getMatrixRow(my_matrix, 3);
+    result.print();
+    
+    EXPECT_EQ(result.getSize(), 4) << "Vector's Size doesn't match";
+    for (size_t i = 0; i < 4; ++i) {
+        EXPECT_EQ(result[i], result_data[i]) << "Vector's values doesn't match";
+    }
+}
+
+TEST(Utilities, GetMatrixCol) {
+    kfsoleq::Matrix my_matrix(5, 4);
+    kfsoleq::soleq_float my_matrix_data[5][4] = { { 1, 2, 3, 4 },
+                                                  { 5, 0, 0, 0 },
+                                                  { 0, 0, 0, 0 },
+                                                  { 0, 0, 0, 6 },
+                                                  { 0, 7, 8, 9 } };
+    kfsoleq::soleq_float result_data[5] = { 3, 0, 0, 0, 8 };
+    
+    for (size_t i = 0; i < 4; ++i) {
+        for (size_t j = 0; j < 5; ++j) {
+            my_matrix(i, j, true) = my_matrix_data[j][i];
+        }
+    }
+    
+    kfsoleq::Vector result = kfsoleq::getMatrixCol(my_matrix, 2);
+    result.print();
+    
+    EXPECT_EQ(result.getSize(), 5) << "Vector's Size doesn't match";
+    for (size_t i = 0; i < 5; ++i) {
+        EXPECT_EQ(result[i], result_data[i]) << "Vector's values doesn't match";
+    }
+}
+
 TEST(Utilities, GetMaxEigenValuePowerMethod) {
     size_t iters_num = 100;
     kfsoleq::CSR_Matrix my_csr_matrix;

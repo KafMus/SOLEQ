@@ -34,6 +34,110 @@ TEST(MatrixInitialisation, SizeBySizeInitialisation) {
     }
 }
 
+TEST(MatrixFunctions, AddRows) {
+    kfsoleq::Matrix my_matrix(3, 3);
+    kfsoleq::soleq_float my_matrix_data[3][3] = { { 1, 2, 3 },
+                                                  { 4, 5, 6 },
+                                                  { 7, 8, 9 } };
+    kfsoleq::soleq_float result_data[5][3]    = { { 1, 2, 3 },
+                                                  { 4, 5, 6 },
+                                                  { 7, 8, 9 },
+                                                  { 0, 0, 0 },
+                                                  { 0, 0, 0 } };
+    for (size_t i = 0; i < 3; ++i) {
+        for (size_t j = 0; j < 3; ++j) {
+            my_matrix(i, j) = my_matrix_data[i][j];
+        }
+    }
+    my_matrix.addRows(2);
+    EXPECT_EQ(my_matrix.getSizeY(), 5) << "Matrix's Y size doesn't match";
+    EXPECT_EQ(my_matrix.getSizeX(), 3) << "Matrix's X size doesn't match";
+    EXPECT_EQ(my_matrix.getValues().size(), 15) << "Matrix's Values size doesn't match";
+    EXPECT_EQ(my_matrix.getValues().capacity(), 15) << "Matrix's Values capacity doesn't match";
+    for (size_t i = 0; i < 5; ++i) {
+        for (size_t j = 0; j < 3; ++j) {
+            EXPECT_NEAR(my_matrix(i, j), result_data[i][j], kfsoleq::tolerance) << "Matrix's Values values doesn't match";
+        }
+    }
+}
+
+TEST(MatrixFunctions, AddCols) {
+    kfsoleq::Matrix my_matrix(3, 3);
+    kfsoleq::soleq_float my_matrix_data[3][3] = { { 1, 2, 3 },
+                                                  { 4, 5, 6 },
+                                                  { 7, 8, 9 } };
+    kfsoleq::soleq_float result_data[3][5]    = { { 1, 2, 3, 0, 0 },
+                                                  { 4, 5, 6, 0, 0 },
+                                                  { 7, 8, 9, 0, 0 } };
+    for (size_t i = 0; i < 3; ++i) {
+        for (size_t j = 0; j < 3; ++j) {
+            my_matrix(i, j, true) = my_matrix_data[j][i];
+        }
+    }
+    my_matrix.addCols(2);
+    EXPECT_EQ(my_matrix.getSizeY(), 3) << "Matrix's Y size doesn't match";
+    EXPECT_EQ(my_matrix.getSizeX(), 5) << "Matrix's X size doesn't match";
+    EXPECT_EQ(my_matrix.getValues().size(), 15) << "Matrix's Values size doesn't match";
+    EXPECT_EQ(my_matrix.getValues().capacity(), 15) << "Matrix's Values capacity doesn't match";
+    for (size_t i = 0; i < 5; ++i) {
+        for (size_t j = 0; j < 3; ++j) {
+            EXPECT_NEAR(my_matrix(i, j, true), result_data[j][i], kfsoleq::tolerance) << "Matrix's Values values doesn't match";
+        }
+    }
+}
+
+TEST(MatrixFunctions, CutRows) {
+    kfsoleq::Matrix my_matrix(5, 3);
+    kfsoleq::soleq_float my_matrix_data[5][3] = { { 1, 2, 3 },
+                                                  { 4, 5, 6 },
+                                                  { 7, 8, 9 },
+                                                  { 0, 0, 0 },
+                                                  { 0, 0, 0 } };
+    kfsoleq::soleq_float result_data[3][3]    = { { 1, 2, 3 },
+                                                  { 4, 5, 6 },
+                                                  { 7, 8, 9 } };
+    for (size_t i = 0; i < 5; ++i) {
+        for (size_t j = 0; j < 3; ++j) {
+            my_matrix(i, j) = my_matrix_data[i][j];
+        }
+    }
+    my_matrix.cutRows(2);
+    EXPECT_EQ(my_matrix.getSizeY(), 3) << "Matrix's Y size doesn't match";
+    EXPECT_EQ(my_matrix.getSizeX(), 3) << "Matrix's X size doesn't match";
+    EXPECT_EQ(my_matrix.getValues().size(), 9) << "Matrix's Values size doesn't match";
+    EXPECT_EQ(my_matrix.getValues().capacity(), 9) << "Matrix's Values capacity doesn't match";
+    for (size_t i = 0; i < 3; ++i) {
+        for (size_t j = 0; j < 3; ++j) {
+            EXPECT_NEAR(my_matrix(i, j), result_data[i][j], kfsoleq::tolerance) << "Matrix's Values values doesn't match";
+        }
+    }
+}
+
+TEST(MatrixFunctions, CutCols) {
+    kfsoleq::Matrix my_matrix(3, 5);
+    kfsoleq::soleq_float my_matrix_data[3][5] = { { 1, 2, 3, 0, 0 },
+                                                  { 4, 5, 6, 0, 0 },
+                                                  { 7, 8, 9, 0, 0 } };
+    kfsoleq::soleq_float result_data[3][3]    = { { 1, 2, 3 },
+                                                  { 4, 5, 6 },
+                                                  { 7, 8, 9 } };
+    for (size_t i = 0; i < 5; ++i) {
+        for (size_t j = 0; j < 3; ++j) {
+            my_matrix(i, j, true) = my_matrix_data[j][i];
+        }
+    }
+    my_matrix.cutCols(2);
+    EXPECT_EQ(my_matrix.getSizeY(), 3) << "Matrix's Y size doesn't match";
+    EXPECT_EQ(my_matrix.getSizeX(), 3) << "Matrix's X size doesn't match";
+    EXPECT_EQ(my_matrix.getValues().size(), 9) << "Matrix's Values size doesn't match";
+    EXPECT_EQ(my_matrix.getValues().capacity(), 9) << "Matrix's Values capacity doesn't match";
+    for (size_t i = 0; i < 3; ++i) {
+        for (size_t j = 0; j < 3; ++j) {
+            EXPECT_NEAR(my_matrix(i, j, true), result_data[j][i], kfsoleq::tolerance) << "Matrix's Values values doesn't match";
+        }
+    }
+}
+
 TEST(MatrixFunctions, GetTransposed) {
     kfsoleq::Matrix my_matrix(3, 3);
     kfsoleq::soleq_float my_matrix_data_1[3][3] = { { 1, 2, 3 },

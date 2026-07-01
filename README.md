@@ -25,9 +25,9 @@ ctest
 ```
 
 ## TODO
+ - Matrix Tests SizeBySizeInit and AccessOperator should be reworked
  - GMRES
     - ~~Upper Triangular Matrix Structure~~
     - Arnoldi Algorithm
     - Solving SOLEQ with incomplete Matrix
     - Actual GMRES solver
- - Matrix Tests SizeBySizeInit and AccessOperator should be reworked

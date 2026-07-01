@@ -46,6 +46,22 @@ kfsoleq::Matrix kfsoleq::getMatrixFromCSRMatrix(const kfsoleq::CSR_Matrix& given
         }
         return result;
 }
+kfsoleq::Vector kfsoleq::getMatrixRow(const kfsoleq::Matrix& given_matrix, size_t y) {
+        size_t size_x = given_matrix.getSizeX();
+        kfsoleq::Vector result(size_x);
+        for (size_t i = 0; i < size_x; ++i) {
+            result[i] = given_matrix(y, i);
+        }
+        return result;
+}
+kfsoleq::Vector kfsoleq::getMatrixCol(const kfsoleq::Matrix& given_matrix, size_t x) {
+        size_t size_y = given_matrix.getSizeY();
+        kfsoleq::Vector result(size_y);
+        for (size_t i = 0; i < size_y; ++i) {
+            result[i] = given_matrix(x, i, true);
+        }
+        return result;
+}
 kfsoleq::soleq_float kfsoleq::getMaxEigenValuePowerMethod(const kfsoleq::Vector initial_vector,
                                                           const kfsoleq::CSR_Matrix& given_csr_matrix,
                                                           size_t iters_num) {

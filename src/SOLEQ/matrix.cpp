@@ -38,6 +38,42 @@ void kfsoleq::Matrix::print() const {
             std::cout << "]\n";
         }
 }
+void kfsoleq::Matrix::print(bool /*---*/) const {
+        std::cout << "Size Y:[" << this->size_y << "]\n";
+        std::cout << "Size X:[" << this->size_x << "]\n";
+        std::cout << "Values:\n";
+        for (size_t i = 0; i < this->size_y; ++i) {
+            std::cout << "[ ";
+            for (size_t j = 0; j < this->size_x; ++j) {
+                std::cout << this->values[(j * this->size_y) + i] << ' ';
+            }
+            std::cout << "]\n";
+        }
+}
+void kfsoleq::Matrix::addRows(size_t n) {
+        size_t new_size = this->values.size() + (n * this->size_x);
+        this->values.reserve(new_size);
+        this->values.resize(new_size);
+        this->size_y += n;
+}
+void kfsoleq::Matrix::addCols(size_t n) {
+        size_t new_size = this->values.size() + (n * this->size_y);
+        this->values.reserve(new_size);
+        this->values.resize(new_size);
+        this->size_x += n;
+}
+void kfsoleq::Matrix::cutRows(size_t n) {
+        size_t new_size = this->values.size() - (n * this->size_x);
+        this->values.resize(new_size);
+        this->values.shrink_to_fit();
+        this->size_y -= n;
+}
+void kfsoleq::Matrix::cutCols(size_t n) {
+        size_t new_size = this->values.size() - (n * this->size_y);
+        this->values.resize(new_size);
+        this->values.shrink_to_fit();
+        this->size_x -= n;
+}
 kfsoleq::Matrix kfsoleq::Matrix::getTransposed() const {
         kfsoleq::Matrix result(this->size_x, this->size_y);
         for (size_t i = 0; i < this->size_y; ++i) {

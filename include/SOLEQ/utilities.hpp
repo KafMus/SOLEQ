@@ -17,6 +17,8 @@ CSR_Matrix getCSRMatrixFromMatrix(const Matrix& given_matrix,
                                   soleq_float given_tolerance);
 Matrix getMatrixFromCSRMatrix(const CSR_Matrix& given_csr_matrix,
                               size_t size_x);
+Vector getMatrixRow(const Matrix& given_matrix, size_t y);
+Vector getMatrixCol(const Matrix& given_matrix, size_t x);
 soleq_float getMaxEigenValuePowerMethod(const Vector initial_vector,
                                         const CSR_Matrix& given_csr_matrix,
                                         size_t iters_num);
